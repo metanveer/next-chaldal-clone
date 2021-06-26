@@ -1,0 +1,109 @@
+.productDetailHeader {
+  max-width: 1366px;
+  margin: 3px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(to right, #f9e18a, #fff6d7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.productDetailHeader p {
+  color: #94784f;
+  font-size: 40px;
+  padding: 10px 20px;
+}
+
+.categoryBanner {
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frontPageBanner {
+  display: flex;
+  width: 100%;
+  padding: 8px;
+}
+
+.frontBannerLeft {
+  margin-right: 5px;
+}
+
+.frontBannerRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.rightTopImg {
+  margin-bottom: 1px;
+}
+
+.frontBannerImg {
+  border-radius: 5px;
+  width: 100%;
+}
+
+.imageContainer {
+  max-height: 215px;
+  min-height: 215px;
+  max-width: 700px;
+}
+.carouselContainer {
+  max-height: 215px;
+  min-height: 215px;
+}
+
+.bannerImage {
+  max-width: 100%;
+}
+
+.categoryHeaderContainer {
+  margin: 10px 20px;
+}
+
+.categoryPaths {
+  margin-bottom: 5px;
+}
+
+.categoryName:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.arrow {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  margin: 0 12px 1px 10px;
+  transform: rotate(-45deg);
+}
+
+.activeCategory {
+  font-weight: 700;
+}
+
+.categoryHeader {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.heading {
+  font-size: 23px;
+  color: #666;
+  white-space: nowrap;
+  padding: 0 40px;
+}
+
+.hrLine {
+  width: 100%;
+  border-top: 1.3px solid #666;
+}

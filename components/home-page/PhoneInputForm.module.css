@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  border-radius: 6px;
+  width: 330px;
+}
+
+.button {
+  background-color: #ff686e;
+  border: 2px solid #ff686e;
+  width: 30%;
+  border-radius: 0 6px 6px 0;
+  padding: 15px 20px;
+  margin: 0;
+  color: #fff;
+  font-size: 15px;
+  position: absolute;
+  left: 70%;
+  top: 0;
+  bottom: 0;
+  transition: all 300ms ease-in-out;
+}
+
+.button:hover {
+  background-color: #ff353d;
+  border: 2px solid #ff353d;
+}

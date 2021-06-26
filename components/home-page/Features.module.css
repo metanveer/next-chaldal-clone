@@ -1,0 +1,33 @@
+.featureImagesContainer {
+  display: flex;
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.image {
+  width: 100%;
+}
+
+.imageCaptionContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 30%;
+  padding: 20px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 3px solid #fdd670;
+}
+
+.captionHead {
+  font-size: 20px;
+  margin: 0 0 25px 0;
+  color: var(--body-text);
+}
+
+.caption {
+  font-size: 16px;
+}

@@ -1,0 +1,30 @@
+.special {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  padding: 10px 0 10px 15px;
+}
+
+.parent {
+  border-left: 1px solid #ccc;
+  margin-left: 20px;
+  padding-left: 11px;
+}
+.children {
+  border-left: 1px solid #ccc;
+  margin-left: 11.5px;
+  padding-left: 8px;
+}
+
+.rightArrow {
+  position: absolute;
+  right: 1px;
+  top: 5px;
+  font-size: 20px;
+}
+
+.iconPrimary {
+  width: 22px;
+  margin: 0 10px;
+  filter: invert(0%) sepia(97%) saturate(15%) hue-rotate(156deg)
+    brightness(100%) contrast(100%);
+}

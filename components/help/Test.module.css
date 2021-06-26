@@ -1,0 +1,23 @@
+.header {
+  position: fixed;
+  top: 55px;
+}
+
+.testHeader {
+  display: flex;
+}
+
+.cellHeader {
+  width: calc(100vw / 7);
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.test {
+  display: flex;
+}
+
+.cell {
+  flex: 1 1 calc(100vw / 7);
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}

@@ -1,16 +1,101 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+:root {
+  --navbar-bg-color: #fdd670;
+  --navbar-border-bottom: #dfb547;
+  --navbar-menu-btn-hover: #f9cd5c;
+  --navbar-login-area-btn: #ff686e;
+  --navbar-login-area-btn-hover: #e04f54;
+  --linkbutton-hover: #ff353d;
+  --navbar-items-divider: #ecc766;
+  --navbar-link-hover: #eeb529;
+  --body-text: #615e58;
+
+  --color-primary-yellow: #fdd670;
+  --color-primary-hover: #eeb529;
+  --color-secondary-red: #ff686e;
+  --color-secondary-hover: #ff353d;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+html {
+  color: #000;
+  background: #fff;
+}
+blockquote,
+body,
+code,
+dd,
+div,
+dl,
+dt,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+li,
+ol,
+p,
+pre,
+td,
+textarea,
+th,
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, Helvetica,
+    droid sans, Arial, lucida grande, tahoma, verdana, arial, sans-serif;
+  font-size: 13px;
+  color: var(--body-text);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  line-height: normal;
+}
+
+a,
+p {
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 26px;
+  margin: 20px 0 25px;
+}
+h2 {
+  font-size: 24px;
+}
+h3 {
+  font-size: 20px;
+  margin: 20px 0 25px;
+}
+button {
+  cursor: pointer;
+}
+button:focus,
+option:focus,
+select:focus {
+  outline: 0;
+}
+
+img {
+  height: auto;
+  width: auto\9; /* ie8 */
 }

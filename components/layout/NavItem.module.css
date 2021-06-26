@@ -1,0 +1,44 @@
+.navItem {
+  height: 55px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userIcon {
+  font-size: 22px;
+  padding: 0 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userName {
+  padding: 0 0 0 5px;
+}
+.iconSecondary {
+  font-size: 22px;
+  padding: 5px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnSignIn {
+  flex: 0 0 150px;
+  height: 55px;
+  background-color: var(--navbar-login-area-btn);
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btnSignIn:hover {
+  background-color: var(--navbar-login-area-btn-hover);
+}

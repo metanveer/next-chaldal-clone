@@ -1,0 +1,12 @@
+.btnLink {
+  background-color: var(--navbar-login-area-btn);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%);
+  transition: all 300ms ease-in-out;
+}
+
+.btnLink:hover {
+  background-color: var(--linkbutton-hover);
+}

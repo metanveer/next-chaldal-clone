@@ -1,0 +1,33 @@
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 300;
+  margin: 30px;
+  color: black;
+}
+
+.section {
+  color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.categories {
+  max-width: 1140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sectionReview {
+  text-align: center;
+}
+
+.loveHeart {
+  width: 35px;
+  margin: 0 10px -11px 10px;
+}

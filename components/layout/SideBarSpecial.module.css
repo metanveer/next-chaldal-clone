@@ -1,0 +1,24 @@
+.sideBarItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 3px 0;
+  margin: 0 0 1px 0;
+  color: black;
+}
+
+.sideBarItem:hover {
+  cursor: pointer;
+  background: #e1e1e1;
+  background: linear-gradient(to right, #fff 0, #ccc 100%);
+}
+
+.offer {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 5px;
+  margin: 2px 5px 0 5px;
+  border-radius: 3px;
+  color: var(--navbar-login-area-btn);
+  border: 1px solid var(--navbar-login-area-btn);
+}

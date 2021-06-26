@@ -1,0 +1,32 @@
+.statsSection {
+  background-color: #3a3a3a;
+}
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.statsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapImage {
+  width: 350px;
+}
+
+.statTitle {
+  font-weight: 700;
+  font-size: 35px;
+  color: white;
+}
+.statData {
+  font-weight: 700;
+  font-size: 35px;
+  color: var(--color-primary-yellow);
+}

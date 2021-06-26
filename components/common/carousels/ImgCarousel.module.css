@@ -1,0 +1,66 @@
+.carousel {
+  --width: 970px;
+  background-color: burlywood;
+  width: var(--width);
+  height: calc(var(--width) * 0.357);
+  position: relative;
+  overflow: hidden;
+}
+
+.allSlides {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.slide {
+  width: var(--width);
+}
+
+.carouselControl {
+  /* width: 90px; */
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: calc(var(--width) * 0.325);
+  right: 190px;
+  z-index: 3000;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ddd;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.activeDot {
+  width: 10px;
+  height: 10px;
+  background-color: #ee4054;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 992px) {
+  .carousel {
+    --width: 600px;
+  }
+  .carouselControl {
+    top: 185px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .carousel {
+    --width: 500px;
+  }
+  .carouselControl {
+    top: 150px;
+  }
+}

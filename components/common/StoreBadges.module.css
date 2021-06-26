@@ -1,0 +1,31 @@
+.storeBadges {
+  --width-badge: 190px;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playStore {
+  flex-grow: 1;
+  width: var(--width-badge);
+  padding: 10px 0 10px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.playStore:hover {
+  transform: scale(1.03);
+  transition: all 0.2s ease-in-out;
+}
+
+.appleStore {
+  flex-grow: 1;
+  width: calc(var(--width-badge) - 15px);
+  padding: 10px 0 10px 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.appleStore:hover {
+  transform: scale(1.03);
+  transition: all 0.2s ease-in-out;
+}

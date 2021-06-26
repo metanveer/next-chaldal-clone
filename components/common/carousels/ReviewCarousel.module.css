@@ -1,0 +1,109 @@
+.carousel {
+  --width: 1200px;
+  max-width: 1200px;
+  height: 212px;
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto;
+}
+
+.allSlides {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  /* transition: all 0.3s ease; */
+}
+
+.slide {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.portraitContainer {
+  flex: 0 0 212px;
+  margin: 30px -40px 0 40px;
+}
+.portrait {
+  width: 130px;
+  border-radius: 50%;
+}
+
+.portraitName {
+  font-size: 18px;
+  font-weight: 300;
+  margin: 5px 10px 0 0;
+}
+
+.review {
+  flex-grow: 1;
+  padding: 30px;
+  position: relative;
+}
+
+.reviewText {
+  background-color: #eee;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.reviewText::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  background-color: #eee;
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  clip-path: polygon(100% 0, 24% 57%, 100% 100%);
+}
+
+.carouselControl {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  z-index: 3000;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ddd;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.activeDot {
+  width: 10px;
+  height: 10px;
+  background-color: #ee4054;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 992px) {
+  .carousel {
+    --width: 600px;
+  }
+  .carouselControl {
+    top: 185px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .carousel {
+    --width: 500px;
+  }
+  .carouselControl {
+    top: 150px;
+  }
+}

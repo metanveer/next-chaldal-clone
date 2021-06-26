@@ -1,0 +1,70 @@
+.corporate {
+  width: 100%;
+  height: 468px;
+  margin-top: 80px;
+  background-image: linear-gradient(to right, #00728fb9 0, #2c515ae5 100%),
+    url(/corporate/banner-corporate-page.jpg);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.corporateTitle {
+  font-size: 24px;
+  color: white;
+  font-weight: 300;
+}
+.corporateSubTitle {
+  font-size: 20px;
+  color: var(--navbar-bg-color);
+  font-weight: 300;
+}
+
+.featuresWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.corpFeatureContainer {
+  position: relative;
+  padding: 15px;
+  margin: 0px 15px 15px;
+  border-radius: 5px;
+  width: 195px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tick {
+  position: absolute;
+  left: 15px;
+  top: -10px;
+  color: #fff;
+  background-color: #82a900;
+  border-radius: 5px;
+  --tick-box-length: 27px;
+  width: var(--tick-box-length);
+  height: var(--tick-box-length);
+  font-size: var(--tick-box-length);
+}
+
+.icon {
+  width: 80px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(323deg)
+    brightness(103%) contrast(103%);
+}
+
+.feature {
+  font-size: 15px;
+  font-weight: 400;
+}

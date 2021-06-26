@@ -1,0 +1,143 @@
+.logo {
+  width: 140px;
+  padding: 5px 15px 5px 0px;
+}
+
+.menu {
+  flex: 0 0 45px;
+  font-size: 25px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 12px;
+}
+
+.menu:hover {
+  background-color: var(--navbar-menu-btn-hover);
+  cursor: pointer;
+}
+
+.navlink {
+  flex: 1 0 9rem;
+  height: 55px;
+  padding-right: 5px;
+  background-color: var(--navbar-bg-color);
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid var(--navbar-items-divider);
+  /* border-bottom: 1px solid var(--navbar-border-bottom); */
+}
+
+.navlink:hover {
+  cursor: pointer;
+  background-color: var(--navbar-link-hover);
+}
+
+.helpWrapper {
+  flex: 1 0 8rem;
+}
+
+.localeWrapper {
+  flex: 1 0 100px;
+  height: 55px;
+  background-color: var(--navbar-bg-color);
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid var(--navbar-items-divider);
+  /* border-bottom: 1px solid var(--navbar-border-bottom); */
+}
+
+.localeEn {
+  cursor: pointer;
+}
+.localeEn:hover {
+  color: var(--navbar-login-area-btn-hover);
+}
+.activeLocale {
+  color: var(--navbar-login-area-btn-hover);
+}
+.localeBn {
+  margin-top: 3px;
+  cursor: pointer;
+}
+.localeBn:hover {
+  margin-top: 3px;
+  color: var(--navbar-login-area-btn-hover);
+}
+
+.divider {
+  margin: 5px;
+}
+
+.navlinkActive {
+  cursor: pointer;
+  background-color: var(--navbar-link-hover);
+}
+
+@media screen and (max-width: 992px) {
+  .localeWrapper {
+    display: none;
+  }
+  .helpWrapper {
+    display: none;
+  }
+}
+
+.navItem {
+  height: 55px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid var(--navbar-items-divider);
+  white-space: nowrap;
+  padding: 0 3px;
+}
+
+.navItemText {
+  margin: 0 3px;
+}
+
+.iconPrimary {
+  font-size: 22px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userName {
+  padding: 0 0 0 5px;
+}
+.iconSecondary {
+  font-size: 22px;
+
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnSignIn {
+  flex: 0 0 150px;
+  height: 55px;
+  background-color: var(--navbar-login-area-btn);
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btnSignIn:hover {
+  background-color: var(--navbar-login-area-btn-hover);
+}

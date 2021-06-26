@@ -1,0 +1,16 @@
+.offerBanner {
+  max-width: calc(590px * 2);
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageA {
+  width: 100%;
+  padding-right: 2px;
+}
+.imageB {
+  width: 100%;
+  padding-left: 2px;
+}
