@@ -1,0 +1,54 @@
+.offerCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  transition: all 300ms ease-in-out;
+}
+.offerCard:hover {
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 15px #a7a7a7;
+  transition: all 300ms ease-in-out;
+}
+
+.offerCardVer {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  transition: all 300ms ease-in-out;
+}
+.offerCardVer:hover {
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 15px #a7a7a7;
+  transition: all 300ms ease-in-out;
+}
+
+.offerImageContainerVer {
+  margin: 5px 5px 0 5px;
+}
+
+.image {
+  width: 400px;
+  border-radius: 10px;
+  margin: 5px 0 5px 5px;
+}
+
+.productCardWrapper {
+  margin: 0 5px;
+}
+
+.imageVer {
+  width: 100%;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.productCardWrapperVer {
+  margin: 5px;
+}

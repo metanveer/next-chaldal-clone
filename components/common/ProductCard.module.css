@@ -1,0 +1,123 @@
+.productCard {
+  --width-card: 202px;
+  --maxheight-card-container: 305px;
+  --height-width-image-container: 200px;
+  display: inline-block;
+  width: var(--width-card);
+}
+.productCardHor {
+  --width-card: 250px;
+  --maxheight-card-container: 145px;
+  --height-width-image-container: 145px;
+  display: inline-block;
+  width: var(--width-card);
+}
+.productCardSmall {
+  --width-card: 146px;
+  --height-width-image-container: 145px;
+  --maxheight-card-container: calc(200px * 1.525);
+  display: inline-block;
+  width: var(--width-card);
+}
+
+.productCardContainer {
+  max-height: var(--maxheight-card-container);
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.productCardContainerHor {
+  height: var(--maxheight-card-container);
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.productCardContainerOverlay {
+  color: #fff;
+  background-color: rgba(40, 40, 40, 0.75);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+}
+
+.overlayContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayTextAdd {
+  text-align: center;
+  max-width: 120px;
+  font-size: 21px;
+  line-height: 35px;
+  white-space: normal;
+  position: absolute;
+  top: 30%;
+}
+.overlayTextAddHor {
+  top: 5%;
+}
+
+.overlayButtonDetails {
+  width: 100%;
+  border-radius: 0 0 4px 4px;
+  border: 1px solid #ccc;
+  height: 25px;
+  font-weight: 700;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.productCardImageWrapper {
+  max-height: var(--height-width-image-container);
+  max-width: var(--height-width-image-container);
+}
+
+.productCardImage {
+  max-width: var(--height-width-image-container);
+  max-height: var(--height-width-image-container);
+}
+
+.productCardName {
+  text-align: center;
+  height: 60px;
+}
+
+.productCardSubText {
+  font-size: 12px;
+  text-align: center;
+  height: 12px;
+}
+
+.productCardPriceContainer {
+  text-align: center;
+  padding: 3px;
+}
+.productCardDiscPrice {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 5px;
+  color: var(--color-secondary-hover);
+}
+.productCardPrice {
+  padding: 5px;
+  text-decoration: line-through;
+  font-weight: 700;
+}

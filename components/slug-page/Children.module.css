@@ -1,5 +1,12 @@
 .childCategories {
-  display: flex;
-  flex-wrap: wrap;
   padding: 0 10px;
+}
+
+.productCardWrapper {
+  display: inline-block;
+  margin: 20px 5px;
+}
+.categoriesCardWrapper {
+  display: inline-block;
+  margin: 0px 5px;
 }

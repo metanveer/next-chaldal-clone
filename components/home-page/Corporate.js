@@ -1,7 +1,7 @@
 import React from "react";
 import css from "./Corporate.module.css";
 import { FiCheck } from "react-icons/fi";
-import BtnLink from "../common/BtnLink";
+import Link from "next/link";
 
 const features = [
   {
@@ -49,7 +49,9 @@ const Corporate = () => {
           />
         ))}
       </div>
-      <BtnLink to="/corporate">FIND OUT MORE</BtnLink>
+      <Link href="/corporate">
+        <a className={css.btnLink}>FIND OUT MORE</a>
+      </Link>
     </section>
   );
 };

@@ -6,7 +6,7 @@ import productsData from "../data/__data__Popular_products.json";
 
 import Header from "../components/common/Header";
 import Children from "../components/slug-page/Children";
-import ProductDetail from "../components/slug-page/ProductDetail";
+import ProductDetail from "../components/common/ProductDetail";
 
 function SlugDetailsPage({ category, products, product }) {
   const router = useRouter();
@@ -15,14 +15,12 @@ function SlugDetailsPage({ category, products, product }) {
     return <div>Loading...</div>;
   }
 
-  // console.log("product", product);
-  // console.log("category", category);
+  console.log("product", product);
+  console.log("category", category);
   console.log("products", products);
 
   const productDetailAvailable = product && Object.keys(product).length > 0;
   const subCategoryiesAvailable = category && Object.keys(category).length > 0;
-  const offerProductsAvailable =
-    !productDetailAvailable && !subCategoryiesAvailable;
   const nothingAvailable = !productDetailAvailable && !subCategoryiesAvailable;
 
   if (productDetailAvailable) {
@@ -51,10 +49,6 @@ function SlugDetailsPage({ category, products, product }) {
     );
   }
 
-  if (offerProductsAvailable) {
-    return <Children type="products" products={products} />;
-  }
-
   if (nothingAvailable) {
     return <h1>Noting Found</h1>;
   }
@@ -70,13 +64,6 @@ export async function getStaticProps(context) {
   const { params } = context;
   const { slug } = params;
 
-  const offerProducts =
-    slug === "offers"
-      ? productsData.filter((item) => item.OfferPictureUrls.length > 0)
-      : [];
-
-  console.log("offers", offerProducts.length);
-
   const currentProduct = productsData.find((item) => item.Slug === slug) || {};
   const currentCategory =
     categoriesWithSlug.find((item) => item.slug === slug) || {};
@@ -85,17 +72,6 @@ export async function getStaticProps(context) {
         item.AllCategoryIds.includes(currentCategory.Id)
       )
     : [];
-
-  if (slug === "offers") {
-    return {
-      props: {
-        product: {},
-        category: {},
-        products: offerProducts,
-      },
-      revalidate: 1000,
-    };
-  }
 
   return {
     props: {

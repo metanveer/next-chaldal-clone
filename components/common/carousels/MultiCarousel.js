@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./MultiCarousel.module.css";
+import css from "./MultiCarousel.module.css";
 
 import useInterval from "../../../hooks/useInterval";
 
@@ -23,37 +23,30 @@ const items = [
   { name: "Item 16" },
 ];
 
-const FirstMultiCarousel = () => {
+const MultiCarousel = () => {
   const slideDuration = 3000;
 
-  const [current, setCurrent] = useState(1);
-  const [userClicked, setUserClicked] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [userHovering, setUserHovering] = useState(false);
 
-  // console.log("current", current);
+  console.log("current", current);
 
   const length = items.length;
-  const visibleCardsCount = 3;
   const cardWidth = 250;
   const marginLeft = 20;
 
-  // console.log("length", length);
+  console.log("length", length);
 
   const next = (current + 1) % length;
   const prev = (current - 1 + length) % length;
 
   useInterval(() => {
-    if (!userClicked) {
+    if (!userHovering) {
       setCurrent(next);
     }
   }, slideDuration);
 
-  useInterval(() => {
-    if (userClicked) {
-      setUserClicked(false);
-    }
-  }, slideDuration);
-
-  function getVisibleSlideValue(current, index) {
+  function applyTransition(current, index) {
     const offSet = Math.round(length / 2 + 1);
     const distanceFromLeft =
       ((current + index) % length) * -cardWidth +
@@ -68,41 +61,37 @@ const FirstMultiCarousel = () => {
   }
 
   function handlePrev() {
-    setUserClicked(true);
     setCurrent(prev);
   }
   function handleNext() {
-    setUserClicked(true);
     setCurrent(next);
   }
 
   return (
-    <div className={styles.carousel}>
-      <button
-        onClick={handlePrev}
-        className={`${styles.carouselBtn} ${styles.btnPrev}`}
-      >
+    <div
+      className={css.carousel}
+      onMouseEnter={() => setUserHovering(true)}
+      onMouseLeave={() => setUserHovering(false)}
+    >
+      <button className={`${css.btn} ${css.btnPrev}`} onClick={handlePrev}>
         {"<"}
       </button>
-      <div className={styles.visibleContainer}>
+      <div className={css.visible}>
         {items.map((item, index) => (
           <span
+            className={css.itemCard}
             key={index}
-            className={styles.itemCard}
-            style={getVisibleSlideValue(current, index)}
+            style={applyTransition(current, index)}
           >
             {item.name}
           </span>
         ))}
       </div>
-      <button
-        onClick={handleNext}
-        className={`${styles.carouselBtn} ${styles.btnNext}`}
-      >
+      <button className={`${css.btn} ${css.btnNext}`} onClick={handleNext}>
         {">"}
       </button>
     </div>
   );
 };
 
-export default FirstMultiCarousel;
+export default MultiCarousel;
