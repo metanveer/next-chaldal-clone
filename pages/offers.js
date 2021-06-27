@@ -1,21 +1,25 @@
 import React from "react";
-import ProductCard from "../components/common/ProductCard";
 import Children from "../components/slug-page/Children";
-import productsData from "../data/__data__Popular_products.json";
+import dbConnect from "../db/dbConnect";
+import Product from "../models/productModel";
 
-const OffersPage = ({ offerProducts }) => {
+const OffersPage = ({ products }) => {
+  const offerProducts = JSON.parse(products);
   return <Children type="products" variant="offer" products={offerProducts} />;
 };
 
 export async function getStaticProps() {
-  const offerProducts =
-    productsData.filter((item) => item.OfferPictureUrls.length > 0) || [];
+  await dbConnect();
 
-  console.log("offers", offerProducts.length);
+  const productsFromDb = await Product.find({
+    OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
+  });
+
+  const products = JSON.stringify(productsFromDb);
 
   return {
     props: {
-      offerProducts: offerProducts,
+      products,
     },
     revalidate: 1000,
   };
