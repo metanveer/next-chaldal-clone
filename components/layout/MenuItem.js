@@ -17,7 +17,8 @@ const MenuItem = ({
         <li onClick={setActiveId} className={styles.child}>
           {icon && <img className={styles.iconPrimary} src={icon} alt={name} />}
           <div>
-            {id}_{name}
+            {/* {id}_ */}
+            {name}
           </div>
           {!containsProducts && (
             <div className={styles.rightArrow}>

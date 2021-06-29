@@ -1,70 +1,113 @@
 import { useState } from "react";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+
 import css from "./MultiCarousel.module.css";
 
 import useInterval from "../../../hooks/useInterval";
+import OfferCard from "../OfferCard";
 
 const MultiCarousel = ({ items }) => {
   const slideDuration = 3000;
 
-  const [current, setCurrent] = useState(0);
-  const [userHovering, setUserHovering] = useState(false);
+  const length = items.length * 2;
+  const cardWidth = 260;
+  const cardHeight = 393;
+  const topBottomClearance = 10;
+  const spaceBetnCards = 40;
+  const visibleCards = 3;
 
-  const length = items.length;
-  const cardWidth = 250;
-  const marginLeft = 20;
+  const carouselHeight = cardHeight + topBottomClearance * 2;
+  const cardWidthWithSpace = cardWidth + spaceBetnCards;
+  const visibleContainerWidth = visibleCards * cardWidthWithSpace;
+  const cardsContainerWidth = items.length * cardWidthWithSpace;
+  const visibleCardsContainerStyle = {
+    width: visibleContainerWidth,
+    marginLeft: -visibleContainerWidth / 2,
+  };
+
+  const [current, setCurrent] = useState(0);
+  const [currentPre, setCurrentPre] = useState(length / 2);
+  const [userHovering, setUserHovering] = useState(false);
 
   const next = (current + 1) % length;
   const prev = (current - 1 + length) % length;
+  const nextPre = (currentPre + 1) % length;
+  const prevPre = (currentPre - 1 + length) % length;
+
+  console.log("current:", current);
+  console.log("Total length:", length);
 
   useInterval(() => {
     if (!userHovering) {
       setCurrent(next);
+      setCurrentPre(nextPre);
     }
   }, slideDuration);
 
-  function applyTransition(current, index) {
-    const offSet = Math.round(length / 2 + 1);
-    const distanceFromLeft =
-      ((current + index) % length) * -cardWidth +
-      marginLeft +
-      offSet * cardWidth;
-    if (distanceFromLeft >= offSet * cardWidth + marginLeft)
-      return { right: `${distanceFromLeft - marginLeft}px` };
+  function applyTransStyle(current) {
+    const leftValue = -current * cardWidthWithSpace + cardWidthWithSpace * 5;
+    console.log(leftValue);
+    if (current === 0) {
+      return {
+        right: `${leftValue - cardWidthWithSpace * 0}px`,
+        width: cardsContainerWidth,
+      };
+    }
     return {
-      left: `${distanceFromLeft}px`,
-      transition: "left 1s ease",
+      left: leftValue,
+      width: cardsContainerWidth,
     };
   }
 
   function handlePrev() {
     setCurrent(prev);
+    setCurrentPre(prevPre);
   }
   function handleNext() {
     setCurrent(next);
+    setCurrentPre(nextPre);
   }
 
   return (
     <div
       className={css.carousel}
+      style={{ height: carouselHeight }}
       onMouseEnter={() => setUserHovering(true)}
       onMouseLeave={() => setUserHovering(false)}
     >
       <button className={`${css.btn} ${css.btnPrev}`} onClick={handlePrev}>
-        {"<"}
+        <FaChevronLeft />
       </button>
-      <div className={css.visible}>
-        {items.map((item, index) => (
-          <span
-            className={css.itemCard}
-            key={index}
-            style={applyTransition(current, index)}
-          >
-            {item.name}
-          </span>
-        ))}
+      <div style={visibleCardsContainerStyle} className={css.visible}>
+        <div className={css.cards} style={applyTransStyle(currentPre)}>
+          {items.map((item, index) => (
+            <div
+              style={{
+                margin: `${topBottomClearance}px ${spaceBetnCards / 2}px`,
+              }}
+              className={css.card}
+              key={index}
+            >
+              <OfferCard variant="vertical" product={item} />
+            </div>
+          ))}
+        </div>
+        <div className={css.cards} style={applyTransStyle(current)}>
+          {items.map((item, index) => (
+            <div
+              style={{
+                margin: `${topBottomClearance}px ${spaceBetnCards / 2}px`,
+              }}
+              className={css.card}
+              key={index}
+            >
+              <OfferCard variant="vertical" product={item} />
+            </div>
+          ))}
+        </div>
       </div>
       <button className={`${css.btn} ${css.btnNext}`} onClick={handleNext}>
-        {">"}
+        <FaChevronRight />
       </button>
     </div>
   );

@@ -86,7 +86,7 @@
 }
 
 .productCardImageWrapper {
-  max-height: var(--height-width-image-container);
+  height: var(--height-width-image-container);
   max-width: var(--height-width-image-container);
 }
 
