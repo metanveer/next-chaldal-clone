@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
 import css from "./MultiCarousel.module.css";
-
 import useInterval from "../../../hooks/useInterval";
 import OfferCard from "../OfferCard";
 
@@ -12,11 +11,11 @@ const MultiCarousel = ({ items }) => {
   const length = items.length * 2;
   const cardWidth = 260;
   const cardHeight = 393;
-  const topBottomClearance = 10;
+  const topClearance = 10;
   const spaceBetnCards = 40;
   const visibleCards = 3;
 
-  const carouselHeight = cardHeight + topBottomClearance * 2;
+  const carouselHeight = cardHeight + topClearance * 2;
   const cardWidthWithSpace = cardWidth + spaceBetnCards;
   const visibleContainerWidth = visibleCards * cardWidthWithSpace;
   const cardsContainerWidth = items.length * cardWidthWithSpace;
@@ -34,9 +33,6 @@ const MultiCarousel = ({ items }) => {
   const nextPre = (currentPre + 1) % length;
   const prevPre = (currentPre - 1 + length) % length;
 
-  console.log("current:", current);
-  console.log("Total length:", length);
-
   useInterval(() => {
     if (!userHovering) {
       setCurrent(next);
@@ -45,11 +41,11 @@ const MultiCarousel = ({ items }) => {
   }, slideDuration);
 
   function applyTransStyle(current) {
-    const leftValue = -current * cardWidthWithSpace + cardWidthWithSpace * 5;
-    console.log(leftValue);
+    const leftValue =
+      -current * cardWidthWithSpace + cardWidthWithSpace * (visibleCards + 2);
     if (current === 0) {
       return {
-        right: `${leftValue - cardWidthWithSpace * 0}px`,
+        right: `${leftValue}px`,
         width: cardsContainerWidth,
       };
     }
@@ -83,7 +79,7 @@ const MultiCarousel = ({ items }) => {
           {items.map((item, index) => (
             <div
               style={{
-                margin: `${topBottomClearance}px ${spaceBetnCards / 2}px`,
+                margin: `${topClearance}px ${spaceBetnCards / 2}px`,
               }}
               className={css.card}
               key={index}
@@ -96,7 +92,7 @@ const MultiCarousel = ({ items }) => {
           {items.map((item, index) => (
             <div
               style={{
-                margin: `${topBottomClearance}px ${spaceBetnCards / 2}px`,
+                margin: `${topClearance}px ${spaceBetnCards / 2}px`,
               }}
               className={css.card}
               key={index}

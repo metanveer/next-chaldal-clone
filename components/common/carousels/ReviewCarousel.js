@@ -1,5 +1,6 @@
 import { useState } from "react";
 import css from "./ReviewCarousel.module.css";
+import Image from "next/image";
 import useInterval from "../../../hooks/useInterval";
 
 const ReviewCarousel = ({ slides }) => {
@@ -45,10 +46,12 @@ const ReviewCarousel = ({ slides }) => {
         {slides.map((slide, index) => (
           <div key={index} className={css.slide}>
             <div className={css.portraitContainer}>
-              <img
+              <Image
                 className={css.portrait}
                 src={slide.image}
                 alt={slide.name}
+                width={130}
+                height={130}
               />
               <div className={css.portraitName}>{slide.name}</div>
             </div>

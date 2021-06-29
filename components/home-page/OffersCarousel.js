@@ -1,20 +1,22 @@
 import MultiCarousel from "../common/Carousels/MultiCarousel";
 import Section from "../common/Section";
 
-import useSWR from "swr";
+import Loader from "../common/Loader";
+import useGetOffers from "../../hooks/useGetOffers";
 
 function OffersCarousel() {
-  const fetcher = (url) => fetch(url).then((r) => r.json());
-
-  const { data, error } = useSWR("/api/Product/GetProductsOnOffer", fetcher);
-
-  console.log("data", data);
+  const { data, error } = useGetOffers();
 
   return (
-    <Section title="Special Offers">
-      {error && <div>Error: {error}</div>}
-      {data ? <MultiCarousel items={data.data} /> : <div>Loading...</div>}
-    </Section>
+    <>
+      {!data && <Loader />}
+      {error && console.log("Error getting offer products", error)}
+      {data && data.data.length > 0 && (
+        <Section title="Special Offers">
+          <MultiCarousel items={data.data} />
+        </Section>
+      )}
+    </>
   );
 }
 

@@ -6,6 +6,7 @@ import categoriesWithSlug from "../data/categoriesWithSlug";
 import Header from "../components/common/Header";
 import Children from "../components/slug-page/Children";
 import ProductDetail from "../components/common/ProductDetail";
+import Loader from "../components/common/Loader";
 
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
@@ -18,7 +19,7 @@ function SlugDetailsPage({
   const router = useRouter();
 
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const product = JSON.parse(productFromDb);
