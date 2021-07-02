@@ -1,3 +1,5 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"); */
+
 :root {
   --navbar-bg-color: #fdd670;
   --navbar-border-bottom: #dfb547;
@@ -7,7 +9,8 @@
   --linkbutton-hover: #ff353d;
   --navbar-items-divider: #ecc766;
   --navbar-link-hover: #eeb529;
-  --body-text: #615e58;
+  /* --body-text: #615e58; */
+  --body-text: #4d4d49;
 
   --color-primary-yellow: #fdd670;
   --color-primary-hover: #eeb529;
@@ -55,6 +58,9 @@ ul {
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, Helvetica,
     droid sans, Arial, lucida grande, tahoma, verdana, arial, sans-serif;
+
+  /* font-family: "Inter", sans-serif; */
+
   font-size: 13px;
   color: var(--body-text);
   -webkit-box-sizing: border-box;
@@ -64,6 +70,8 @@ body {
   width: 100%;
   background-color: #fff;
   line-height: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a,

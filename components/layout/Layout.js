@@ -4,34 +4,55 @@ import NavBar from "./NavBar";
 import SideBar from "./SideBar";
 // import Modal from "../UI/Modal";
 
-import styles from "./Layout.module.css";
+import css from "./Layout.module.css";
+import Cart from "../cart/Cart";
+import CartFloating from "../cart/CartFloating";
 
 const Layout = ({ children }) => {
   const [modalShown, setModalShown] = useState(false);
   const [sidebarShown, setSidebarShown] = useState(true);
+  const [cartShown, setCartShown] = useState(false);
 
   return (
-    <Fragment>
+    <div className={css.layout}>
       {/* {modalShown && (
         <Modal handleCloseModal={() => setModalShown(false)}>
           <Login />
         </Modal>
       )} */}
-      <nav className={styles.navBar}>
+      <nav className={css.navBar}>
         <NavBar
           handleSideBar={() => setSidebarShown(!sidebarShown)}
           setModalShown={setModalShown}
         />
       </nav>
 
-      <div className={sidebarShown ? styles.sideBar : styles.sideBarHide}>
+      <div className={sidebarShown ? css.sideBar : css.sideBarHide}>
         <SideBar />
       </div>
 
-      <main className={sidebarShown ? styles.main : styles.mainExtended}>
-        {children}
+      <div className={css.cartFloatingWrapper}>
+        <CartFloating onShowCart={() => setCartShown(true)} />
+      </div>
+      <div
+        className={`${css.cartWrapper} ${
+          cartShown ? css.cartVisible : css.cartHidden
+        }`}
+      >
+        <Cart onClose={() => setCartShown(false)} />
+      </div>
+      <main className={sidebarShown ? css.main : css.mainExtended}>
+        <div className={css.pageWrapper}>
+          <div
+            className={`${css.page} ${
+              cartShown ? css.pageCartVisible : css.pageCartHidden
+            }`}
+          >
+            {children}
+          </div>
+        </div>
       </main>
-    </Fragment>
+    </div>
   );
 };
 

@@ -5,12 +5,12 @@
 }
 
 .firstChild {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #eee;
   margin-left: 20px;
   padding-left: 11px;
 }
 .nestedChild {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #eee;
   margin-left: 11.5px;
   padding-left: 8px;
 }
