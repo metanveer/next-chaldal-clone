@@ -84,7 +84,19 @@ const MultiCarousel = ({ items }) => {
               className={css.card}
               key={index}
             >
-              <OfferCard variant="vertical" product={item} />
+              <OfferCard
+                cardType="vertical"
+                id={item._id}
+                itemName={item.NameWithoutSubText}
+                image={item.PictureUrls[0]}
+                offerImage={item.OfferPictureUrls[0]}
+                images={item.PictureUrls}
+                packSize={item.SubText}
+                regPrice={item.Price.Lo}
+                discPrice={item.DiscountedPrice.Lo}
+                description={item.LongDescription}
+                slug={item.Slug}
+              />
             </div>
           ))}
         </div>
@@ -97,7 +109,19 @@ const MultiCarousel = ({ items }) => {
               className={css.card}
               key={index}
             >
-              <OfferCard variant="vertical" product={item} />
+              <OfferCard
+                cardType="vertical"
+                id={item._id}
+                itemName={item.NameWithoutSubText}
+                image={item.PictureUrls[0]}
+                offerImage={item.OfferPictureUrls[0]}
+                images={item.PictureUrls}
+                packSize={item.SubText}
+                regPrice={item.Price.Lo}
+                discPrice={item.DiscountedPrice.Lo}
+                description={item.LongDescription}
+                slug={item.Slug}
+              />
             </div>
           ))}
         </div>

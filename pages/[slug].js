@@ -25,8 +25,8 @@ function SlugDetailsPage({
   const product = JSON.parse(productFromDb);
   const products = JSON.parse(productsFromDb);
 
-  // console.log("product", product);
-  // console.log("category", category);
+  console.log("product", product);
+  console.log("category", category);
   console.log("productsClient", products);
 
   const productDetailAvailable = product && Object.keys(product).length > 0;
@@ -37,7 +37,16 @@ function SlugDetailsPage({
     return (
       <>
         <Header type="product-detail-page" />
-        <ProductDetail product={product} />
+        <ProductDetail
+          id={product._id}
+          image={product.PictureUrls[0]}
+          images={product.PictureUrls}
+          itemName={product.NameWithoutSubText}
+          packSize={product.SubText}
+          discPrice={product.DiscountedPrice.Lo}
+          regPrice={product.Price.Lo}
+          description={product.LongDescription}
+        />
       </>
     );
   }

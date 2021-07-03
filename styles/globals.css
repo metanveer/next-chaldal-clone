@@ -96,6 +96,7 @@ h3 {
 }
 button {
   cursor: pointer;
+  user-select: none;
 }
 button:focus,
 option:focus,

@@ -24,8 +24,19 @@
 }
 
 .arrow {
-  color: grey;
+  color: rgb(82, 80, 80);
   cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+}
+
+.arrowDisable {
+  user-select: none;
+  color: rgb(221, 217, 217);
+  font-size: 18px;
+}
+.arrowDisable:hover {
+  color: rgb(221, 217, 217);
   font-size: 18px;
 }
 

@@ -1,13 +1,41 @@
 import React, { useState } from "react";
+import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import Modal from "./Modal";
 import ProductDetail from "./ProductDetail";
 import Button from "./Button";
 import css from "./ProductCard.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItemToCart,
+  decreaseQty,
+  increaseQty,
+} from "../../features/cartItems/cartItemsSlice";
 
-const ProductCard = ({ item, variant }) => {
+const ProductCard = ({
+  cardType,
+  id,
+  itemName,
+  image,
+  images,
+  packSize,
+  regPrice,
+  discPrice,
+  description,
+  slug,
+}) => {
+  const dispatch = useDispatch();
+  const { items: cartItems } = useSelector((state) => state.cartItems);
+
   const [clickedId, setClickedId] = useState(null);
   const [prevLocation, setPrevLocation] = useState(null);
   const [overlayShown, setOverlayShown] = useState(false);
+
+  const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
+  const isItemInCart = itemInCart !== undefined;
+
+  const isDiscounted = discPrice < regPrice;
+  const small = cardType === "small" ? css.productCardSmall : null;
+  const hor = cardType === "horizontal" ? css.productCardHor : null;
 
   function handleCloseModal() {
     setClickedId(null);
@@ -15,21 +43,23 @@ const ProductCard = ({ item, variant }) => {
   }
 
   function handleShowModal() {
-    setClickedId(item.ProductVariantId);
+    setClickedId(id);
     setPrevLocation(window.location.pathname);
-    history.pushState({}, null, `/${item.Slug}`);
+    history.pushState({}, null, `/${slug}`);
   }
 
-  const name = item.NameWithoutSubText;
-  const image = item.PictureUrls[0];
-  const subText = item.SubText;
-  const price = item.Price.Lo;
-  const discPrice = item.DiscountedPrice.Lo;
-
-  const isDiscounted = discPrice < price;
-
-  const small = variant === "small" ? css.productCardSmall : null;
-  const hor = variant === "horizontal" ? css.productCardHor : null;
+  function handleAddItemToCart() {
+    dispatch(
+      addItemToCart({
+        packSize,
+        image,
+        itemName,
+        discPrice,
+        regPrice,
+        id,
+      })
+    );
+  }
 
   return (
     <div className={`${css.productCard} ${small} ${hor}`}>
@@ -41,37 +71,84 @@ const ProductCard = ({ item, variant }) => {
         }`}
       >
         <div className={css.productCardImageWrapper}>
-          <img className={css.productCardImage} src={image} alt={name} />
+          <img className={css.productCardImage} src={image} alt={itemName} />
         </div>
         <div>
-          <div className={css.productCardName}>{name}</div>
-          <div className={css.productCardSubText}>{subText}</div>
+          <div className={css.productCardName}>{itemName}</div>
+          <div className={css.productCardSubText}>{packSize}</div>
           <div className={css.productCardPriceContainer}>
             {isDiscounted ? (
               <>
                 <span
                   className={css.productCardDiscPrice}
                 >{`৳ ${discPrice}`}</span>
-                <span className={css.productCardPrice}>{`৳ ${price}`}</span>
+                <span className={css.productCardPrice}>{`৳ ${regPrice}`}</span>
               </>
             ) : (
               <span
                 style={{ color: "inherit" }}
                 className={css.productCardDiscPrice}
-              >{`৳ ${price}`}</span>
+              >{`৳ ${regPrice}`}</span>
             )}
           </div>
         </div>
         {overlayShown && (
           <div className={css.productCardContainerOverlay}>
             <div className={css.overlayContent}>
-              <div
-                className={`${css.overlayTextAdd} ${
-                  hor && css.overlayTextAddHor
-                }`}
-              >
-                Add to Shopping Bag
-              </div>
+              {!isItemInCart && (
+                <div
+                  onClick={handleAddItemToCart}
+                  className={`${css.overlayTextAdd} ${
+                    hor && css.overlayTextAddHor
+                  }`}
+                >
+                  Add to Shopping Bag
+                </div>
+              )}
+              {isItemInCart && (
+                <>
+                  <div
+                    onClick={() => dispatch(increaseQty(itemInCart.id))}
+                    className={`${css.overlayTextInBag} ${
+                      hor && css.overlayTextInBagHor
+                    }`}
+                  >
+                    <div
+                      className={`${css.totalPriceInCart} ${
+                        hor && css.totalPriceInCartHor
+                      }`}
+                    >
+                      {`৳ ${itemInCart.qty * itemInCart.discPrice}`}
+                    </div>
+
+                    <div
+                      className={`${css.qty} ${small && css.qtySmall} ${
+                        hor && css.qtyHor
+                      }`}
+                    >
+                      {itemInCart.qty}
+                    </div>
+
+                    <div className={css.inBag}>in bag</div>
+                  </div>
+                  <div
+                    onClick={() => dispatch(decreaseQty(itemInCart.id))}
+                    className={`${css.qtyBtn} ${css.btnLeft} ${
+                      hor && css.qtyBtnHor
+                    }`}
+                  >
+                    <FiMinusCircle />
+                  </div>
+                  <div
+                    onClick={() => dispatch(increaseQty(itemInCart.id))}
+                    className={`${css.qtyBtn} ${css.btnRight} ${
+                      hor && css.qtyBtnHor
+                    }`}
+                  >
+                    <FiPlusCircle />
+                  </div>
+                </>
+              )}
             </div>
             <button
               onClick={handleShowModal}
@@ -82,11 +159,24 @@ const ProductCard = ({ item, variant }) => {
           </div>
         )}
       </div>
-      <Button type="add-to-cart" />
+      <Button
+        onAddItemToCart={handleAddItemToCart}
+        itemInCart={itemInCart}
+        type="add-to-cart"
+      />
 
-      {clickedId === item.ProductVariantId && (
+      {clickedId === id && (
         <Modal type="product-detail" handleCloseModal={handleCloseModal}>
-          <ProductDetail product={item} />
+          <ProductDetail
+            id={id}
+            image={image}
+            images={images}
+            itemName={itemName}
+            packSize={packSize}
+            discPrice={discPrice}
+            regPrice={regPrice}
+            description={description}
+          />
         </Modal>
       )}
     </div>

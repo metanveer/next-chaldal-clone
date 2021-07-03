@@ -1,26 +1,49 @@
 import React from "react";
 import css from "./CartItem.module.css";
 import { VscClose, VscChevronUp, VscChevronDown } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decreaseQty,
+  increaseQty,
+  removeItem,
+} from "../../features/cartItems/cartItemsSlice";
 
 const CartItem = ({
-  qty = 6,
-  packSize = "500 gm",
-  image = "https://chaldn.com/_mpimage/nescafe-classic-coffee-jar-frappe-glass-free-100-gm?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D74467&q=low&v=1&m=400&webp=1",
-  itemName = "Nescafe Classic Coffee Jar (Frappe Glass Free)",
-  discPrice = 60,
-  price = 290,
+  qty,
+  packSize,
+  image,
+  itemName,
+  discPrice,
+  regPrice,
+  id,
 }) => {
+  const dispatch = useDispatch();
+
+  const isDiscountAvailable =
+    discPrice && discPrice > 0 && discPrice < regPrice;
+
+  const totalDiscPrice = discPrice * qty;
+  const totalRegPrice = regPrice * qty;
+
+  function handleDecreaseQty() {
+    if (qty === 1) return;
+    dispatch(decreaseQty(id));
+  }
+
   return (
     <div className={css.cartItem}>
-      <div className={css.btnClose}>
+      <div onClick={() => dispatch(removeItem(id))} className={css.btnClose}>
         <VscClose />
       </div>
       <div className={css.qtySec}>
-        <div className={css.arrow}>
+        <div onClick={() => dispatch(increaseQty(id))} className={css.arrow}>
           <VscChevronUp />
         </div>
         <div className={css.qty}>{qty} </div>
-        <div className={css.arrow}>
+        <div
+          onClick={handleDecreaseQty}
+          className={`${qty === 1 ? css.arrowDisable : css.arrow}`}
+        >
           <VscChevronDown />
         </div>
       </div>
@@ -30,15 +53,17 @@ const CartItem = ({
       <div className={css.detailSec}>
         <div className={css.itemName}>{itemName}</div>
         <div className={css.qtyPackSize}>{`৳ ${
-          discPrice > 0 ? discPrice : price
+          isDiscountAvailable ? discPrice : regPrice
         } / ${packSize}`}</div>
       </div>
       <div className={css.priceSec}>
-        {discPrice > 0 && (
-          <div className={css.discPrice}>{`৳ ${discPrice}`}</div>
+        {isDiscountAvailable && (
+          <div className={css.discPrice}>{`৳ ${totalDiscPrice}`}</div>
         )}
 
-        <div className={`${discPrice && css.price}`}>{`৳ ${price}`}</div>
+        <div
+          className={`${isDiscountAvailable && css.price}`}
+        >{`৳ ${totalRegPrice}`}</div>
       </div>
     </div>
   );

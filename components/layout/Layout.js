@@ -1,4 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
+import useScrollbarSize from "react-scrollbar-size";
+import { useSelector, useDispatch } from "react-redux";
+import { showCart, hideCart } from "../../features/toggleCart/toggleCartSlice";
 // import Login from "../../pages/Login/Login";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
@@ -11,7 +14,15 @@ import CartFloating from "../cart/CartFloating";
 const Layout = ({ children }) => {
   const [modalShown, setModalShown] = useState(false);
   const [sidebarShown, setSidebarShown] = useState(true);
-  const [cartShown, setCartShown] = useState(false);
+
+  const dispatch = useDispatch();
+  const { cartShown } = useSelector((state) => state.toggleCart);
+  const { items, totalItemsPriceDisc } = useSelector(
+    (state) => state.cartItems
+  );
+
+  const { width: scrollBarWidth } = useScrollbarSize();
+  const cartWidth = 320;
 
   return (
     <div className={css.layout}>
@@ -31,15 +42,27 @@ const Layout = ({ children }) => {
         <SideBar />
       </div>
 
-      <div className={css.cartFloatingWrapper}>
-        <CartFloating onShowCart={() => setCartShown(true)} />
+      <div
+        style={{ right: `${scrollBarWidth}px` }}
+        className={css.cartFloatingWrapper}
+      >
+        <CartFloating
+          onShowCart={() => dispatch(showCart())}
+          cartItemsCount={items.length}
+          cartAmount={totalItemsPriceDisc}
+        />
       </div>
       <div
-        className={`${css.cartWrapper} ${
-          cartShown ? css.cartVisible : css.cartHidden
-        }`}
+        style={{
+          right: `${
+            cartShown
+              ? `${scrollBarWidth}px`
+              : `-${scrollBarWidth + cartWidth}px`
+          }`,
+        }}
+        className={css.cartWrapper}
       >
-        <Cart onClose={() => setCartShown(false)} />
+        <Cart onClose={() => dispatch(hideCart())} />
       </div>
       <main className={sidebarShown ? css.main : css.mainExtended}>
         <div className={css.pageWrapper}>

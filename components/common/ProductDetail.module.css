@@ -149,6 +149,13 @@
   border-radius: 4px;
 }
 
+.changeQtyBtn:hover {
+  background-color: #ffffff;
+}
+.changeQtyBtn:active {
+  box-shadow: inset 0 0 8px #ccc;
+}
+
 .btnBuyNow {
   background-color: var(--navbar-login-area-btn);
   font-size: 16px;

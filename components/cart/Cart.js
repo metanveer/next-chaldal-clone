@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FaShoppingBag } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 import {
@@ -9,24 +10,29 @@ import {
 import css from "./Cart.module.css";
 import DeliveryPromo from "./DeliveryPromo";
 import CartItem from "./CartItem";
+import decimalWithCommas from "../../utils/decimal-with-commas";
 
 const Cart = ({ onClose }) => {
+  const { items, totalItemsPriceDisc } = useSelector(
+    (state) => state.cartItems
+  );
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className={css.cart}>
+      <div onClick={onClose} className={css.btnCollapse} />
       <header className={css.cartHeader}>
         <div className={css.shoppingBagIcon}>
           <FaShoppingBag />
         </div>
-        <div className={css.itemsCount}>8 ITEMS</div>
+        <div className={css.itemsCount}>{items.length} ITEMS</div>
         <button onClick={onClose} className={css.btnClose}>
           <CgClose />
         </button>
       </header>
       <DeliveryPromo
         minAmountForPromo={500}
-        cartAmount={50}
+        cartAmount={totalItemsPriceDisc}
         deliveryCharge={30}
         promoAmount={15}
       />
@@ -40,15 +46,12 @@ const Cart = ({ onClose }) => {
           </span>
           <span className={css.text}>Express Delivery</span>
         </div>
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
+
+        {items.map((item) => (
+          <Fragment key={item.id}>
+            <CartItem key={item.id} {...item} />
+          </Fragment>
+        ))}
       </div>
       <div className={css.discountCode}>
         <button
@@ -88,7 +91,7 @@ const Cart = ({ onClose }) => {
           <span className={css.placeOrderText}>Place Order</span>
           <span className={css.orderAmount}>
             <span className={css.takaSign}>{`৳`}</span>
-            {`${"2,475.00"}`}
+            {decimalWithCommas(totalItemsPriceDisc)}
           </span>
         </button>
       </div>

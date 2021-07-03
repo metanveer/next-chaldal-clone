@@ -2,16 +2,28 @@ import React from "react";
 import css from "./OfferCard.module.css";
 import ProductCard from "./ProductCard";
 
-const OfferCard = ({ product, variant }) => {
-  const ver = variant === "vertical";
+const OfferCard = ({
+  cardType,
+  id,
+  itemName,
+  image,
+  offerImage,
+  images,
+  packSize,
+  regPrice,
+  discPrice,
+  description,
+  slug,
+}) => {
+  const ver = cardType === "vertical";
 
   return (
     <div className={`${css.offerCard} ${ver && css.offerCardVer}`}>
       <div className={`${ver && css.offerImageContainerVer}`}>
         <img
           className={`${css.image} ${ver && css.imageVer}`}
-          src={product.OfferPictureUrls[0]}
-          alt={product.Name}
+          src={offerImage}
+          alt={itemName}
         />
       </div>
       <div
@@ -20,8 +32,16 @@ const OfferCard = ({ product, variant }) => {
         }`}
       >
         <ProductCard
-          item={product}
-          variant={`${ver ? "horizontal" : "small"}`}
+          cardType={`${ver ? "horizontal" : "small"}`}
+          id={id}
+          itemName={itemName}
+          image={image}
+          images={images}
+          packSize={packSize}
+          regPrice={regPrice}
+          discPrice={discPrice}
+          description={description}
+          slug={slug}
         />
       </div>
     </div>

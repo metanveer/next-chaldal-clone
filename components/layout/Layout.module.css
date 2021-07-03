@@ -73,21 +73,13 @@
   position: fixed;
   top: 55px;
   bottom: 0;
+  width: var(--cart-width);
   z-index: 5;
   transition: all 0.3s ease;
 }
 
-.cartVisible {
-  right: 0.89vw;
-  width: var(--cart-width);
-}
-.cartHidden {
-  right: calc(var(--cart-width) * -1);
-}
-
 .cartFloatingWrapper {
   position: fixed;
-  right: 0.8vw;
   top: 40%;
   z-index: 4;
 }
