@@ -1,0 +1,28 @@
+.container {
+  --border-test: 0px solid black;
+  /* width: 400px; */
+  border: var(--border-test);
+  text-align: center;
+  padding: 2rem 1rem 1.5rem 1rem;
+}
+
+.heading {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--color-secondary-red);
+  padding: 1rem 1rem 0.5rem 1rem;
+}
+
+.sub {
+  padding: 1rem 1rem 0.5rem 1rem;
+}
+
+.listContainer {
+  text-align: left;
+  padding: 0 0.5rem 1rem 3rem;
+}
+
+.listItem {
+  font-weight: 700;
+  padding: 1rem 0;
+}

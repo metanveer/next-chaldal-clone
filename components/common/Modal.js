@@ -4,16 +4,19 @@ import { VscChromeClose } from "react-icons/vsc";
 
 import css from "./Modal.module.css";
 
-const Backdrop = ({ handleCloseModal }) => {
-  return <div className={css.backdrop} onClick={handleCloseModal} />;
+const Backdrop = ({ onCloseModal }) => {
+  return <div className={css.backdrop} onClick={onCloseModal} />;
 };
 
-const ModalOverlay = ({ handleCloseModal, children, type }) => {
-  const modalStyle = `${type === "product-detail" ? css.modalPD : css.modal}`;
+const ModalOverlay = ({ onCloseModal, children, modalWidth }) => {
+  const widthStyle = {
+    left: `calc(50vw - ${modalWidth}px / 2)`,
+    width: `${modalWidth}px`,
+  };
 
   return (
-    <div className={modalStyle}>
-      <button onClick={handleCloseModal} className={css.close}>
+    <div style={widthStyle} className={css.modal}>
+      <button onClick={onCloseModal} className={css.close}>
         <VscChromeClose />
       </button>
       <div className={css.content}>{children}</div>
@@ -21,15 +24,15 @@ const ModalOverlay = ({ handleCloseModal, children, type }) => {
   );
 };
 
-const Modal = ({ handleCloseModal, children, type }) => {
+const Modal = ({ onCloseModal, children, modalWidth }) => {
   return (
     <Fragment>
       {ReactDOM.createPortal(
-        <Backdrop handleCloseModal={handleCloseModal} />,
+        <Backdrop onCloseModal={onCloseModal} />,
         document.getElementById("overlays")
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay handleCloseModal={handleCloseModal} type={type}>
+        <ModalOverlay modalWidth={modalWidth} onCloseModal={onCloseModal}>
           {children}
         </ModalOverlay>,
         document.getElementById("overlays")

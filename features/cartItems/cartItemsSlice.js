@@ -39,7 +39,7 @@ const cartItemsSlice = createSlice({
   name: "cart-items",
   initialState,
   reducers: {
-    addItemToCart(state, action) {
+    addItemToCart: (state, action) => {
       const itemToAdd = action.payload;
       const itemExistsInCart = state.items.find(
         (item) => item.id === itemToAdd.id
@@ -62,7 +62,7 @@ const cartItemsSlice = createSlice({
 
       state.msg = "item-added";
     },
-    removeItem(state, action) {
+    removeItem: (state, action) => {
       const id = action.payload;
 
       state.items = state.items.filter((item) => item.id !== id);
@@ -72,7 +72,7 @@ const cartItemsSlice = createSlice({
 
       state.msg = "item-removed";
     },
-    increaseQty(state, action) {
+    increaseQty: (state, action) => {
       const id = action.payload;
       const itemExisted = state.items.find((item) => item.id === id);
       if (itemExisted) {
@@ -84,7 +84,7 @@ const cartItemsSlice = createSlice({
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
     },
-    decreaseQty(state, action) {
+    decreaseQty: (state, action) => {
       const id = action.payload;
       const itemExisted = state.items.find((item) => item.id === id);
       if (itemExisted && itemExisted.qty > 1) {

@@ -14,12 +14,6 @@ export const toggleCartSlice = createSlice({
     hideCart: (state) => {
       state.cartShown = false;
     },
-    // showCart(state) {
-    //   state.cartShown = true;
-    // },
-    // hideCart(state) {
-    //   state.cartShown = false;
-    // },
   },
 });
 

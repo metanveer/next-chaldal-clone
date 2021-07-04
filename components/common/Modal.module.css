@@ -8,7 +8,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modalPD {
+.modal {
   position: relative;
   top: 70px;
   left: calc(50vw - 980px / 2);
@@ -38,19 +38,6 @@
 
 .close:hover {
   color: #ed4054;
-}
-
-.modal {
-  position: relative;
-  top: 20vh;
-  left: calc(50vw - 380px / 2);
-  width: 380px;
-  background-color: white;
-  padding: 1rem;
-  border-radius: 3px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  z-index: 30;
-  animation: slide-down 300ms ease-out forwards;
 }
 
 .content {
