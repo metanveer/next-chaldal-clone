@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import css from "./CartItem.module.css";
 import { VscClose, VscChevronUp, VscChevronDown } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import {
   increaseQty,
   removeItem,
 } from "../../features/cartItems/cartItemsSlice";
+import useFocusElement from "../../hooks/useFocusElement";
 
 const CartItem = ({
   qty,
@@ -18,10 +19,10 @@ const CartItem = ({
   id,
 }) => {
   const dispatch = useDispatch();
+  const cartItemRef = useRef();
 
   const isDiscountAvailable =
     discPrice && discPrice > 0 && discPrice < regPrice;
-
   const totalDiscPrice = discPrice * qty;
   const totalRegPrice = regPrice * qty;
 
@@ -30,10 +31,10 @@ const CartItem = ({
     dispatch(decreaseQty(id));
   }
 
-  const focusClass = css.focus;
+  const focusedStyle = useFocusElement(cartItemRef, qty, css.focus);
 
   return (
-    <div className={`${css.cartItem} ${focusClass}`}>
+    <div ref={cartItemRef} className={`${css.cartItem} ${focusedStyle}`}>
       <div onClick={() => dispatch(removeItem(id))} className={css.btnClose}>
         <VscClose />
       </div>

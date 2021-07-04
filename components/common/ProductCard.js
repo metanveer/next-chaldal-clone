@@ -14,6 +14,7 @@ import {
   hideModal,
   showModal,
 } from "../../features/toggleModal/toggleModalSlice";
+import { showCart } from "../../features/toggleCart/toggleCartSlice";
 
 const ProductCard = ({
   cardType,
@@ -66,6 +67,7 @@ const ProductCard = ({
         id,
       })
     );
+    dispatch(showCart());
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FaShoppingBag } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
@@ -11,29 +11,12 @@ import css from "./Cart.module.css";
 import DeliveryPromo from "./DeliveryPromo";
 import CartItem from "./CartItem";
 import decimalWithCommas from "../../utils/decimal-with-commas";
-import useScrollToBottom from "../../hooks/useScrollToBottom";
 
 const Cart = ({ onClose }) => {
-  const bottomRef = useRef();
   const { items, totalItemsPriceDisc } = useSelector(
     (state) => state.cartItems
   );
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const cartLength = items.length;
-
-  // function scrollToBottom() {
-  //   bottomRef.current.scrollIntoView({
-  //     behavior: "smooth",
-  //     block: "start",
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [cartLength]);
-
-  useScrollToBottom(bottomRef, cartLength);
 
   return (
     <div className={css.cart}>
@@ -67,7 +50,6 @@ const Cart = ({ onClose }) => {
         {items.map((item) => (
           <CartItem key={item.id} {...item} />
         ))}
-        <div ref={bottomRef}></div>
       </div>
       <div className={css.discountCode}>
         <button
