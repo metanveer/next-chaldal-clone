@@ -34,6 +34,7 @@ const ProductCard = ({
 
   const [prevLocation, setPrevLocation] = useState(null);
   const [overlayShown, setOverlayShown] = useState(false);
+  const [clickedId, setClickedId] = useState(null);
 
   const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
   const isItemInCart = itemInCart !== undefined;
@@ -43,12 +44,14 @@ const ProductCard = ({
   const hor = cardType === "horizontal" ? css.productCardHor : null;
 
   function handleCloseModal() {
-    dispatch(hideModal());
+    // dispatch(hideModal());
+    setClickedId(null);
     history.pushState({}, null, `${prevLocation}`);
   }
 
   function handleShowModal() {
-    dispatch(showModal(id));
+    // dispatch(showModal(id));
+    setClickedId(id);
     setPrevLocation(window.location.pathname);
     history.pushState({}, null, `/${slug}`);
   }
@@ -171,7 +174,7 @@ const ProductCard = ({
         type="add-to-cart"
       />
 
-      {modalShown && modalId === id && (
+      {clickedId === id && (
         <Modal modalWidth={980} onCloseModal={handleCloseModal}>
           <ProductDetail
             id={id}
@@ -182,6 +185,7 @@ const ProductCard = ({
             discPrice={discPrice}
             regPrice={regPrice}
             description={description}
+            setClickedId={setClickedId}
           />
         </Modal>
       )}

@@ -24,6 +24,7 @@
   right: 5px;
   margin-top: -12px;
   cursor: pointer;
+  user-select: none;
   color: rgb(153, 152, 152);
 }
 
