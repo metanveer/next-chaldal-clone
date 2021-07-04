@@ -3,7 +3,7 @@
   --overall-width: 75px;
   margin: 7.5px;
   width: var(--overall-width);
-  height: 85px;
+  height: 89px;
   border: var(--border-test);
   position: relative;
   display: flex;
@@ -66,4 +66,10 @@
   justify-content: center;
   box-shadow: 0 0 16px -1px rgb(0 0 0 / 75%);
   border-radius: 8px;
+}
+
+.taka {
+  padding-right: 3px;
+  font-size: 14px;
+  margin-left: -3px;
 }

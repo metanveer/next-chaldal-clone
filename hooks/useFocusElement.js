@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useFocusElement(elementRef, param, activeStyle) {
+function useFocusElement(elementRef, param, activeStyle, timeOut) {
   const [focusedStyle, setFocusedStyle] = useState(null);
 
   function scrollToElement() {
@@ -14,7 +14,7 @@ function useFocusElement(elementRef, param, activeStyle) {
   useEffect(() => {
     elementRef && scrollToElement();
     setFocusedStyle(activeStyle);
-    let timer = setTimeout(() => setFocusedStyle(null), 800);
+    let timer = setTimeout(() => setFocusedStyle(null), timeOut);
     return () => {
       clearTimeout(timer);
     };

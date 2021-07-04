@@ -31,7 +31,7 @@ const CartItem = ({
     dispatch(decreaseQty(id));
   }
 
-  const focusedStyle = useFocusElement(cartItemRef, qty, css.focus);
+  const focusedStyle = useFocusElement(cartItemRef, qty, css.focus, 800);
 
   return (
     <div ref={cartItemRef} className={`${css.cartItem} ${focusedStyle}`}>

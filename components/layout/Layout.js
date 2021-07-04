@@ -28,7 +28,8 @@ const Layout = ({ children }) => {
   const focusedStyle = useFocusElement(
     undefined,
     totalItemsPriceDisc,
-    css.bounce
+    css.bounce,
+    900
   );
 
   return (
