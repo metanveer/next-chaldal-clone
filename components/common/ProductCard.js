@@ -10,10 +10,6 @@ import {
   decreaseQty,
   increaseQty,
 } from "../../features/cartItems/cartItemsSlice";
-import {
-  hideModal,
-  showModal,
-} from "../../features/toggleModal/toggleModalSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
 
 const ProductCard = ({
@@ -30,7 +26,6 @@ const ProductCard = ({
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
-  const { modalShown, modalId } = useSelector((state) => state.toggleModal);
 
   const [prevLocation, setPrevLocation] = useState(null);
   const [overlayShown, setOverlayShown] = useState(false);
@@ -44,13 +39,11 @@ const ProductCard = ({
   const hor = cardType === "horizontal" ? css.productCardHor : null;
 
   function handleCloseModal() {
-    // dispatch(hideModal());
     setClickedId(null);
     history.pushState({}, null, `${prevLocation}`);
   }
 
   function handleShowModal() {
-    // dispatch(showModal(id));
     setClickedId(id);
     setPrevLocation(window.location.pathname);
     history.pushState({}, null, `/${slug}`);
@@ -67,7 +60,7 @@ const ProductCard = ({
         id,
       })
     );
-    dispatch(showCart());
+    if (cartItems.length === 0) dispatch(showCart());
   }
 
   return (

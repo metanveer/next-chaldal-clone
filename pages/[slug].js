@@ -110,8 +110,12 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+  const categoriesPaths = categoriesWithSlug.map((item) => ({
+    params: { slug: item.slug },
+  }));
+
   return {
-    paths: [],
+    paths: categoriesPaths,
     fallback: true,
   };
 }

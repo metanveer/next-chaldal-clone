@@ -6,7 +6,6 @@ import {
   decreaseQty,
 } from "../../features/cartItems/cartItemsSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
-import { hideModal } from "../../features/toggleModal/toggleModalSlice";
 import Footer from "../common/Footer";
 import PicturesMagnify from "./PicturesMagnify";
 import css from "./ProductDetail.module.css";
@@ -45,6 +44,7 @@ const ProductDetail = ({
         id,
       })
     );
+    if (cartItems.length === 0) dispatch(showCart());
   }
 
   function handleBuyNow() {

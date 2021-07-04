@@ -4,14 +4,15 @@ function useFocusElement(elementRef, param, activeStyle) {
   const [focusedStyle, setFocusedStyle] = useState(null);
 
   function scrollToElement() {
-    elementRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
+    elementRef &&
+      elementRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
   }
 
   useEffect(() => {
-    scrollToElement();
+    elementRef && scrollToElement();
     setFocusedStyle(activeStyle);
     let timer = setTimeout(() => setFocusedStyle(null), 800);
     return () => {

@@ -10,6 +10,7 @@ import SideBar from "./SideBar";
 import css from "./Layout.module.css";
 import Cart from "../cart/Cart";
 import CartFloating from "../cart/CartFloating";
+import useFocusElement from "../../hooks/useFocusElement";
 
 const Layout = ({ children }) => {
   const [modalShown, setModalShown] = useState(false);
@@ -23,6 +24,12 @@ const Layout = ({ children }) => {
 
   const { width: scrollBarWidth } = useScrollbarSize();
   const cartWidth = 320;
+
+  const focusedStyle = useFocusElement(
+    undefined,
+    totalItemsPriceDisc,
+    css.bounce
+  );
 
   return (
     <div className={css.layout}>
@@ -44,7 +51,7 @@ const Layout = ({ children }) => {
 
       <div
         style={{ right: `${scrollBarWidth}px` }}
-        className={css.cartFloatingWrapper}
+        className={`${css.cartFloatingWrapper} ${focusedStyle}`}
       >
         <CartFloating
           onShowCart={() => dispatch(showCart())}
