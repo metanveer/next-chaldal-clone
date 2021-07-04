@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   modalShown: false,
-  modalName: "",
+  modalId: "",
 };
 
 export const toggleModalSlice = createSlice({
@@ -10,13 +10,13 @@ export const toggleModalSlice = createSlice({
   initialState,
   reducers: {
     showModal: (state, action) => {
-      const modalName = action.payload;
+      const modalId = action.payload;
       state.modalShown = true;
-      state.modalName = modalName;
+      state.modalId = modalId;
     },
     hideModal: (state) => {
       state.modalShown = false;
-      state.modalName = "";
+      state.modalId = "";
     },
   },
 });

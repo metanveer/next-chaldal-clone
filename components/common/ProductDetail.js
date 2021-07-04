@@ -59,8 +59,6 @@ const ProductDetail = ({
     );
     dispatch(hideModal());
     dispatch(showCart());
-    // close modal
-    // and focus the item in the cart
   }
 
   return (

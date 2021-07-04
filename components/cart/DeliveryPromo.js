@@ -17,7 +17,7 @@ const DeliveryPromo = ({
   promoAmount = 10,
 }) => {
   const dispatch = useDispatch();
-  const { modalShown, modalName } = useSelector((state) => state.toggleModal);
+  const { modalShown, modalId } = useSelector((state) => state.toggleModal);
 
   const isPromoApply = cartAmount >= minAmountForPromo;
   const amountNeeded = minAmountForPromo - cartAmount;
@@ -52,7 +52,7 @@ const DeliveryPromo = ({
           )}
         </div>
       </div>
-      {modalShown && modalName === "delivery-policy" && (
+      {modalShown && modalId === "delivery-policy" && (
         <Modal modalWidth={400} onCloseModal={() => dispatch(hideModal())}>
           <DeliveryPolicy />
         </Modal>

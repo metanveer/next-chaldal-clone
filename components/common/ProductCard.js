@@ -30,9 +30,8 @@ const ProductCard = ({
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
-  const { modalShown, modalName } = useSelector((state) => state.toggleModal);
+  const { modalShown, modalId } = useSelector((state) => state.toggleModal);
 
-  const [clickedId, setClickedId] = useState(null);
   const [prevLocation, setPrevLocation] = useState(null);
   const [overlayShown, setOverlayShown] = useState(false);
 
@@ -44,14 +43,12 @@ const ProductCard = ({
   const hor = cardType === "horizontal" ? css.productCardHor : null;
 
   function handleCloseModal() {
-    setClickedId(null);
     dispatch(hideModal());
     history.pushState({}, null, `${prevLocation}`);
   }
 
   function handleShowModal() {
-    setClickedId(id);
-    dispatch(showModal("product-detail"));
+    dispatch(showModal(id));
     setPrevLocation(window.location.pathname);
     history.pushState({}, null, `/${slug}`);
   }
@@ -174,7 +171,7 @@ const ProductCard = ({
         type="add-to-cart"
       />
 
-      {clickedId === id && modalShown && modalName === "product-detail" && (
+      {modalShown && modalId === id && (
         <Modal modalWidth={980} onCloseModal={handleCloseModal}>
           <ProductDetail
             id={id}
