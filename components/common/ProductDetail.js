@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToCart,
   decreaseQty,
-  increaseQty,
 } from "../../features/cartItems/cartItemsSlice";
+import { showCart } from "../../features/toggleCart/toggleCartSlice";
+import { hideModal } from "../../features/toggleModal/toggleModalSlice";
 import Footer from "../common/Footer";
 import PicturesMagnify from "./PicturesMagnify";
 import css from "./ProductDetail.module.css";
@@ -56,6 +57,8 @@ const ProductDetail = ({
         id,
       })
     );
+    dispatch(hideModal());
+    dispatch(showCart());
     // close modal
     // and focus the item in the cart
   }

@@ -30,8 +30,10 @@ const CartItem = ({
     dispatch(decreaseQty(id));
   }
 
+  const focusClass = css.focus;
+
   return (
-    <div className={css.cartItem}>
+    <div className={`${css.cartItem} ${focusClass}`}>
       <div onClick={() => dispatch(removeItem(id))} className={css.btnClose}>
         <VscClose />
       </div>

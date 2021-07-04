@@ -17,7 +17,7 @@ const DeliveryPromo = ({
   promoAmount = 10,
 }) => {
   const dispatch = useDispatch();
-  const { modalShown } = useSelector((state) => state.toggleModal);
+  const { modalShown, modalName } = useSelector((state) => state.toggleModal);
 
   const isPromoApply = cartAmount >= minAmountForPromo;
   const amountNeeded = minAmountForPromo - cartAmount;
@@ -26,7 +26,10 @@ const DeliveryPromo = ({
 
   return (
     <>
-      <div onClick={() => dispatch(showModal())} className={css.bar}>
+      <div
+        onClick={() => dispatch(showModal("delivery-policy"))}
+        className={css.bar}
+      >
         <div className={css.helpInfo}>
           <FaInfoCircle />
         </div>
@@ -49,7 +52,7 @@ const DeliveryPromo = ({
           )}
         </div>
       </div>
-      {modalShown && (
+      {modalShown && modalName === "delivery-policy" && (
         <Modal modalWidth={400} onCloseModal={() => dispatch(hideModal())}>
           <DeliveryPolicy />
         </Modal>

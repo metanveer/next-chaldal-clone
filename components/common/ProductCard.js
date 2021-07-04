@@ -10,6 +10,10 @@ import {
   decreaseQty,
   increaseQty,
 } from "../../features/cartItems/cartItemsSlice";
+import {
+  hideModal,
+  showModal,
+} from "../../features/toggleModal/toggleModalSlice";
 
 const ProductCard = ({
   cardType,
@@ -25,6 +29,7 @@ const ProductCard = ({
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
+  const { modalShown, modalName } = useSelector((state) => state.toggleModal);
 
   const [clickedId, setClickedId] = useState(null);
   const [prevLocation, setPrevLocation] = useState(null);
@@ -39,11 +44,13 @@ const ProductCard = ({
 
   function handleCloseModal() {
     setClickedId(null);
+    dispatch(hideModal());
     history.pushState({}, null, `${prevLocation}`);
   }
 
   function handleShowModal() {
     setClickedId(id);
+    dispatch(showModal("product-detail"));
     setPrevLocation(window.location.pathname);
     history.pushState({}, null, `/${slug}`);
   }
@@ -165,7 +172,7 @@ const ProductCard = ({
         type="add-to-cart"
       />
 
-      {clickedId === id && (
+      {clickedId === id && modalShown && modalName === "product-detail" && (
         <Modal modalWidth={980} onCloseModal={handleCloseModal}>
           <ProductDetail
             id={id}

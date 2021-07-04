@@ -2,17 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   modalShown: false,
+  modalName: "",
 };
 
 export const toggleModalSlice = createSlice({
   name: "toogle-modal",
   initialState,
   reducers: {
-    showModal: (state) => {
+    showModal: (state, action) => {
+      const modalName = action.payload;
       state.modalShown = true;
+      state.modalName = modalName;
     },
     hideModal: (state) => {
       state.modalShown = false;
+      state.modalName = "";
     },
   },
 });

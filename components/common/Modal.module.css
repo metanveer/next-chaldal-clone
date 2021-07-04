@@ -10,7 +10,7 @@
 
 .modal {
   position: relative;
-  top: 70px;
+  top: 5vh;
   left: calc(50vw - 980px / 2);
   width: 980px;
   background-color: white;
@@ -42,7 +42,7 @@
 
 .content {
   padding-bottom: 4px;
-  margin-bottom: 20vh;
+  margin-bottom: 10vh;
 }
 
 @media (max-width: 768px) {
