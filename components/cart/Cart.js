@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Transition } from "react-transition-group";
 import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingBag } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
@@ -38,11 +39,11 @@ const Cart = ({ onClose }) => {
   useEffect(() => {
     if (!cartShown && !isPromoApplied) {
       setNotifyPromo(true);
-      const timer = setTimeout(() => setNotifyPromo(false), 4000);
-      return () => {
-        clearTimeout(timer);
-      };
     }
+    const timer = setTimeout(() => setNotifyPromo(false), 3000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [cartShown, isPromoApplied, totalItemsPriceDisc]);
 
   const handleShowModal = () => {
@@ -52,22 +53,40 @@ const Cart = ({ onClose }) => {
     dispatch(hideModal());
   };
 
+  const duration = 500;
+
+  const defaultStyle = {
+    transition: `opacity ${duration}ms ease`,
+    opacity: 0,
+    right: `${scrollWidth}px`,
+  };
+
+  const transitionStyles = {
+    entering: { opacity: 1 },
+    entered: { opacity: 1 },
+    exiting: { opacity: 0 },
+    exited: { opacity: 0 },
+  };
+
   return (
     <>
-      {notifyPromo && (
-        <div
-          style={{ right: `${scrollWidth}px` }}
-          className={css.promoNotifyWrapper}
-        >
-          <DeliveryPromo
-            minAmountForPromo={minAmountForPromo}
-            cartAmount={totalItemsPriceDisc}
-            deliveryCharge={30}
-            promoAmount={15}
-            onShowModal={handleShowModal}
-          />
-        </div>
-      )}
+      <Transition in={notifyPromo} timeout={duration}>
+        {(state) => (
+          <div
+            style={{ ...defaultStyle, ...transitionStyles[state] }}
+            className={css.promoNotifyWrapper}
+          >
+            <DeliveryPromo
+              minAmountForPromo={minAmountForPromo}
+              cartAmount={totalItemsPriceDisc}
+              deliveryCharge={30}
+              promoAmount={15}
+              onShowModal={handleShowModal}
+            />
+          </div>
+        )}
+      </Transition>
+
       <div className={css.cart}>
         <div onClick={onClose} className={css.btnCollapse} />
         <header className={css.cartHeader}>
