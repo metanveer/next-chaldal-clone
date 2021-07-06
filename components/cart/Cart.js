@@ -59,7 +59,7 @@ const Cart = ({ onClose }) => {
   const duration = 500;
 
   const defaultStyle = {
-    transition: `opacity ${duration}ms ease`,
+    transition: `opacity ${duration}ms ease-in-out`,
     opacity: 0,
     right: `${scrollWidth}px`,
   };
@@ -69,6 +69,18 @@ const Cart = ({ onClose }) => {
     entered: { opacity: 1 },
     exiting: { opacity: 0 },
     exited: { opacity: 0 },
+  };
+
+  const formStyle = {
+    height: "0",
+    transition: "all .2s ease",
+  };
+
+  const transForm = {
+    entering: { height: 0 },
+    entered: { height: "50px" },
+    exiting: { height: "50px" },
+    exited: { height: 0 },
   };
 
   return (
@@ -153,17 +165,27 @@ const Cart = ({ onClose }) => {
             <span>Have a special code?</span>
           </button>
           <div className={css.formContainer}>
-            {isExpanded && (
-              <form className={css.form}>
-                <input
-                  className={css.input}
-                  type="text"
-                  placeholder="Special Code"
-                  required
-                />
-                <button className={css.btnGo}>Go</button>
-              </form>
-            )}
+            <Transition in={isExpanded} timeout={200}>
+              {(state) => (
+                <div
+                  style={{
+                    ...formStyle,
+                    ...transForm[state],
+                  }}
+                >
+                  <form className={css.form}>
+                    <input
+                      className={css.input}
+                      type="text"
+                      placeholder="Special Code"
+                      required
+                    />
+                    <button className={css.btnGo}>Go</button>
+                  </form>
+                </div>
+              )}
+            </Transition>
+
             {/* <p>Notify: The code is not valid</p> */}
           </div>
         </div>
