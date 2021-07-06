@@ -17,17 +17,6 @@ function getItemsTotalPrice(itemsArray, desiredProperty) {
   }
 }
 
-// function saveItemsToLs(state) {
-//   if (typeof window !== "undefined") {
-//     localStorage.setItem("cart", JSON.stringify(state));
-//   }
-// }
-
-// const cartState =
-//   typeof window !== "undefined" && localStorage.getItem("cart")
-//     ? JSON.parse(localStorage.getItem("cart"))
-//     : {};
-
 const initialState = {
   items: [],
   totalItemsPriceDisc: 0,
@@ -36,7 +25,7 @@ const initialState = {
 };
 
 const cartItemsSlice = createSlice({
-  name: "cart-items",
+  name: "cartItems",
   initialState,
   reducers: {
     addItemToCart: (state, action) => {
@@ -72,21 +61,11 @@ const cartItemsSlice = createSlice({
 
       state.msg = "item-removed";
     },
-    increaseQty: (state, action) => {
-      const id = action.payload;
-      const itemExisted = state.items.find((item) => item.id === id);
-      if (itemExisted) {
-        itemExisted.qty++;
-        state.msg = "qty-increased";
-      } else {
-        state.msg = "item-not-in-cart";
-      }
-      state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
-      state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
-    },
+
     decreaseQty: (state, action) => {
       const id = action.payload;
       const itemExisted = state.items.find((item) => item.id === id);
+      itemExisted.hasVisited = false;
       if (itemExisted && itemExisted.qty > 1) {
         itemExisted.qty--;
         state.msg = "qty-decreased";
@@ -97,10 +76,26 @@ const cartItemsSlice = createSlice({
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
     },
+
+    setItemSeenStatus: (state, action) => {
+      const status = action.payload;
+      const itemInCart = state.items.find((item) => item.id === status.id);
+      if (itemInCart) {
+        itemInCart.hasVisited = status.cartStatus;
+      }
+    },
+    setAllItemsSeen: (state) => {
+      state.items = state.items.map((item) => ({ ...item, hasVisited: true }));
+    },
   },
 });
 
-export const { addItemToCart, removeItem, decreaseQty, increaseQty } =
-  cartItemsSlice.actions;
+export const {
+  addItemToCart,
+  removeItem,
+  decreaseQty,
+  setItemSeenStatus,
+  setAllItemsSeen,
+} = cartItemsSlice.actions;
 
 export default cartItemsSlice.reducer;

@@ -1,13 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import css from "./CartItem.module.css";
 import { VscClose, VscChevronUp, VscChevronDown } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addItemToCart,
   decreaseQty,
-  increaseQty,
   removeItem,
+  setAllItemsSeen,
 } from "../../features/cartItems/cartItemsSlice";
-import useFocusElement from "../../hooks/useFocusElement";
 
 const CartItem = ({
   qty,
@@ -17,29 +17,72 @@ const CartItem = ({
   discPrice,
   regPrice,
   id,
+  hasVisited,
 }) => {
   const dispatch = useDispatch();
+  const { cartShown } = useSelector((state) => state.toggleCart);
+
   const cartItemRef = useRef();
+  const [focused, setFocused] = useState(false);
 
   const isDiscountAvailable =
     discPrice && discPrice > 0 && discPrice < regPrice;
   const totalDiscPrice = discPrice * qty;
   const totalRegPrice = regPrice * qty;
 
-  function handleDecreaseQty() {
-    if (qty === 1) return;
-    dispatch(decreaseQty(id));
+  useEffect(() => {
+    scrollToElement(cartItemRef);
+    setFocused(true);
+    let timer = setTimeout(() => setFocused(false), 900);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [qty]);
+
+  useEffect(() => {
+    !hasVisited && scrollToElement(cartItemRef);
+    if (cartShown) dispatch(setAllItemsSeen());
+  }, [cartShown]);
+
+  function scrollToElement(elementRef) {
+    elementRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   }
 
-  const focusedStyle = useFocusElement(cartItemRef, qty, css.focus, 800);
+  const handleAddToCart = () => {
+    dispatch(
+      addItemToCart({
+        packSize,
+        image,
+        itemName,
+        discPrice,
+        regPrice,
+        id,
+        hasVisited: cartShown,
+      })
+    );
+    dispatch(setAllItemsSeen());
+  };
+
+  const handleRemoveItem = () => dispatch(removeItem(id));
+
+  const handleDecreaseQty = () => {
+    if (qty === 1) return;
+    dispatch(decreaseQty(id));
+    dispatch(setAllItemsSeen());
+  };
+
+  const focusedStyle = focused ? css.focus : !hasVisited ? css.focus : null;
 
   return (
     <div ref={cartItemRef} className={`${css.cartItem} ${focusedStyle}`}>
-      <div onClick={() => dispatch(removeItem(id))} className={css.btnClose}>
+      <div onClick={handleRemoveItem} className={css.btnClose}>
         <VscClose />
       </div>
       <div className={css.qtySec}>
-        <div onClick={() => dispatch(increaseQty(id))} className={css.arrow}>
+        <div onClick={handleAddToCart} className={css.arrow}>
           <VscChevronUp />
         </div>
         <div className={css.qty}>{qty} </div>

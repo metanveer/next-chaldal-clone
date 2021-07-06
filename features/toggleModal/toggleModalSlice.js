@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const toggleModalSlice = createSlice({
-  name: "toogle-modal",
+  name: "toogleModal",
   initialState,
   reducers: {
     showModal: (state, action) => {

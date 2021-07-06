@@ -1,20 +1,13 @@
 import React from "react";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
-import { useDispatch } from "react-redux";
-import {
-  decreaseQty,
-  increaseQty,
-} from "../../features/cartItems/cartItemsSlice";
 import css from "./Button.module.css";
 
-const Button = ({ type, onAddItemToCart, itemInCart }) => {
-  const dispatch = useDispatch();
-
-  if (type === "add-to-cart") {
+const Button = ({ btnType, onIncreaseQty, onDecreaseQty, itemInCart }) => {
+  if (btnType === "add-to-cart") {
     return (
       <>
         {!itemInCart && (
-          <button onClick={onAddItemToCart} className={css.buttonAddToCart}>
+          <button onClick={onIncreaseQty} className={css.buttonAddToCart}>
             <div className={css.buttonIcon}>
               <img src="/categories/icons/horse.svg" alt="Home Appliances" />
             </div>
@@ -24,16 +17,16 @@ const Button = ({ type, onAddItemToCart, itemInCart }) => {
         {itemInCart && (
           <button className={css.buttonAddToCartInBag}>
             <div
-              onClick={() => dispatch(decreaseQty(itemInCart.id))}
+              onClick={onDecreaseQty}
               className={`${css.btn} ${css.btnMinus}`}
             >
               <HiOutlineMinus />
             </div>
-            <div onClick={onAddItemToCart} className={css.buttonText}>
+            <div onClick={onIncreaseQty} className={css.buttonText}>
               {itemInCart.qty} in bag
             </div>
             <div
-              onClick={() => dispatch(increaseQty(itemInCart.id))}
+              onClick={onIncreaseQty}
               className={`${css.btn} ${css.btnPlus}`}
             >
               <HiOutlinePlus />

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToCart,
   decreaseQty,
-  increaseQty,
+  setItemSeenStatus,
 } from "../../features/cartItems/cartItemsSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
 
@@ -26,6 +26,7 @@ const ProductCard = ({
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
+  const { cartShown } = useSelector((state) => state.toggleCart);
 
   const [prevLocation, setPrevLocation] = useState(null);
   const [overlayShown, setOverlayShown] = useState(false);
@@ -61,6 +62,12 @@ const ProductCard = ({
       })
     );
     if (cartItems.length === 0) dispatch(showCart());
+    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+  }
+
+  function handleDecreaseQty() {
+    dispatch(decreaseQty(itemInCart.id));
+    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
   }
 
   return (
@@ -110,7 +117,7 @@ const ProductCard = ({
               {isItemInCart && (
                 <>
                   <div
-                    onClick={() => dispatch(increaseQty(itemInCart.id))}
+                    onClick={handleAddItemToCart}
                     className={`${css.overlayTextInBag} ${
                       hor && css.overlayTextInBagHor
                     }`}
@@ -134,7 +141,7 @@ const ProductCard = ({
                     <div className={css.inBag}>in bag</div>
                   </div>
                   <div
-                    onClick={() => dispatch(decreaseQty(itemInCart.id))}
+                    onClick={handleDecreaseQty}
                     className={`${css.qtyBtn} ${css.btnLeft} ${
                       hor && css.qtyBtnHor
                     }`}
@@ -142,7 +149,7 @@ const ProductCard = ({
                     <FiMinusCircle />
                   </div>
                   <div
-                    onClick={() => dispatch(increaseQty(itemInCart.id))}
+                    onClick={handleAddItemToCart}
                     className={`${css.qtyBtn} ${css.btnRight} ${
                       hor && css.qtyBtnHor
                     }`}
@@ -162,9 +169,10 @@ const ProductCard = ({
         )}
       </div>
       <Button
-        onAddItemToCart={handleAddItemToCart}
+        btnType="add-to-cart"
+        onIncreaseQty={handleAddItemToCart}
+        onDecreaseQty={handleDecreaseQty}
         itemInCart={itemInCart}
-        type="add-to-cart"
       />
 
       {clickedId === id && (

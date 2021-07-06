@@ -8,10 +8,11 @@
   align-items: stretch;
   border-top: 1px solid #ffffff !important;
   border-bottom: 1px solid #eee;
-  transition: all 0.3s ease;
+  transition: all 1.2s ease-in-out;
 }
 
 .focus {
+  transition: all 0.1s ease-in-out;
   background-color: #d9effc;
   border-bottom: 1px solid #1e89c1 !important;
   border-top: 1px solid #1e89c1 !important;

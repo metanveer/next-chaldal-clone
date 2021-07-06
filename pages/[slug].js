@@ -25,9 +25,9 @@ function SlugDetailsPage({
   const product = JSON.parse(productFromDb);
   const products = JSON.parse(productsFromDb);
 
-  console.log("product", product);
-  console.log("category", category);
-  console.log("productsClient", products);
+  // console.log("product", product);
+  // console.log("category", category);
+  // console.log("productsClient", products);
 
   const productDetailAvailable = product && Object.keys(product).length > 0;
   const subCategoryiesAvailable = category && Object.keys(category).length > 0;
@@ -96,8 +96,8 @@ export async function getStaticProps(context) {
   const currentProduct = JSON.stringify(product);
   const currentProducts = JSON.stringify(products);
 
-  console.log("curCat", currentCategory);
-  console.log("productsfromDb", currentProducts);
+  // console.log("curCat", currentCategory);
+  // console.log("productsfromDb", currentProducts);
 
   return {
     props: {

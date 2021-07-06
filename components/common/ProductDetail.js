@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToCart,
   decreaseQty,
+  setItemSeenStatus,
 } from "../../features/cartItems/cartItemsSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
 import Footer from "../common/Footer";
@@ -27,6 +28,7 @@ const ProductDetail = ({
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
+  const { cartShown } = useSelector((state) => state.toggleCart);
 
   const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
   const isItemInCart = itemInCart !== undefined;
@@ -45,6 +47,7 @@ const ProductDetail = ({
       })
     );
     if (cartItems.length === 0) dispatch(showCart());
+    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
   }
 
   function handleBuyNow() {
@@ -59,7 +62,13 @@ const ProductDetail = ({
       })
     );
     setClickedId(null);
-    dispatch(showCart());
+    cartItems.length === 0 && dispatch(showCart());
+    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+  }
+
+  function handleDecreaseQty() {
+    dispatch(decreaseQty(id));
+    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
   }
 
   return (
@@ -84,10 +93,7 @@ const ProductDetail = ({
           </div>
           <div className={css.changeQtySec}>
             <div className={css.changeQtyWrapper}>
-              <button
-                onClick={() => dispatch(decreaseQty(id))}
-                className={css.changeQtyBtn}
-              >
+              <button onClick={handleDecreaseQty} className={css.changeQtyBtn}>
                 <AiOutlineMinus />
               </button>
               <div className={css.changeQtyTextContainer}>

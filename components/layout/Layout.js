@@ -10,7 +10,7 @@ import SideBar from "./SideBar";
 import css from "./Layout.module.css";
 import Cart from "../cart/Cart";
 import CartFloating from "../cart/CartFloating";
-import useFocusElement from "../../hooks/useFocusElement";
+import useBounceAnimation from "../../hooks/useBounceAnimation";
 
 const Layout = ({ children }) => {
   const [modalShown, setModalShown] = useState(false);
@@ -25,12 +25,15 @@ const Layout = ({ children }) => {
   const { width: scrollBarWidth } = useScrollbarSize();
   const cartWidth = 320;
 
-  const focusedStyle = useFocusElement(
-    undefined,
-    totalItemsPriceDisc,
-    css.bounce,
-    900
-  );
+  const bounceStyle = useBounceAnimation(totalItemsPriceDisc, css.bounce, 900);
+
+  function handleHideCart() {
+    dispatch(hideCart(items));
+  }
+
+  function handleShowCart() {
+    dispatch(showCart(items));
+  }
 
   return (
     <div className={css.layout}>
@@ -52,10 +55,10 @@ const Layout = ({ children }) => {
 
       <div
         style={{ right: `${scrollBarWidth}px` }}
-        className={`${css.cartFloatingWrapper} ${focusedStyle}`}
+        className={`${css.cartFloatingWrapper} ${bounceStyle}`}
       >
         <CartFloating
-          onShowCart={() => dispatch(showCart())}
+          onShowCart={handleShowCart}
           cartItemsCount={items.length}
           cartAmount={totalItemsPriceDisc}
         />
@@ -70,7 +73,7 @@ const Layout = ({ children }) => {
         }}
         className={css.cartWrapper}
       >
-        <Cart onClose={() => dispatch(hideCart())} />
+        <Cart onClose={handleHideCart} />
       </div>
       <main className={sidebarShown ? css.main : css.mainExtended}>
         <div className={css.pageWrapper}>
