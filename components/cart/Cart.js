@@ -20,6 +20,9 @@ import {
   hideModal,
 } from "../../features/toggleModal/toggleModalSlice";
 
+const emptyCart =
+  "https://chaldn.com/asset/Egg.Grocery.Fabric/Egg.Grocery.Web1/1.5.0+Release-2210/Default/components/header/ShoppingCart/images/emptyShoppingBag.png?q=low&webp=1&alpha=1";
+
 const Cart = ({ onClose }) => {
   const dispatch = useDispatch();
   const { width: scrollWidth } = useScrollbarSize();
@@ -105,16 +108,27 @@ const Cart = ({ onClose }) => {
           promoAmount={15}
           onShowModal={handleShowModal}
         />
+
         <div className={css.cartItemsContainer}>
-          <div className={css.deliveryType}>
-            <span className={css.deliveryTypeIconContainer}>
-              <img
-                className={css.deliveryTypeIcon}
-                src="/categories/icons/horse.svg"
-              />
-            </span>
-            <span className={css.text}>Express Delivery</span>
-          </div>
+          {items.length > 0 && (
+            <div className={css.deliveryType}>
+              <span className={css.deliveryTypeIconContainer}>
+                <img
+                  className={css.deliveryTypeIcon}
+                  src="/categories/icons/horse.svg"
+                />
+              </span>
+              <span className={css.text}>Express Delivery</span>
+            </div>
+          )}
+          {items.length === 0 && (
+            <div className={css.emptyCartContainer}>
+              <img className={css.emptyCart} src={emptyCart} />
+              <div className={css.emptyCartText}>
+                Your shopping bag is empty. Start shopping
+              </div>
+            </div>
+          )}
 
           {items.map((item) => (
             <CartItem key={item.id} {...item} />
