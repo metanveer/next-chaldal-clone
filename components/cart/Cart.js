@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { FaShoppingBag } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 import {
@@ -81,7 +81,7 @@ const Cart = ({ onClose }) => {
               <button className={css.btnGo}>Go</button>
             </form>
           )}
-          {/* <p>The code is not valid</p> */}
+          {/* <p>Notify: The code is not valid</p> */}
         </div>
       </div>
       <div className={css.placeOrder}>

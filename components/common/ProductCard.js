@@ -11,6 +11,7 @@ import {
   setItemSeenStatus,
 } from "../../features/cartItems/cartItemsSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
+import decimalWithCommas from "../../utils/decimal-with-commas";
 
 const ProductCard = ({
   cardType,
@@ -127,7 +128,9 @@ const ProductCard = ({
                         hor && css.totalPriceInCartHor
                       }`}
                     >
-                      {`৳ ${itemInCart.qty * itemInCart.discPrice}`}
+                      {`৳ ${decimalWithCommas(
+                        itemInCart.qty * itemInCart.discPrice
+                      )}`}
                     </div>
 
                     <div
