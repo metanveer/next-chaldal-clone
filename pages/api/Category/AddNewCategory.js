@@ -15,5 +15,7 @@ export default async function handler(req, res) {
         .status(400)
         .json({ success: false, message: "failed to add new category" });
     }
+  } else {
+    res.status(400).json({ success: false, message: "Invalid request method" });
   }
 }
