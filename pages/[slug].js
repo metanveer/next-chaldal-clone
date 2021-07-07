@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import { useRouter } from "next/router";
 
-import categoriesWithSlug from "../data/categoriesWithSlug";
-
 import Header from "../components/common/Header";
 import Children from "../components/slug-page/Children";
 import ProductDetail from "../components/common/ProductDetail";
@@ -10,11 +8,13 @@ import Loader from "../components/common/Loader";
 
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
+import Category from "../models/categoryModel";
 
 function SlugDetailsPage({
-  category,
+  category: categoryFromDb,
   products: productsFromDb,
   product: productFromDb,
+  categories: categoriesFromDb,
 }) {
   const router = useRouter();
 
@@ -24,14 +24,16 @@ function SlugDetailsPage({
 
   const product = JSON.parse(productFromDb);
   const products = JSON.parse(productsFromDb);
+  const category = JSON.parse(categoryFromDb);
+  const categories = JSON.parse(categoriesFromDb);
 
   // console.log("product", product);
   // console.log("category", category);
   // console.log("productsClient", products);
 
   const productDetailAvailable = product && Object.keys(product).length > 0;
-  const subCategoryiesAvailable = category && Object.keys(category).length > 0;
-  const nothingAvailable = !productDetailAvailable && !subCategoryiesAvailable;
+  const subCategoriesAvailable = category && Object.keys(category).length > 0;
+  const nothingAvailable = !productDetailAvailable && !subCategoriesAvailable;
 
   if (productDetailAvailable) {
     return (
@@ -51,16 +53,16 @@ function SlugDetailsPage({
     );
   }
 
-  if (subCategoryiesAvailable) {
+  if (subCategoriesAvailable) {
     return (
       <>
-        <Header category={category} allCategories={categoriesWithSlug} />
+        <Header category={category} allCategories={categories} />
         {category.ContainsProducts ? (
           <Children type="products" products={products} />
         ) : (
           <Children
             type="categories"
-            categories={categoriesWithSlug}
+            categories={categories}
             currentCategory={category}
           />
         )}
@@ -83,34 +85,41 @@ export async function getStaticProps(context) {
   const { params } = context;
   const { slug } = params;
 
-  const currentCategory =
-    categoriesWithSlug.find((item) => item.slug === slug) || {};
-
   await dbConnect();
 
-  const product = await Product.findOne({ Slug: slug }).exec();
-  const products = await Product.find({
-    AllCategoryIds: currentCategory.Id,
-  });
+  const categories = await Category.find({});
+  const categoriesToJson = JSON.stringify(categories);
 
-  const currentProduct = JSON.stringify(product);
-  const currentProducts = JSON.stringify(products);
+  const category = categories.find((item) => item.slug === slug) || {};
+  const categoryToJson = JSON.stringify(category);
+
+  const product = await Product.findOne({ Slug: slug }).exec();
+  const productToJson = JSON.stringify(product);
+
+  const products = await Product.find({
+    AllCategoryIds: category.Id,
+  });
+  const productsToJson = JSON.stringify(products);
 
   // console.log("curCat", currentCategory);
   // console.log("productsfromDb", currentProducts);
 
   return {
     props: {
-      product: currentProduct,
-      category: currentCategory,
-      products: currentProducts,
+      product: productToJson,
+      category: categoryToJson,
+      products: productsToJson,
+      categories: categoriesToJson,
     },
     revalidate: 1000,
   };
 }
 
 export async function getStaticPaths() {
-  const categoriesPaths = categoriesWithSlug.map((item) => ({
+  await dbConnect();
+
+  const categories = await Category.find({});
+  const categoriesPaths = categories.map((item) => ({
     params: { slug: item.slug },
   }));
 
