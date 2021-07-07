@@ -48,10 +48,15 @@
   width: 100%;
 }
 
-.imageContainer {
+.imagesContainer {
   max-height: 215px;
   min-height: 215px;
-  max-width: 700px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.imageWrapper {
+  flex: 0 1 700px;
 }
 .carouselContainer {
   max-height: 215px;
@@ -60,6 +65,7 @@
 
 .bannerImage {
   max-width: 100%;
+  max-height: 215px;
 }
 
 .categoryHeaderContainer {
