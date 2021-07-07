@@ -9,6 +9,7 @@
   top: 0;
   left: 0;
   transition: all 1.5s ease;
+  max-width: 700px;
 }
 .imageActive {
   opacity: 1;

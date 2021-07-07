@@ -77,22 +77,20 @@ const Header = ({ type, category, allCategories }) => {
             </div>
           </div>
         )}
-        <div className={css.imagesContainer}>
-          {category.Banners.length > 0 &&
-            category.Banners.length <= 2 &&
-            category.Banners.map((item, index) => (
-              <div className={css.imageWrapper}>
-                <img
-                  key={index}
-                  className={css.bannerImage}
-                  src={item.BannerUrl}
-                />
+        {category.Name !== "Food" && (
+          <div className={css.imagesContainer}>
+            {category.Banners.length > 0 &&
+              category.Banners.length <= 2 &&
+              category.Banners.map((item, index) => (
+                <div key={index} className={css.imageWrapper}>
+                  <img className={css.bannerImage} src={item.BannerUrl} />
+                </div>
+              ))}
+            {category.Banners.length > 2 && (
+              <div className={css.carouselContainer}>
+                <FadeCarousel images={category.Banners} />
               </div>
-            ))}
-        </div>
-        {category.Banners.length > 2 && (
-          <div className={css.carouselContainer}>
-            <FadeCarousel images={category.Banners} />
+            )}
           </div>
         )}
       </div>
