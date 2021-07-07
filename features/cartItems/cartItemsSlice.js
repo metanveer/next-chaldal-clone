@@ -21,7 +21,7 @@ const initialState = {
   items: [],
   totalItemsPriceDisc: 0,
   totalItemsPriceReg: 0,
-  msg: "",
+  msg: "Initial state",
 };
 
 const cartItemsSlice = createSlice({
@@ -43,13 +43,13 @@ const cartItemsSlice = createSlice({
           discPrice: itemToAdd.discPrice,
           regPrice: itemToAdd.regPrice,
         });
+        state.msg = "Item added";
       } else {
         itemExistsInCart.qty++;
+        state.msg = "Quantity increased";
       }
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
-
-      state.msg = "item-added";
     },
     removeItem: (state, action) => {
       const id = action.payload;
@@ -59,7 +59,7 @@ const cartItemsSlice = createSlice({
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
 
-      state.msg = "item-removed";
+      state.msg = "Item removed";
     },
 
     decreaseQty: (state, action) => {
@@ -68,10 +68,10 @@ const cartItemsSlice = createSlice({
       itemExisted.hasVisited = false;
       if (itemExisted && itemExisted.qty > 1) {
         itemExisted.qty--;
-        state.msg = "qty-decreased";
+        state.msg = "Quantity decreased";
       } else {
         state.items = state.items.filter((item) => item.id !== id);
-        state.msg = "item-removed";
+        state.msg = "Item removed";
       }
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
@@ -83,9 +83,11 @@ const cartItemsSlice = createSlice({
       if (itemInCart) {
         itemInCart.hasVisited = status.cartStatus;
       }
+      state.msg = `Items being watched`;
     },
     setAllItemsSeen: (state) => {
       state.items = state.items.map((item) => ({ ...item, hasVisited: true }));
+      state.msg = `All items seen`;
     },
   },
 });

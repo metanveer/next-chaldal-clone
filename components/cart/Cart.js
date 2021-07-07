@@ -27,7 +27,7 @@ const Cart = ({ onClose }) => {
   const dispatch = useDispatch();
   const { width: scrollWidth } = useScrollbarSize();
 
-  const { items, totalItemsPriceDisc } = useSelector(
+  const { items, totalItemsPriceDisc, msg } = useSelector(
     (state) => state.cartItems
   );
   const { cartShown } = useSelector((state) => state.toggleCart);
@@ -40,14 +40,14 @@ const Cart = ({ onClose }) => {
   const isPromoApplied = totalItemsPriceDisc >= minAmountForPromo;
 
   useEffect(() => {
-    if (!cartShown && !isPromoApplied) {
+    if (!cartShown && !isPromoApplied && msg !== "Initial state") {
       setNotifyPromo(true);
     }
     const timer = setTimeout(() => setNotifyPromo(false), 3000);
     return () => {
       clearTimeout(timer);
     };
-  }, [cartShown, isPromoApplied, totalItemsPriceDisc]);
+  }, [cartShown, isPromoApplied, totalItemsPriceDisc, msg]);
 
   const handleShowModal = () => {
     dispatch(showModal("delivery-policy"));
@@ -68,7 +68,7 @@ const Cart = ({ onClose }) => {
     entering: { opacity: 1 },
     entered: { opacity: 1 },
     exiting: { opacity: 0 },
-    exited: { opacity: 0 },
+    exited: { display: "none" },
   };
 
   const formStyle = {
