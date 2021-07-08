@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const toggleCartSlice = createSlice({
-  name: "toogleCart",
+  name: "toggleCart",
   initialState,
   reducers: {
     showCart: (state) => {
@@ -19,4 +19,4 @@ export const toggleCartSlice = createSlice({
 
 export const { showCart, hideCart } = toggleCartSlice.actions;
 
-export default toggleCartSlice.reducer;
+export default toggleCartSlice;

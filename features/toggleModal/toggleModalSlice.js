@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const toggleModalSlice = createSlice({
-  name: "toogleModal",
+  name: "toggleModal",
   initialState,
   reducers: {
     showModal: (state, action) => {
@@ -23,4 +23,4 @@ export const toggleModalSlice = createSlice({
 
 export const { showModal, hideModal } = toggleModalSlice.actions;
 
-export default toggleModalSlice.reducer;
+export default toggleModalSlice;
