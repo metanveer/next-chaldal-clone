@@ -9,6 +9,8 @@ import Loader from "../components/common/Loader";
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
+import { wrapper } from "../store";
+import { setCategoriesFromDB } from "../features/categorySlice/categoryActions";
 
 function SlugDetailsPage({
   category: categoryFromDb,
@@ -81,39 +83,76 @@ function SlugDetailsPage({
   );
 }
 
-export async function getStaticProps(context) {
-  const { params } = context;
-  const { slug } = params;
+export const getStaticProps = wrapper.getStaticProps(
+  (store) =>
+    async ({ params }) => {
+      const { slug } = params;
 
-  await dbConnect();
+      await dbConnect();
 
-  const categories = await Category.find({});
-  const categoriesToJson = JSON.stringify(categories);
+      const categories = await Category.find({});
+      const categoriesToJson = JSON.stringify(categories);
+      await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
 
-  const category = categories.find((item) => item.slug === slug) || {};
-  const categoryToJson = JSON.stringify(category);
+      const category = categories.find((item) => item.slug === slug) || {};
+      const categoryToJson = JSON.stringify(category);
 
-  const product = await Product.findOne({ Slug: slug }).exec();
-  const productToJson = JSON.stringify(product);
+      const product = await Product.findOne({ Slug: slug }).exec();
+      const productToJson = JSON.stringify(product);
 
-  const products = await Product.find({
-    AllCategoryIds: category.Id,
-  });
-  const productsToJson = JSON.stringify(products);
+      const products = await Product.find({
+        AllCategoryIds: category.Id,
+      });
+      const productsToJson = JSON.stringify(products);
 
-  // console.log("curCat", currentCategory);
-  // console.log("productsfromDb", currentProducts);
+      // console.log("curCat", currentCategory);
+      // console.log("productsfromDb", currentProducts);
 
-  return {
-    props: {
-      product: productToJson,
-      category: categoryToJson,
-      products: productsToJson,
-      categories: categoriesToJson,
-    },
-    revalidate: 1000,
-  };
-}
+      return {
+        props: {
+          product: productToJson,
+          category: categoryToJson,
+          products: productsToJson,
+          categories: categoriesToJson,
+        },
+        revalidate: 1000,
+      };
+    }
+);
+
+// export async function getStaticProps(context) {
+//   const { params } = context;
+//   const { slug } = params;
+
+//   await dbConnect();
+
+//   const categories = await Category.find({});
+//   const categoriesToJson = JSON.stringify(categories);
+
+//   const category = categories.find((item) => item.slug === slug) || {};
+//   const categoryToJson = JSON.stringify(category);
+
+//   const product = await Product.findOne({ Slug: slug }).exec();
+//   const productToJson = JSON.stringify(product);
+
+//   const products = await Product.find({
+//     AllCategoryIds: category.Id,
+//   });
+//   const productsToJson = JSON.stringify(products);
+
+//   // console.log("curCat", currentCategory);
+//   // console.log("productsfromDb", currentProducts);
+
+//   return {
+//     props: {
+//       product: productToJson,
+//       category: categoryToJson,
+//       products: productsToJson,
+//       categories: categoriesToJson,
+//     },
+//     revalidate: 1000,
+//   };
+// }
 
 export async function getStaticPaths() {
   await dbConnect();

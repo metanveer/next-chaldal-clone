@@ -9,6 +9,10 @@ import Corporate from "../components/home-page/Corporate";
 import GetApp from "../components/home-page/GetApp";
 import Stats from "../components/home-page/Stats";
 import Footer from "../components/common/Footer";
+import dbConnect from "../db/dbConnect";
+import categoryModel from "../models/categoryModel";
+import { wrapper } from "../store";
+import { setCategoriesFromDB } from "../features/categorySlice/categoryActions";
 
 export default function HomePage() {
   return (
@@ -27,3 +31,11 @@ export default function HomePage() {
     </>
   );
 }
+
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  await dbConnect();
+
+  const categories = await categoryModel.find({});
+  const categoriesToJson = JSON.stringify(categories);
+  await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
+});

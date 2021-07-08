@@ -2,10 +2,11 @@ import React, { Fragment } from "react";
 import SideBarSpecial from "./SideBarSpecial";
 import css from "./SideBar.module.css";
 import Categories from "./Categories";
-import categoriesWithSlug from "../../data/categoriesWithSlug";
 import useGetOffers from "../../hooks/useGetOffers";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
+  const { categories } = useSelector((state) => state.categorySlice.server);
   const { data } = useGetOffers();
 
   return (
@@ -18,7 +19,7 @@ const SideBar = () => {
         />
         <SideBarSpecial itemName="Food Aid" />
       </div>
-      <Categories categories={categoriesWithSlug} />
+      <Categories categories={categories} />
     </Fragment>
   );
 };
