@@ -67,6 +67,7 @@ const ProductDetail = ({
   }
 
   function handleDecreaseQty() {
+    if (!itemInCart) return;
     dispatch(decreaseQty(id));
     dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
   }

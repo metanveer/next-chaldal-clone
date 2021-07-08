@@ -65,14 +65,18 @@ const cartItemsSlice = createSlice({
     decreaseQty: (state, action) => {
       const id = action.payload;
       const itemExisted = state.items.find((item) => item.id === id);
-      itemExisted.hasVisited = false;
       if (itemExisted && itemExisted.qty > 1) {
+        itemExisted.hasVisited = false;
         itemExisted.qty--;
         state.msg = "Quantity decreased";
-      } else {
+      }
+
+      if (itemExisted && itemExisted.qty === 1) {
         state.items = state.items.filter((item) => item.id !== id);
         state.msg = "Item removed";
       }
+
+      state.msg = "Item not in cart";
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
     },
@@ -100,4 +104,4 @@ export const {
   setAllItemsSeen,
 } = cartItemsSlice.actions;
 
-export default cartItemsSlice.reducer;
+export default cartItemsSlice;
