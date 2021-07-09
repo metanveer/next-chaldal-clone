@@ -11,23 +11,14 @@ import Product from "../models/productModel";
 import Category from "../models/categoryModel";
 import { wrapper } from "../store";
 import { setCategoriesFromDB } from "../features/categorySlice/categoryActions";
+import { setCurCategoryAtServer } from "../features/categorySlice/categorySlice";
 
-function SlugDetailsPage({
-  category: categoryFromDb,
-  products: productsFromDb,
-  product: productFromDb,
-  categories: categoriesFromDb,
-}) {
+function SlugDetailsPage({ category, products, product, categories }) {
   const router = useRouter();
 
   if (router.isFallback) {
     return <Loader />;
   }
-
-  const product = JSON.parse(productFromDb);
-  const products = JSON.parse(productsFromDb);
-  const category = JSON.parse(categoryFromDb);
-  const categories = JSON.parse(categoriesFromDb);
 
   // console.log("product", product);
   // console.log("category", category);
@@ -96,6 +87,7 @@ export const getStaticProps = wrapper.getStaticProps(
 
       const category = categories.find((item) => item.slug === slug) || {};
       const categoryToJson = JSON.stringify(category);
+      store.dispatch(setCurCategoryAtServer(JSON.parse(categoryToJson)));
 
       const product = await Product.findOne({ Slug: slug }).exec();
       const productToJson = JSON.stringify(product);
@@ -110,49 +102,15 @@ export const getStaticProps = wrapper.getStaticProps(
 
       return {
         props: {
-          product: productToJson,
-          category: categoryToJson,
-          products: productsToJson,
-          categories: categoriesToJson,
+          product: JSON.parse(productToJson),
+          category: JSON.parse(categoryToJson),
+          products: JSON.parse(productsToJson),
+          categories: JSON.parse(categoriesToJson),
         },
-        revalidate: 1000,
+        revalidate: 3600,
       };
     }
 );
-
-// export async function getStaticProps(context) {
-//   const { params } = context;
-//   const { slug } = params;
-
-//   await dbConnect();
-
-//   const categories = await Category.find({});
-//   const categoriesToJson = JSON.stringify(categories);
-
-//   const category = categories.find((item) => item.slug === slug) || {};
-//   const categoryToJson = JSON.stringify(category);
-
-//   const product = await Product.findOne({ Slug: slug }).exec();
-//   const productToJson = JSON.stringify(product);
-
-//   const products = await Product.find({
-//     AllCategoryIds: category.Id,
-//   });
-//   const productsToJson = JSON.stringify(products);
-
-//   // console.log("curCat", currentCategory);
-//   // console.log("productsfromDb", currentProducts);
-
-//   return {
-//     props: {
-//       product: productToJson,
-//       category: categoryToJson,
-//       products: productsToJson,
-//       categories: categoriesToJson,
-//     },
-//     revalidate: 1000,
-//   };
-// }
 
 export async function getStaticPaths() {
   await dbConnect();

@@ -4,24 +4,23 @@ import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 
 const OffersPage = ({ products }) => {
-  const offerProducts = JSON.parse(products);
-  return <Children type="products" variant="offer" products={offerProducts} />;
+  return <Children type="products" variant="offer" products={products} />;
 };
 
 export async function getStaticProps() {
   await dbConnect();
 
-  const productsFromDb = await Product.find({
+  const products = await Product.find({
     OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
   });
 
-  const products = JSON.stringify(productsFromDb);
+  const productsToJson = JSON.stringify(products);
 
   return {
     props: {
-      products,
+      products: JSON.parse(productsToJson),
     },
-    revalidate: 1000,
+    revalidate: 3600,
   };
 }
 
