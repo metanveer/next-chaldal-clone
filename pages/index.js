@@ -13,15 +13,16 @@ import dbConnect from "../db/dbConnect";
 import categoryModel from "../models/categoryModel";
 import { wrapper } from "../store";
 import { setCategoriesFromDB } from "../features/categorySlice/categoryActions";
+import productModel from "../models/productModel";
 
-export default function HomePage() {
+export default function HomePage({ categories, productsOnOffer }) {
   return (
     <>
       <Hero />
       <OfferBanners />
-      <ProductCategories />
+      <ProductCategories categories={categories} />
       <OrderCarousel />
-      <OffersCarousel />
+      <OffersCarousel products={productsOnOffer} />
       <Features />
       <Review />
       <Corporate />
@@ -38,4 +39,17 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   const categories = await categoryModel.find({});
   const categoriesToJson = JSON.stringify(categories);
   await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
+
+  const productsOnOffer = await productModel.find({
+    OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
+  });
+  const productsToJson = JSON.stringify(productsOnOffer);
+
+  return {
+    props: {
+      categories: JSON.parse(categoriesToJson),
+      productsOnOffer: JSON.parse(productsToJson),
+    },
+    revalidate: 3600,
+  };
 });

@@ -1,25 +1,13 @@
 import Section from "../common/Section";
 import Card from "../common/Card";
-import { useSelector } from "react-redux";
+
 import Loader from "../common/Loader";
 
-function ProductCategories() {
-  const { categories } = useSelector((state) => state.categorySlice.server);
-
-  // const length = categories.length;
-  // const visible = 12;
-
-  // console.log(length);
-
-  // const sliceFrom = +(Math.random() * (length - visible)).toFixed();
-  // const sliceTo = sliceFrom + visible;
-
-  // console.log(`${sliceFrom} to ${sliceTo}`);
-
+function ProductCategories({ categories }) {
   return (
     <Section type="category" title="Our Product Categories">
-      {!categories && <Loader />}
-      {categories &&
+      {categories.length === 0 && <Loader />}
+      {categories.length !== 0 &&
         categories
           .slice(91, 103)
           .map((category) => (
