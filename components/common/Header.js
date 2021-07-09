@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Link from "next/link";
 import FadeCarousel from "./carousels/FadeCarousel";
 import css from "./Header.module.css";
+import { getParentsArray } from "../../utils/get-parent-category";
 
 const frontBanner = {
   imageOne:
@@ -27,20 +28,10 @@ const Header = ({ type, category, allCategories }) => {
     );
   }
 
-  function getParents(curCategory, allCategories) {
-    const levelOne = allCategories.find(
-      (item) => item.Id === curCategory.ParentCategoryId
-    ) || { Name: null };
-    const levelTwo = allCategories.find(
-      (item) => item.Id === levelOne.ParentCategoryId
-    ) || { Name: null };
-    const levelThree = allCategories.find(
-      (item) => item.Id === levelTwo.ParentCategoryId
-    ) || { Name: null };
-    return [levelOne, levelTwo, levelThree];
-  }
-
-  const parentCategoriesNames = getParents(category, allCategories).reverse();
+  const parentCategoriesNames = getParentsArray(
+    category,
+    allCategories
+  ).reverse();
 
   return (
     <header>
