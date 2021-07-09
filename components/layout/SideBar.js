@@ -24,7 +24,7 @@ const SideBar = () => {
         <SideBarSpecial itemName="Food Aid" />
       </div>
       {categories.length !== 0 && <Categories categories={categories} />}
-      {!catData && <Loader />}
+      {categories.length === 0 && !catData && <Loader />}
       {categories.length === 0 && catData && (
         <Categories categories={catData.data} />
       )}
