@@ -27,3 +27,12 @@
   /* filter: invert(0%) sepia(97%) saturate(15%) hue-rotate(156deg)
     brightness(100%) contrast(100%); */
 }
+
+.name {
+  font-weight: 400;
+}
+
+.active {
+  font-weight: 700;
+  color: #d39b11;
+}
