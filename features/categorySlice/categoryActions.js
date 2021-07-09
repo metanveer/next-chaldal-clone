@@ -1,7 +1,4 @@
-import categorySlice, {
-  setCategoriesAtServer,
-  setCurCategoryAtServer,
-} from "./categorySlice";
+import { setCategoriesAtServer } from "./categorySlice";
 
 export const fetchCategories = () => {
   return async (dispatch) => {
