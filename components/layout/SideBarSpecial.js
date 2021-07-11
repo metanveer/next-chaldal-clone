@@ -11,8 +11,8 @@ const SideBarSpecial = ({
     <Link href={`/${nameToUrl(itemName)}`}>
       <a>
         <li className={styles.sideBarItem}>
-          <div className={styles.itemName}>{itemName}</div>
-          {offersCount && <div className={styles.offer}>{offersCount}</div>}
+          <span className={styles.itemName}>{itemName}</span>
+          {offersCount && <span className={styles.offer}>{offersCount}</span>}
         </li>
       </a>
     </Link>

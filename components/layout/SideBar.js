@@ -16,7 +16,6 @@ const SideBar = () => {
   return (
     <Fragment>
       <div className={css.special}>
-        <SideBarSpecial itemName="Coupons" />
         <SideBarSpecial
           itemName="Offers"
           offersCount={data && data.data.length}

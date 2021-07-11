@@ -14,10 +14,10 @@
 }
 
 .offer {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   padding: 0 5px;
-  margin: 2px 5px 0 5px;
+  margin: 0px 5px;
   border-radius: 3px;
   color: var(--navbar-login-area-btn);
   border: 1px solid var(--navbar-login-area-btn);
