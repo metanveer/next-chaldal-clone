@@ -184,6 +184,10 @@
   height: 60px;
 }
 
+.highlighted {
+  background-color: #fdd670;
+}
+
 .productCardSubText {
   font-size: 12px;
   text-align: center;

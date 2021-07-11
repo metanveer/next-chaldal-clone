@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Highlighter from "react-highlight-words";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import Modal from "./Modal";
 import ProductDetail from "./ProductDetail";
@@ -17,6 +18,7 @@ const ProductCard = ({
   cardType,
   id,
   itemName,
+  searchWords = [],
   image,
   images,
   packSize,
@@ -84,7 +86,14 @@ const ProductCard = ({
           <img className={css.productCardImage} src={image} alt={itemName} />
         </div>
         <div>
-          <div className={css.productCardName}>{itemName}</div>
+          <div className={css.productCardName}>
+            <Highlighter
+              highlightClassName={css.highlighted}
+              searchWords={searchWords}
+              autoEscape={true}
+              textToHighlight={itemName}
+            />
+          </div>
           <div className={css.productCardSubText}>{packSize}</div>
           <div className={css.productCardPriceContainer}>
             {isDiscounted ? (

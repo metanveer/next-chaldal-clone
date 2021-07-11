@@ -7,6 +7,12 @@ import MenuItem from "./MenuItem";
 const Categories = ({ categories }) => {
   const { curCategory } = useSelector((state) => state.categorySlice.server);
 
+  const { value } = useSelector((state) => state.search.client.input);
+
+  const searchRgx = new RegExp(value, "i");
+
+  const searchFieldEmpty = value === "";
+
   const parents = getParentsArray(curCategory, categories);
 
   const [level, setLevel] = useState(getInitialState());
@@ -110,76 +116,107 @@ const Categories = ({ categories }) => {
                 containsProducts={item.ContainsProducts}
                 setActiveId={() => setActiveLevelOne(item.Id)}
               />
-              <div className={css.firstLevel}>
-                {item.Id === level.one &&
-                  categories
-                    .filter((item) => item.ParentCategoryId === level.one)
-                    .map(function (item) {
-                      return (
-                        <Fragment key={item.Id}>
-                          <MenuItem
-                            name={item.Name}
-                            slug={item.slug}
-                            id={item.Id}
-                            activeId={level.two}
-                            containsProducts={item.ContainsProducts}
-                            setActiveId={() => setActiveLevelTwo(item.Id)}
-                          />
-                          <div className={css.nestedLevel}>
-                            {item.Id === level.two &&
-                              categories
-                                .filter(
-                                  (item) => item.ParentCategoryId === level.two
-                                )
-                                .map(function (item) {
-                                  return (
-                                    <Fragment key={item.Id}>
-                                      <MenuItem
-                                        name={item.Name}
-                                        slug={item.slug}
-                                        id={item.Id}
-                                        activeId={level.three}
-                                        containsProducts={item.ContainsProducts}
-                                        setActiveId={() =>
-                                          setActiveLevelThree(item.Id)
-                                        }
-                                      />
-                                      <div className={css.nestedLevel}>
-                                        {item.Id === level.three &&
-                                          categories
-                                            .filter(
-                                              (item) =>
-                                                item.ParentCategoryId ===
-                                                level.three
-                                            )
-                                            .map(function (item) {
-                                              return (
-                                                <Fragment key={item.Id}>
-                                                  <MenuItem
-                                                    name={item.Name}
-                                                    slug={item.slug}
-                                                    id={item.Id}
-                                                    activeId={level.four}
-                                                    containsProducts={
-                                                      item.ContainsProducts
-                                                    }
-                                                    setActiveId={() =>
-                                                      setActiveLevelFour(
-                                                        item.Id
-                                                      )
-                                                    }
-                                                  />
-                                                </Fragment>
-                                              );
-                                            })}
-                                      </div>
-                                    </Fragment>
-                                  );
-                                })}
-                          </div>
-                        </Fragment>
-                      );
-                    })}
+              <div className={css.subCategories}>
+                {searchFieldEmpty ? (
+                  <>
+                    {item.Id === level.one &&
+                      categories
+                        .filter((item) => item.ParentCategoryId === level.one)
+                        .map(function (item) {
+                          return (
+                            <Fragment key={item.Id}>
+                              <MenuItem
+                                name={item.Name}
+                                slug={item.slug}
+                                id={item.Id}
+                                activeId={level.two}
+                                containsProducts={item.ContainsProducts}
+                                setActiveId={() => setActiveLevelTwo(item.Id)}
+                              />
+
+                              <div className={css.nestedLevel}>
+                                {item.Id === level.two &&
+                                  categories
+                                    .filter(
+                                      (item) =>
+                                        item.ParentCategoryId === level.two
+                                    )
+                                    .map(function (item) {
+                                      return (
+                                        <Fragment key={item.Id}>
+                                          <MenuItem
+                                            name={item.Name}
+                                            slug={item.slug}
+                                            id={item.Id}
+                                            activeId={level.three}
+                                            containsProducts={
+                                              item.ContainsProducts
+                                            }
+                                            setActiveId={() =>
+                                              setActiveLevelThree(item.Id)
+                                            }
+                                          />
+                                          <div className={css.nestedLevel}>
+                                            {item.Id === level.three &&
+                                              categories
+                                                .filter(
+                                                  (item) =>
+                                                    item.ParentCategoryId ===
+                                                    level.three
+                                                )
+                                                .map(function (item) {
+                                                  return (
+                                                    <Fragment key={item.Id}>
+                                                      <MenuItem
+                                                        name={item.Name}
+                                                        slug={item.slug}
+                                                        id={item.Id}
+                                                        activeId={level.four}
+                                                        containsProducts={
+                                                          item.ContainsProducts
+                                                        }
+                                                        setActiveId={() =>
+                                                          setActiveLevelFour(
+                                                            item.Id
+                                                          )
+                                                        }
+                                                      />
+                                                    </Fragment>
+                                                  );
+                                                })}
+                                          </div>
+                                        </Fragment>
+                                      );
+                                    })}
+                              </div>
+                            </Fragment>
+                          );
+                        })}
+                  </>
+                ) : (
+                  <>
+                    {categories
+                      .filter(
+                        (child) =>
+                          child.ParentCategoryId === item.Id &&
+                          child.Name.match(searchRgx)
+                      )
+                      .map(function (item) {
+                        return (
+                          <Fragment key={item.Id}>
+                            <MenuItem
+                              name={item.Name}
+                              slug={item.slug}
+                              id={item.Id}
+                              activeId={level.two}
+                              containsProducts={item.ContainsProducts}
+                              setActiveId={() => setActiveLevelTwo(item.Id)}
+                            />
+                          </Fragment>
+                        );
+                      })}
+                  </>
+                )}
               </div>
             </Fragment>
           );

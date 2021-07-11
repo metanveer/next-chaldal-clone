@@ -24,8 +24,6 @@
 .iconPrimary {
   width: 22px;
   margin: 0 10px 0 0;
-  /* filter: invert(0%) sepia(97%) saturate(15%) hue-rotate(156deg)
-    brightness(100%) contrast(100%); */
 }
 
 .name {
@@ -35,4 +33,8 @@
 .active {
   font-weight: 700;
   color: #d39b11;
+}
+
+.highlighted {
+  background-color: #fdd670;
 }
