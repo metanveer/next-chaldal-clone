@@ -1,0 +1,29 @@
+.container {
+  padding: 10px 10px;
+}
+
+.foundMsg {
+  color: #a9a9a9;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.found {
+  font-weight: 700;
+}
+
+.productCardWrapper {
+  display: inline-block;
+  margin: 20px 5px;
+}
+
+.notFoundMsg {
+  font-size: 1.4rem;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.notFound {
+  font-weight: 700;
+  color: #a78e08;
+}

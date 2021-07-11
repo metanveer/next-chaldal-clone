@@ -5,6 +5,7 @@ import cartItemsSlice from "../features/cartItems/cartItemsSlice";
 import toogleCartSlice from "../features/toggleCart/toggleCartSlice";
 import toggleModalSlice from "../features/toggleModal/toggleModalSlice";
 import categorySlice from "../features/categorySlice/categorySlice";
+import searchProductSlice from "../features/searchProduct/searchProductSlice";
 
 const makeStore = () =>
   configureStore({
@@ -13,6 +14,7 @@ const makeStore = () =>
       [cartItemsSlice.name]: cartItemsSlice.reducer,
       [toggleModalSlice.name]: toggleModalSlice.reducer,
       [categorySlice.name]: categorySlice.reducer,
+      [searchProductSlice.name]: searchProductSlice.reducer,
     },
   });
 

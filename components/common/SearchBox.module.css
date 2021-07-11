@@ -25,6 +25,16 @@
   color: #7d7d7d;
 }
 
+.atBanner {
+  font-size: 17px;
+  border-top: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.atBanner::placeholder {
+  color: #757575;
+}
+
 .searchButton {
   border: none;
   border-radius: 3px;
@@ -35,10 +45,16 @@
   padding: 3px;
   outline: none;
   background-color: #fff;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   color: #7a7a7a;
+}
+
+.btnAtBanner {
+  border-top: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8;
+  border-radius: 0 6px 6px 0;
 }
 
 .searchBoxBanner {
@@ -51,38 +67,4 @@
   display: flex;
   align-items: center;
   border: 1px solid #c8c8c8;
-}
-.searchInputBanner {
-  box-sizing: border-box;
-  border: none;
-  height: 40px;
-  font-size: 17px;
-
-  border-top: 1px solid #c8c8c8;
-  border-bottom: 1px solid #c8c8c8;
-  flex: 1 1 50px;
-  font-family: inherit;
-  outline: none;
-}
-
-.searchInputBanner::placeholder {
-  color: #757575;
-}
-
-.searchButtonBanner {
-  border: none;
-  border-top: 1px solid #c8c8c8;
-  border-bottom: 1px solid #c8c8c8;
-  border-radius: 0 6px 6px 0;
-  height: 40px;
-  width: 40px;
-  box-sizing: border-box;
-  font-size: 25px;
-  padding: 3px;
-  outline: none;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #7a7a7a;
 }
