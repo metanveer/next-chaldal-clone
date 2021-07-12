@@ -24,7 +24,8 @@ const ProductDetail = ({
   discPrice,
   regPrice,
   description,
-  setClickedId,
+  modalShownId,
+  onHideModal,
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
@@ -61,7 +62,7 @@ const ProductDetail = ({
         id,
       })
     );
-    setClickedId(null);
+    modalShownId && onHideModal(null);
     cartItems.length === 0 && dispatch(showCart());
     dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
   }

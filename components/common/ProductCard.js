@@ -198,7 +198,8 @@ const ProductCard = ({
             discPrice={discPrice}
             regPrice={regPrice}
             description={description}
-            setClickedId={setClickedId}
+            modalShownId={clickedId}
+            onHideModal={setClickedId}
           />
         </Modal>
       )}
