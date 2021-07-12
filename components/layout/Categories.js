@@ -5,7 +5,7 @@ import css from "./Categories.module.css";
 import MenuItem from "./MenuItem";
 
 const Categories = ({ categories }) => {
-  const { curCategory } = useSelector((state) => state.categorySlice.server);
+  const { currentCategory } = useSelector((state) => state.category);
 
   const { value } = useSelector((state) => state.search);
 
@@ -13,7 +13,7 @@ const Categories = ({ categories }) => {
 
   const searchFieldEmpty = value === "";
 
-  const parents = getParentsArray(curCategory, categories);
+  const parents = getParentsArray(currentCategory, categories);
 
   const [level, setLevel] = useState(getInitialState());
 
@@ -23,28 +23,28 @@ const Categories = ({ categories }) => {
         one: parents[2].Id,
         two: parents[1].Id,
         three: parents[0].Id,
-        four: curCategory.Id,
+        four: currentCategory.Id,
       };
     }
     if (parents.length === 2) {
       return {
         one: parents[1].Id,
         two: parents[0].Id,
-        three: curCategory.Id,
+        three: currentCategory.Id,
         four: null,
       };
     }
     if (parents.length === 1) {
       return {
         one: parents[0].Id,
-        two: curCategory.Id,
+        two: currentCategory.Id,
         three: null,
         four: null,
       };
     }
     if (parents.length === 0) {
       return {
-        one: curCategory.Id,
+        one: currentCategory.Id,
         two: null,
         three: null,
         four: null,
@@ -197,9 +197,11 @@ const Categories = ({ categories }) => {
                   <>
                     {categories
                       .filter(
-                        (child) =>
-                          child.ParentCategoryId === item.Id &&
-                          child.Name.match(searchRgx)
+                        (category) =>
+                          category.Name.match(searchRgx) &&
+                          getParentsArray(category, categories)
+                            .map((p) => p.Id)
+                            .includes(item.Id)
                       )
                       .map(function (item) {
                         return (

@@ -10,8 +10,10 @@ import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
 import { wrapper } from "../store";
-import { setCategoriesFromDB } from "../features/categorySlice/categoryActions";
-import { setCurCategoryAtServer } from "../features/categorySlice/categorySlice";
+import {
+  setCategories,
+  setCurrentCategory,
+} from "../features/category/categorySlice";
 
 function SlugDetailsPage({ category, products, product, categories }) {
   const router = useRouter();
@@ -83,11 +85,11 @@ export const getStaticProps = wrapper.getStaticProps(
 
       const categories = await Category.find({});
       const categoriesToJson = JSON.stringify(categories);
-      await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
+      store.dispatch(setCategories(JSON.parse(categoriesToJson)));
 
       const category = categories.find((item) => item.slug === slug) || {};
       const categoryToJson = JSON.stringify(category);
-      store.dispatch(setCurCategoryAtServer(JSON.parse(categoryToJson)));
+      store.dispatch(setCurrentCategory(JSON.parse(categoryToJson)));
 
       const product = await Product.findOne({ Slug: slug }).exec();
       const productToJson = JSON.stringify(product);

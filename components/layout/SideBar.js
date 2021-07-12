@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import useGetCategories from "../../hooks/useGetCategories";
 
 const SideBar = () => {
-  const { categories } = useSelector((state) => state.categorySlice.server);
+  const { categories } = useSelector((state) => state.category);
   const { data } = useGetOffers();
 
   const { data: catData } = useGetCategories();

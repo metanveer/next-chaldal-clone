@@ -2,7 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import React from "react";
 import ProductCard from "../../components/common/ProductCard";
 import dbConnect from "../../db/dbConnect";
-import { setCategoriesFromDB } from "../../features/categorySlice/categoryActions";
+import { setCategories } from "../../features/category/categorySlice";
 import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
 import categoryModel from "../../models/categoryModel";
 import productModel from "../../models/productModel";
@@ -22,7 +22,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       const categories = await categoryModel.find({});
       const categoriesToJson = JSON.stringify(categories);
-      await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
+      store.dispatch(setCategories(JSON.parse(categoriesToJson)));
 
       if (term === "") {
         return {

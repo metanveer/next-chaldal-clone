@@ -4,7 +4,7 @@ import { createWrapper } from "next-redux-wrapper";
 import cartItemsSlice from "../features/cartItems/cartItemsSlice";
 import toogleCartSlice from "../features/toggleCart/toggleCartSlice";
 import toggleModalSlice from "../features/toggleModal/toggleModalSlice";
-import categorySlice from "../features/categorySlice/categorySlice";
+import categorySlice from "../features/category/categorySlice";
 import searchProductSlice from "../features/searchProduct/searchProductSlice";
 
 const makeStore = () =>

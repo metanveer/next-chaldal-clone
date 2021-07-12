@@ -12,8 +12,8 @@ import Footer from "../components/common/Footer";
 import dbConnect from "../db/dbConnect";
 import categoryModel from "../models/categoryModel";
 import { wrapper } from "../store";
-import { setCategoriesFromDB } from "../features/categorySlice/categoryActions";
 import productModel from "../models/productModel";
+import { setCategories } from "../features/category/categorySlice";
 
 export default function HomePage({ categories, productsOnOffer }) {
   return (
@@ -38,7 +38,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
 
   const categories = await categoryModel.find({});
   const categoriesToJson = JSON.stringify(categories);
-  await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
+  store.dispatch(setCategories(JSON.parse(categoriesToJson)));
 
   const productsOnOffer = await productModel.find({
     OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
