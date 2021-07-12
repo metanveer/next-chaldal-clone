@@ -1,51 +1,74 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
-import useSWR from "swr";
-import Loader from "../../components/common/Loader";
 import ProductCard from "../../components/common/ProductCard";
+import dbConnect from "../../db/dbConnect";
+import { setCategoriesFromDB } from "../../features/categorySlice/categoryActions";
+import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
+import categoryModel from "../../models/categoryModel";
+import productModel from "../../models/productModel";
+import { wrapper } from "../../store";
 import css from "./term.module.css";
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params }) => {
+      const { term } = params;
 
-export async function getServerSideProps({ params }) {
-  const { term } = params;
+      console.log("term", term);
 
-  const data = await fetcher(
-    `http://localhost:3000/api/Product/Search/${term}`
-  );
+      store.dispatch(setSearchInput({ name: "searchTerm", value: term }));
 
-  return {
-    props: { data },
-  };
-}
+      await dbConnect();
 
-function SearchResultsPage(props) {
+      const categories = await categoryModel.find({});
+      const categoriesToJson = JSON.stringify(categories);
+      await store.dispatch(setCategoriesFromDB(JSON.parse(categoriesToJson)));
+
+      if (term === "") {
+        return {
+          props: { products: [] },
+        };
+      }
+
+      const rgxSearchSet = term.split(" ").map((word) => new RegExp(word, "i"));
+
+      console.log("rgxSet", rgxSearchSet);
+
+      const products = await productModel.find({
+        NameWithoutSubText: rgxSearchSet,
+      });
+      const productsToJson = JSON.stringify(products);
+
+      return {
+        props: { products: JSON.parse(productsToJson) },
+      };
+    }
+);
+
+function SearchResultsPage({ products }) {
   const router = useRouter();
   const { term } = router.query;
 
-  const { data } = useSWR(`/api/Product/Search/${term}`, fetcher, {
-    initialData: props.data,
-  });
-
   const termSet = term.split(" ");
+
+  console.log("found", products);
 
   return (
     <div className={css.container}>
-      {data && data.data.length !== 0 && (
+      {products.length !== 0 && (
         <p className={css.foundMsg}>
           Search result for: <span className={css.found}>{term}</span>
         </p>
       )}
-      {!data && <Loader />}
-      {data && data.data.length === 0 && (
+
+      {products.length === 0 && (
         <div className={css.notFoundMsg}>
           Your search <span className={css.notFound}>{term}</span> did not match
           any product
         </div>
       )}
-      {data &&
-        data.data.length !== 0 &&
-        data.data.map((product) => (
+      {products.length !== 0 &&
+        products.map((product) => (
           <div className={css.productCardWrapper} key={product._id}>
             <ProductCard
               id={product._id}

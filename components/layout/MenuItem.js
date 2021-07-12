@@ -15,7 +15,7 @@ const MenuItem = ({
   containsProducts,
 }) => {
   const router = useRouter();
-  const { value } = useSelector((state) => state.search.client.input);
+  const { value } = useSelector((state) => state.search);
 
   const activeStyle = router.asPath === `/${slug}` && css.active;
 

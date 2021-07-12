@@ -7,7 +7,7 @@ import MenuItem from "./MenuItem";
 const Categories = ({ categories }) => {
   const { curCategory } = useSelector((state) => state.categorySlice.server);
 
-  const { value } = useSelector((state) => state.search.client.input);
+  const { value } = useSelector((state) => state.search);
 
   const searchRgx = new RegExp(value, "i");
 

@@ -1,38 +1,32 @@
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTermClient } from "../../features/searchProduct/searchProductSlice";
+import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
 import css from "./SearchBox.module.css";
 
 const SearchBox = ({ type }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
-  const { name, value } = useSelector((state) => state.search.client.input);
+  const { name, value } = useSelector((state) => state.search);
   const router = useRouter();
 
   const hero = type === "hero";
 
-  const searchSlug = router.query.term;
   const pathAtSearchPage = router.pathname === "/search/[term]";
 
   useEffect(() => {
-    if (pathAtSearchPage && searchSlug) {
+    if (pathAtSearchPage) {
       inputRef.current.focus();
-      dispatch(
-        setSearchTermClient({ name: "searchTerm", value: router.query.term })
-      );
     }
     if (!pathAtSearchPage) {
-      dispatch(setSearchTermClient({ name: "searchTerm", value: "" }));
+      dispatch(setSearchInput({ name: "searchTerm", value: "" }));
     }
   }, [pathAtSearchPage]);
 
   const inputChangeHandler = (e) => {
-    dispatch(
-      setSearchTermClient({ name: "searchTerm", value: e.target.value })
-    );
-    router.push(`/search/${e.target.value}`);
+    router.push(`/search/${encodeURI(e.target.value)}`);
+    dispatch(setSearchInput({ name: "searchTerm", value: e.target.value }));
   };
 
   return (
