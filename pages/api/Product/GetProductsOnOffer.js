@@ -2,19 +2,14 @@ import dbConnect from "../../../db/dbConnect";
 import Product from "../../../models/productModel";
 
 export default async function handler(req, res) {
-  const { method } = req;
-
   await dbConnect();
+  const data = await fetchOffers(Product);
+  res.status(200).json(data);
+}
 
-  if (method === "GET") {
-    try {
-      const products = await Product.find({
-        OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
-      });
-      res.status(200).json({ success: true, data: products });
-    } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, error: error });
-    }
-  }
+export async function fetchOffers(Model) {
+  const data = await Model.find({
+    OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
+  });
+  return JSON.parse(JSON.stringify(data));
 }
