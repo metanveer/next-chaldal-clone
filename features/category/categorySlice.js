@@ -20,7 +20,6 @@ export const categorySlice = createSlice({
 
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      console.log("HYDRATE", action.payload.category);
       return {
         ...state,
         ...action.payload.category,

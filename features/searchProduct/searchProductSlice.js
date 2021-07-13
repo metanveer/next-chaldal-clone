@@ -18,8 +18,6 @@ export const searchProductSlice = createSlice({
 
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      console.log("HYDRATE", action.payload.search);
-
       return {
         ...state,
         ...action.payload.search,

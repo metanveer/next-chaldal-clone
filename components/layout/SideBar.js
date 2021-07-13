@@ -16,16 +16,15 @@ const SideBar = () => {
   return (
     <Fragment>
       <div className={css.special}>
-        <SideBarSpecial
-          itemName="Offers"
-          offersCount={data && data.data.length}
-        />
+        <SideBarSpecial itemName="Offers" offersCount={data && data.length} />
         <SideBarSpecial itemName="Food Aid" />
       </div>
-      {categories.length !== 0 && <Categories categories={categories} />}
-      {categories.length === 0 && !catData && <Loader />}
-      {categories.length === 0 && catData && (
-        <Categories categories={catData.data} />
+      {categories.length !== 0 ? (
+        <Categories categories={categories} />
+      ) : !catData ? (
+        <Loader />
+      ) : (
+        <Categories categories={catData} />
       )}
     </Fragment>
   );

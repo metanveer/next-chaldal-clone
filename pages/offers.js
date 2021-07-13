@@ -1,5 +1,6 @@
 import React from "react";
 import Children from "../components/slug-page/Children";
+import { fetchOffers } from "./api/Product/GetProductsOnOffer";
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 
@@ -9,16 +10,11 @@ const OffersPage = ({ products }) => {
 
 export async function getStaticProps() {
   await dbConnect();
-
-  const products = await Product.find({
-    OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
-  });
-
-  const productsToJson = JSON.stringify(products);
+  const products = await fetchOffers(Product);
 
   return {
     props: {
-      products: JSON.parse(productsToJson),
+      products,
     },
     revalidate: 3600,
   };

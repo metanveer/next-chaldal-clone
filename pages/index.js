@@ -14,15 +14,17 @@ import categoryModel from "../models/categoryModel";
 import { wrapper } from "../store";
 import productModel from "../models/productModel";
 import { setCategories } from "../features/category/categorySlice";
+import { fetchOffers } from "./api/Product/GetProductsOnOffer";
+import { fetchCategories } from "./api/Category/GetAllCategories";
 
-export default function HomePage({ categories, productsOnOffer }) {
+export default function HomePage({ categories, offers }) {
   return (
     <>
       <Hero />
       <OfferBanners />
       <ProductCategories categories={categories} />
       <OrderCarousel />
-      <OffersCarousel products={productsOnOffer} />
+      <OffersCarousel products={offers} />
       <Features />
       <Review />
       <Corporate />
@@ -36,19 +38,16 @@ export default function HomePage({ categories, productsOnOffer }) {
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   await dbConnect();
 
-  const categories = await categoryModel.find({});
-  const categoriesToJson = JSON.stringify(categories);
-  store.dispatch(setCategories(JSON.parse(categoriesToJson)));
+  const categories = await fetchCategories(categoryModel);
 
-  const productsOnOffer = await productModel.find({
-    OfferPictureUrls: { $exists: true, $not: { $size: 0 } },
-  });
-  const productsToJson = JSON.stringify(productsOnOffer);
+  store.dispatch(setCategories(categories));
+
+  const offers = await fetchOffers(productModel);
 
   return {
     props: {
-      categories: JSON.parse(categoriesToJson),
-      productsOnOffer: JSON.parse(productsToJson),
+      categories,
+      offers,
     },
     revalidate: 3600,
   };

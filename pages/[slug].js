@@ -84,30 +84,26 @@ export const getStaticProps = wrapper.getStaticProps(
       await dbConnect();
 
       const categories = await Category.find({});
-      const categoriesToJson = JSON.stringify(categories);
-      store.dispatch(setCategories(JSON.parse(categoriesToJson)));
+      store.dispatch(setCategories(JSON.parse(JSON.stringify(categories))));
 
       const category = categories.find((item) => item.slug === slug) || {};
-      const categoryToJson = JSON.stringify(category);
-      store.dispatch(setCurrentCategory(JSON.parse(categoryToJson)));
+      store.dispatch(setCurrentCategory(JSON.parse(JSON.stringify(category))));
 
       const product = await Product.findOne({ Slug: slug }).exec();
-      const productToJson = JSON.stringify(product);
 
       const products = await Product.find({
         AllCategoryIds: category.Id,
       });
-      const productsToJson = JSON.stringify(products);
 
       // console.log("curCat", currentCategory);
       // console.log("productsfromDb", currentProducts);
 
       return {
         props: {
-          product: JSON.parse(productToJson),
-          category: JSON.parse(categoryToJson),
-          products: JSON.parse(productsToJson),
-          categories: JSON.parse(categoriesToJson),
+          product: JSON.parse(JSON.stringify(product)),
+          category: JSON.parse(JSON.stringify(category)),
+          products: JSON.parse(JSON.stringify(products)),
+          categories: JSON.parse(JSON.stringify(categories)),
         },
         revalidate: 3600,
       };
