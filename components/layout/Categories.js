@@ -1,62 +1,32 @@
-import { Fragment, useState } from "react";
+import { useRouter } from "next/router";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { getActiveCategory } from "../../utils/get-active-category";
 import { getParentsArray } from "../../utils/get-parent-category";
 import css from "./Categories.module.css";
 import MenuItem from "./MenuItem";
 
 const Categories = ({ categories }) => {
   const { currentCategory } = useSelector((state) => state.category);
-
   const { value } = useSelector((state) => state.search);
+  const [level, setLevel] = useState(getInitialState());
+  const router = useRouter();
 
   const searchRgx = new RegExp(value, "i");
-
   const searchFieldEmpty = value === "";
+  const categoryPage = router.asPath === `/${currentCategory.slug}`;
+  console.log(router);
 
-  const parents = getParentsArray(currentCategory, categories);
-
-  const [level, setLevel] = useState(getInitialState());
-
-  function getInitialState() {
-    if (parents.length === 3) {
-      return {
-        one: parents[2].Id,
-        two: parents[1].Id,
-        three: parents[0].Id,
-        four: currentCategory.Id,
-      };
-    }
-    if (parents.length === 2) {
-      return {
-        one: parents[1].Id,
-        two: parents[0].Id,
-        three: currentCategory.Id,
-        four: null,
-      };
-    }
-    if (parents.length === 1) {
-      return {
-        one: parents[0].Id,
-        two: currentCategory.Id,
-        three: null,
-        four: null,
-      };
-    }
-    if (parents.length === 0) {
-      return {
-        one: currentCategory.Id,
+  useEffect(() => {
+    if (!categoryPage) {
+      setLevel({
+        one: null,
         two: null,
         three: null,
         four: null,
-      };
+      });
     }
-    return {
-      one: null,
-      two: null,
-      three: null,
-      four: null,
-    };
-  }
+  }, [categoryPage]);
 
   function setActiveLevelOne(id) {
     setLevel({
@@ -86,6 +56,50 @@ const Categories = ({ categories }) => {
       ...level,
       four: id,
     });
+  }
+
+  function setActiveFromSearch(item) {
+    const id = item.Id;
+    const parents = getParentsArray(item, categories).map((p) => p.Id);
+
+    if (parents.length === 3) {
+      setLevel(getActiveCategory(parents, 3, id));
+    }
+    if (parents.length === 2) {
+      setLevel(getActiveCategory(parents, 2, id));
+    }
+    if (parents.length === 1) {
+      setLevel(getActiveCategory(parents, 1, id));
+    }
+    if (parents.length === 0) {
+      setLevel(getActiveCategory(parents, 0, id));
+    }
+  }
+
+  function getInitialState() {
+    const id = currentCategory.Id;
+    const parents = getParentsArray(currentCategory, categories).map(
+      (p) => p.Id
+    );
+
+    if (parents.length === 3) {
+      return getActiveCategory(parents, 3, id);
+    }
+    if (parents.length === 2) {
+      return getActiveCategory(parents, 2, id);
+    }
+    if (parents.length === 1) {
+      return getActiveCategory(parents, 1, id);
+    }
+    if (parents.length === 0) {
+      return getActiveCategory(parents, 0, id);
+    }
+    return {
+      one: null,
+      two: null,
+      three: null,
+      four: null,
+    };
   }
 
   return (
@@ -210,9 +224,9 @@ const Categories = ({ categories }) => {
                               name={item.Name}
                               slug={item.slug}
                               id={item.Id}
-                              activeId={level.two}
+                              activeId={item.Id}
                               containsProducts={item.ContainsProducts}
-                              setActiveId={() => setActiveLevelTwo(item.Id)}
+                              setActiveId={() => setActiveFromSearch(item)}
                             />
                           </Fragment>
                         );
