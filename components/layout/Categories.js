@@ -15,7 +15,6 @@ const Categories = ({ categories }) => {
   const searchRgx = new RegExp(value, "i");
   const searchFieldEmpty = value === "";
   const categoryPage = router.asPath === `/${currentCategory.slug}`;
-  console.log(router);
 
   useEffect(() => {
     if (!categoryPage) {

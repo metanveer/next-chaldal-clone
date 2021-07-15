@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const productSchema = new mongoose.Schema({
   ProductVariantId: { type: Number },
@@ -39,6 +40,8 @@ const productSchema = new mongoose.Schema({
   AllRecursiveCategoryIds: [{ type: Number }],
   AllManufacturerIds: [{ type: Number }],
 });
+
+productSchema.plugin(mongoosePaginate);
 
 export default mongoose.models.Product ||
   mongoose.model("Product", productSchema);
