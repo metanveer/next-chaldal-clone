@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchOffers } from "./api/Product/GetProductsOnOffer";
+import { fetchOffers } from "./api/products/offers-available";
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 import css from "../styles/offers.module.css";

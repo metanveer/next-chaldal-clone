@@ -14,8 +14,8 @@ import categoryModel from "../models/categoryModel";
 import { wrapper } from "../store";
 import productModel from "../models/productModel";
 import { setCategories } from "../features/category/categorySlice";
-import { fetchOffers } from "./api/Product/GetProductsOnOffer";
-import { fetchCategories } from "./api/Category/GetAllCategories";
+import { fetchOffers } from "./api/products/offers-available";
+import { fetchCategories } from "./api/categories";
 
 export default function HomePage({ categories, offers }) {
   return (

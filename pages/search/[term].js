@@ -7,8 +7,8 @@ import { setCategories } from "../../features/category/categorySlice";
 import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
 import categoryModel from "../../models/categoryModel";
 import productModel from "../../models/productModel";
-import { getPagedProducts } from "../api/Product/Search";
-import { fetchCategories } from "../api/Category/GetAllCategories";
+import { getProducts } from "../api/products";
+import { fetchCategories } from "../api/categories";
 import Loader from "../../components/common/Loader";
 import { wrapper } from "../../store";
 import css from "../../styles/term.module.css";
@@ -24,7 +24,7 @@ function SearchResultsPage({ result }) {
 
   const fetchSearched = async ({ pageParam = startPage }) => {
     const res = await fetch(
-      `/api/Product/Search?q=${term}&page=${pageParam}&size=30`
+      `/api/product/search?q=${term}&page=${pageParam}&size=30`
     );
     const result = await res.json();
     return result;
@@ -119,7 +119,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const categories = await fetchCategories(categoryModel);
       store.dispatch(setCategories(categories));
 
-      const result = await getPagedProducts(productModel, term, 1, 30);
+      const result = await getProducts(productModel, term, 1, 30);
 
       return {
         props: {

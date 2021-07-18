@@ -15,8 +15,8 @@ import {
 } from "../features/category/categorySlice";
 import ProductCard from "../components/common/ProductCard";
 import Card from "../components/common/Card";
-import { getProductsByCatId } from "./api/Product/GetByCategory";
 import { useInfiniteQuery } from "react-query";
+import { getProductsByCatId } from "./api/products/category";
 
 function SlugDetailsPage({ category, product, categories, result }) {
   const hasProduct = product && Object.keys(product).length > 0;
@@ -39,7 +39,7 @@ function SlugDetailsPage({ category, product, categories, result }) {
 
   const fetchProducts = async ({ pageParam = startPage }) => {
     const res = await fetch(
-      `/api/Product/GetByCategory?id=${category.Id}&page=${pageParam}&size=30`
+      `/api/products/category?id=${category.Id}&page=${pageParam}&size=30`
     );
     const result = await res.json();
     return result;
