@@ -1,11 +1,31 @@
 import React from "react";
-import Children from "../components/slug-page/Children";
 import { fetchOffers } from "./api/Product/GetProductsOnOffer";
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
+import css from "../styles/offers.module.css";
+import OfferCard from "../components/common/OfferCard";
 
 const OffersPage = ({ products }) => {
-  return <Children type="products" variant="offer" products={products} />;
+  return (
+    <div className={css.childCategories}>
+      {products.map((product) => (
+        <div className={css.productCardWrapper} key={product._id}>
+          <OfferCard
+            id={product._id}
+            itemName={product.NameWithoutSubText}
+            image={product.PictureUrls[0]}
+            offerImage={product.OfferPictureUrls[0]}
+            images={product.PictureUrls}
+            packSize={product.SubText}
+            regPrice={product.Price.Lo}
+            discPrice={product.DiscountedPrice.Lo}
+            description={product.LongDescription}
+            slug={product.Slug}
+          />
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export async function getStaticProps() {

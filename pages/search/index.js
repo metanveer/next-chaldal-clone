@@ -3,7 +3,7 @@ import dbConnect from "../../db/dbConnect";
 import { setCategories } from "../../features/category/categorySlice";
 import categoryModel from "../../models/categoryModel";
 import { wrapper } from "../../store";
-import css from "./index.module.css";
+import css from "../../styles/search.module.css";
 
 function SearchPage() {
   return (

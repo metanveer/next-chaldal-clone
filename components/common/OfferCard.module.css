@@ -34,6 +34,7 @@
 
 .image {
   width: 400px;
+  max-height: 300px;
   border-radius: 10px;
   margin: 5px 0 5px 5px;
 }
@@ -47,6 +48,7 @@
   border-radius: 10px;
   margin: 0;
   padding: 0;
+  max-height: 186px;
 }
 
 .productCardWrapperVer {

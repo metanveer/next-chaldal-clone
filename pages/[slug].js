@@ -1,11 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-
+import css from "../styles/slug.module.css";
+import InfiniteScroll from "react-infinite-scroller";
 import Header from "../components/common/Header";
-import Children from "../components/slug-page/Children";
 import ProductDetail from "../components/common/ProductDetail";
 import Loader from "../components/common/Loader";
-
 import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
@@ -14,23 +13,52 @@ import {
   setCategories,
   setCurrentCategory,
 } from "../features/category/categorySlice";
+import ProductCard from "../components/common/ProductCard";
+import Card from "../components/common/Card";
+import { getProductsByCatId } from "./api/Product/GetByCategory";
+import { useInfiniteQuery } from "react-query";
 
-function SlugDetailsPage({ category, products, product, categories }) {
+function SlugDetailsPage({ category, product, categories, result }) {
+  const hasProduct = product && Object.keys(product).length > 0;
+  const hasCategories = category && Object.keys(category).length > 0;
+  const hasNothing = !hasProduct && !hasCategories;
+
   const router = useRouter();
+  const headerRef = useRef();
 
-  if (router.isFallback) {
-    return <Loader />;
-  }
+  const { slug } = router.query;
+  const currentPath = router.asPath;
 
-  // console.log("product", product);
-  // console.log("category", category);
-  // console.log("productsClient", products);
+  useEffect(() => {
+    if (hasCategories) {
+      headerRef.current.scrollIntoView();
+    }
+  }, [currentPath, hasCategories]);
 
-  const productDetailAvailable = product && Object.keys(product).length > 0;
-  const subCategoriesAvailable = category && Object.keys(category).length > 0;
-  const nothingAvailable = !productDetailAvailable && !subCategoriesAvailable;
+  const startPage = 0;
 
-  if (productDetailAvailable) {
+  const fetchProducts = async ({ pageParam = startPage }) => {
+    const res = await fetch(
+      `/api/Product/GetByCategory?id=${category.Id}&page=${pageParam}&size=30`
+    );
+    const result = await res.json();
+    return result;
+  };
+
+  const queryRes = useInfiniteQuery(["products", slug], fetchProducts, {
+    enabled: hasCategories,
+    initialData: { pages: [result], pageParams: [] },
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  });
+  console.log("slug query", queryRes);
+
+  const { data, error, isLoading, isError, hasNextPage, fetchNextPage } =
+    queryRes;
+
+  console.log("product", product);
+  console.log("category", category);
+
+  if (hasProduct) {
     return (
       <>
         <Header type="product-detail-page" />
@@ -48,24 +76,87 @@ function SlugDetailsPage({ category, products, product, categories }) {
     );
   }
 
-  if (subCategoriesAvailable) {
+  if (hasCategories) {
     return (
       <>
-        <Header category={category} allCategories={categories} />
-        {category.ContainsProducts ? (
-          <Children type="products" products={products} />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : isError ? (
+          <span>Error: {error.message}</span>
         ) : (
-          <Children
-            type="categories"
-            categories={categories}
-            currentCategory={category}
-          />
+          <div className={css.wrapper}>
+            <div className={css.container}>
+              <div className={css.scrallableDiv}>
+                <div ref={headerRef}>
+                  <Header category={category} allCategories={categories} />
+                </div>
+                {category.ContainsProducts ? (
+                  <InfiniteScroll
+                    pageStart={startPage}
+                    loadMore={fetchNextPage}
+                    hasMore={hasNextPage}
+                    loader={
+                      <div key={0}>
+                        <Loader />
+                      </div>
+                    }
+                    useWindow={false}
+                  >
+                    {data.pages.map((page, index) => (
+                      <Fragment key={index}>
+                        {page.totalDocs === 0 ? (
+                          <div className={css.childCategories}>
+                            No product found under this category
+                          </div>
+                        ) : (
+                          page.docs.map((product, index) => (
+                            <div className={css.productCardWrapper} key={index}>
+                              <ProductCard
+                                id={product._id}
+                                itemName={product.NameWithoutSubText}
+                                image={product.PictureUrls[0]}
+                                images={product.PictureUrls}
+                                packSize={product.SubText}
+                                regPrice={product.Price.Lo}
+                                discPrice={product.DiscountedPrice.Lo}
+                                description={product.LongDescription}
+                                slug={product.Slug}
+                              />
+                            </div>
+                          ))
+                        )}
+                      </Fragment>
+                    ))}
+                  </InfiniteScroll>
+                ) : (
+                  <div className={css.childCategories}>
+                    {categories &&
+                      categories
+                        .filter((item) => item.ParentCategoryId === category.Id)
+                        .map((item) => (
+                          <div
+                            className={css.categoriesCardWrapper}
+                            key={item.Id}
+                          >
+                            <Card
+                              type="category"
+                              name={item.Name}
+                              image={item.Picture.ImageUrl}
+                              slug={item.slug}
+                            />
+                          </div>
+                        ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         )}
       </>
     );
   }
 
-  if (nothingAvailable) {
+  if (hasNothing) {
     return <h1>Noting Found</h1>;
   }
 
@@ -76,7 +167,7 @@ function SlugDetailsPage({ category, products, product, categories }) {
   );
 }
 
-export const getStaticProps = wrapper.getStaticProps(
+export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params }) => {
       const { slug } = params;
@@ -91,37 +182,17 @@ export const getStaticProps = wrapper.getStaticProps(
 
       const product = await Product.findOne({ Slug: slug }).exec();
 
-      const products = await Product.find({
-        AllCategoryIds: category.Id,
-      });
-
-      // console.log("curCat", currentCategory);
-      // console.log("productsfromDb", currentProducts);
+      const result = await getProductsByCatId(Product, category.Id, 1, 30);
 
       return {
         props: {
           product: JSON.parse(JSON.stringify(product)),
           category: JSON.parse(JSON.stringify(category)),
-          products: JSON.parse(JSON.stringify(products)),
+          result: result,
           categories: JSON.parse(JSON.stringify(categories)),
         },
-        revalidate: 3600,
       };
     }
 );
-
-export async function getStaticPaths() {
-  await dbConnect();
-
-  const categories = await Category.find({});
-  const categoriesPaths = categories.map((item) => ({
-    params: { slug: item.slug },
-  }));
-
-  return {
-    paths: categoriesPaths,
-    fallback: true,
-  };
-}
 
 export default SlugDetailsPage;

@@ -1,7 +1,7 @@
 import dbConnect from "../../../db/dbConnect";
 import Category from "../../../models/categoryModel";
 
-export default async function handler(req, res) {
+export default async (req, res) => {
   const { method } = req;
 
   await dbConnect();
@@ -18,4 +18,4 @@ export default async function handler(req, res) {
   } else {
     res.status(400).json({ success: false, message: "Invalid request method" });
   }
-}
+};

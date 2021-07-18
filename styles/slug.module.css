@@ -1,0 +1,26 @@
+.wrapper {
+  height: calc(100vh - 55px);
+}
+
+.container {
+  height: 100%;
+}
+
+.scrallableDiv {
+  height: 100%;
+  overflow: auto;
+  padding: 0 10px;
+}
+
+.childCategories {
+  padding: 0 10px;
+}
+
+.productCardWrapper {
+  display: inline-block;
+  margin: 20px 5px;
+}
+.categoriesCardWrapper {
+  display: inline-block;
+  margin: 0px 5px;
+}

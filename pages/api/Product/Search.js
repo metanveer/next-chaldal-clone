@@ -2,16 +2,16 @@ import dbConnect from "../../../db/dbConnect";
 import productModel from "../../../models/productModel";
 
 export default async (req, res) => {
-  const { text = "", page = 1, size = 20 } = req.query;
+  const { q = "", page = 1, size = 20 } = req.query;
 
   dbConnect();
 
-  const result = await getPagedProducts(text, page, size, productModel);
+  const result = await getPagedProducts(productModel, q, page, size);
 
   res.status(200).json(result);
 };
 
-export async function getPagedProducts(query, page, size, Model) {
+export async function getPagedProducts(Model, query, page, size) {
   const rgxSearchSet = query.split(" ").map((word) => new RegExp(word, "i"));
   const options = {
     page: page,

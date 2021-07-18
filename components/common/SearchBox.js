@@ -18,6 +18,7 @@ const SearchBox = ({ type }) => {
   useEffect(() => {
     if (pathAtSearchPage) {
       inputRef.current.focus();
+      inputRef.current.setSelectionRange(-1, -1);
     }
     if (!pathAtSearchPage) {
       dispatch(setSearchInput({ name: "searchTerm", value: "" }));
@@ -25,6 +26,7 @@ const SearchBox = ({ type }) => {
   }, [pathAtSearchPage]);
 
   const inputChangeHandler = (e) => {
+    e.preventDefault();
     router.push(`/search/${encodeURI(e.target.value)}`);
     dispatch(setSearchInput({ name: "searchTerm", value: e.target.value }));
   };
