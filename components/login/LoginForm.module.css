@@ -1,0 +1,94 @@
+.container {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: var(--color-primary-yellow);
+  transition: all 0.2s linear;
+  width: 340px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.input {
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: left;
+  font-weight: 400;
+  padding: 15px 15px;
+  background-color: #fff;
+  color: #444;
+  border: black;
+  overflow: hidden;
+  border-radius: 5px;
+  width: 100%;
+  transition: all 0.2s linear;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.error {
+  font-weight: 400;
+  color: rgb(194, 2, 2);
+  font-size: 15px;
+  padding: 2px;
+}
+
+.inputGroup {
+  margin-bottom: 10px;
+}
+
+.button {
+  width: 100%;
+  border-radius: 5px;
+  color: #eee;
+  background: var(--color-secondary-red);
+  outline: none;
+  border: none;
+  height: 60px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 700;
+  transition: all 0.2s linear;
+}
+
+.button:hover {
+  color: #eee;
+  background-color: var(--color-secondary-hover);
+}
+
+.toggle {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #b36601;
+  border: none;
+  padding: 0.15rem 1.5rem;
+}
+
+.toggle:hover {
+  background-color: transparent;
+  color: #5f4703;
+}
+
+.formFooter {
+  font-size: 15px;
+  padding: 5px 0 15px 0;
+}
+
+.formFooter span {
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+.formFooter span:hover {
+  text-decoration: underline;
+}
+
+.status {
+  font-size: 15px;
+  margin-bottom: 10px;
+}

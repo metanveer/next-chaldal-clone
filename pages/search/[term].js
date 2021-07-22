@@ -2,19 +2,15 @@ import { useRouter } from "next/dist/client/router";
 import React, { Fragment, useEffect, useRef } from "react";
 import ProductCard from "../../components/common/ProductCard";
 import InfiniteScroll from "react-infinite-scroller";
-import dbConnect from "../../db/dbConnect";
-import { setCategories } from "../../features/category/categorySlice";
 import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
-import categoryModel from "../../models/categoryModel";
 import productModel from "../../models/productModel";
 import { getProducts } from "../api/products";
-import { fetchCategories } from "../api/categories";
 import Loader from "../../components/common/Loader";
 import { wrapper } from "../../store";
 import css from "../../styles/term.module.css";
 import { useInfiniteQuery } from "react-query";
 
-function SearchResultsPage({ result }) {
+const SearchResultsPage = ({ result }) => {
   const {
     query: { term },
   } = useRouter();
@@ -24,7 +20,7 @@ function SearchResultsPage({ result }) {
 
   const fetchSearched = async ({ pageParam = startPage }) => {
     const res = await fetch(
-      `/api/product/search?q=${term}&page=${pageParam}&size=30`
+      `/api/products/search?q=${term}&page=${pageParam}&size=30`
     );
     const result = await res.json();
     return result;
@@ -106,18 +102,13 @@ function SearchResultsPage({ result }) {
       )}
     </>
   );
-}
+};
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params }) => {
       const { term } = params;
       store.dispatch(setSearchInput({ name: "searchTerm", value: term }));
-
-      await dbConnect();
-
-      const categories = await fetchCategories(categoryModel);
-      store.dispatch(setCategories(categories));
 
       const result = await getProducts(productModel, term, 1, 30);
 

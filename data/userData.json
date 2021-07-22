@@ -1,0 +1,58 @@
+{
+  "Guid": "5f1bbb2c-b340-4d73-b764-02205229bf3a",
+  "Name": "Tanveer Hossain",
+  "Email": "stanveer.me@gmail.com",
+  "Phone": "",
+  "CreatedOn": {
+    "UnixTimeMilliseconds": 1583038457297,
+    "Offset": { "Ticks": 0 }
+  },
+
+  "Addresses": [
+    {
+      "Id": 1673858,
+      "Name": "Shaikh Tanveer Hossain",
+      "Address": "dsfsfsfs",
+      "DeliveryAreaId": 31,
+      "PhoneNumber": "+8801715506431",
+      "WrongGeoTagReported": false,
+      "Area": "Uttara",
+      "WarehouseId": 1,
+      "IsDeliveryAreaActive": true,
+      "Dynamics": null
+    }
+  ],
+  "IsFacebookLogin": true,
+  "IsExpressDeliveryEnabled": true,
+  "IsCorporateCustomer": false,
+  "DefaultLocale": "en-US",
+  "NumOrdersCompleted": 0,
+  "NumOrdersProcessing": 0,
+  "NumOrdersCancelled": 1,
+  "Permissions": {},
+  "OrganizationId": 1,
+  "IsEmployee": false,
+  "ManageOrganization": null,
+  "CustomerReferralCode": "R-gi75x5f1b",
+  "CustomerReferralLink": "https://chaldal.com/ref/gi75x5f1b",
+  "IsReferredCustomer": false,
+  "DoesFullNameExist": true,
+  "ShipmentToReview": null,
+  "ProfilePhotoUrl": "",
+  "MoneyBalance": { "Lo": 0, "Mid": 0, "Hi": 0, "SignScale": 4 },
+  "HoldBalance": { "Lo": 0, "Mid": 0, "Hi": 0, "SignScale": 4 },
+  "OverdraftLimit": { "Lo": 0, "Mid": 0, "Hi": 0, "SignScale": 4 },
+  "AvailableBalance": { "Lo": 0, "Mid": 0, "Hi": 0, "SignScale": 4 },
+  "UnsubscribeEmail": false,
+  "UnsubscribeSms": false,
+  "UnsubscribeDevice": false,
+  "UnsubscribePhoneCall": false,
+  "HasValidEmail": true,
+  "EmailAwaitingVerification": "",
+  "IsIgnoreSlotCapacitiesAndQtyLimitations": false,
+  "Gender": "",
+  "MetropolitanAreaId": 1,
+  "CustomerState": 30,
+  "IsEligibleForIncentive": false,
+  "Dynamics": null
+}

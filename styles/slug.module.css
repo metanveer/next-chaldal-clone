@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-.scrallableDiv {
+.scrollContainer {
   height: 100%;
   overflow: auto;
   padding: 0 10px;

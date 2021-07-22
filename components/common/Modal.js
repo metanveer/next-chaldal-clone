@@ -8,7 +8,7 @@ const Backdrop = ({ onCloseModal }) => {
   return <div className={css.backdrop} onClick={onCloseModal} />;
 };
 
-const ModalOverlay = ({ onCloseModal, children, modalWidth }) => {
+const ModalOverlay = ({ onCloseModal, children, modalWidth, closeBtn }) => {
   const widthStyle = {
     left: `calc(50vw - ${modalWidth}px / 2)`,
     width: `${modalWidth}px`,
@@ -16,15 +16,17 @@ const ModalOverlay = ({ onCloseModal, children, modalWidth }) => {
 
   return (
     <div style={widthStyle} className={css.modal}>
-      <button onClick={onCloseModal} className={css.close}>
-        <VscChromeClose />
-      </button>
+      {closeBtn && (
+        <button onClick={onCloseModal} className={css.close}>
+          <VscChromeClose />
+        </button>
+      )}
       <div className={css.content}>{children}</div>
     </div>
   );
 };
 
-const Modal = ({ onCloseModal, children, modalWidth }) => {
+const Modal = ({ onCloseModal, children, modalWidth, closeBtn }) => {
   return (
     <Fragment>
       {ReactDOM.createPortal(
@@ -32,7 +34,11 @@ const Modal = ({ onCloseModal, children, modalWidth }) => {
         document.getElementById("overlays")
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay modalWidth={modalWidth} onCloseModal={onCloseModal}>
+        <ModalOverlay
+          modalWidth={modalWidth}
+          closeBtn={closeBtn}
+          onCloseModal={onCloseModal}
+        >
           {children}
         </ModalOverlay>,
         document.getElementById("overlays")

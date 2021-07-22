@@ -2,17 +2,12 @@
   --cart-width: 320px;
 }
 
-.navBar {
-  background-color: var(--navbar-bg-color);
-  height: 55px;
-  width: 100%;
+.navbarWrapper {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--navbar-border-bottom);
+  z-index: 100;
 }
 
 .sideBar {
@@ -42,6 +37,7 @@
 .main {
   position: fixed;
   top: 55px;
+
   left: 219px;
   right: 0;
   bottom: 0;
@@ -56,7 +52,7 @@
 
 .page {
   position: absolute;
-  top: 0;
+  top: 0px;
   left: 0;
 }
 
@@ -74,14 +70,14 @@
   top: 55px;
   bottom: 0;
   width: var(--cart-width);
-  z-index: 5;
+  z-index: 90;
   transition: all 0.3s ease;
 }
 
 .cartFloatingWrapper {
   position: fixed;
   top: 40%;
-  z-index: 4;
+  z-index: 90;
 }
 
 .bounce {

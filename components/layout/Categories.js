@@ -14,7 +14,8 @@ const Categories = ({ categories }) => {
 
   const searchRgx = new RegExp(value, "i");
   const searchFieldEmpty = value === "";
-  const categoryPage = router.asPath === `/${currentCategory.slug}`;
+  const categoryPage =
+    router.asPath === `/${currentCategory ? currentCategory.slug : null}`;
 
   useEffect(() => {
     if (!categoryPage) {
@@ -76,29 +77,32 @@ const Categories = ({ categories }) => {
   }
 
   function getInitialState() {
-    const id = currentCategory.Id;
-    const parents = getParentsArray(currentCategory, categories).map(
-      (p) => p.Id
-    );
+    if (currentCategory) {
+      const id = currentCategory.Id;
+      const parents = getParentsArray(currentCategory, categories).map(
+        (p) => p.Id
+      );
 
-    if (parents.length === 3) {
-      return getActiveCategory(parents, 3, id);
+      if (parents.length === 3) {
+        return getActiveCategory(parents, 3, id);
+      }
+      if (parents.length === 2) {
+        return getActiveCategory(parents, 2, id);
+      }
+      if (parents.length === 1) {
+        return getActiveCategory(parents, 1, id);
+      }
+      if (parents.length === 0) {
+        return getActiveCategory(parents, 0, id);
+      }
+    } else {
+      return {
+        one: null,
+        two: null,
+        three: null,
+        four: null,
+      };
     }
-    if (parents.length === 2) {
-      return getActiveCategory(parents, 2, id);
-    }
-    if (parents.length === 1) {
-      return getActiveCategory(parents, 1, id);
-    }
-    if (parents.length === 0) {
-      return getActiveCategory(parents, 0, id);
-    }
-    return {
-      one: null,
-      two: null,
-      three: null,
-      four: null,
-    };
   }
 
   return (

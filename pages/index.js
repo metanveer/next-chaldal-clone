@@ -9,22 +9,22 @@ import Corporate from "../components/home-page/Corporate";
 import GetApp from "../components/home-page/GetApp";
 import Stats from "../components/home-page/Stats";
 import Footer from "../components/common/Footer";
-import dbConnect from "../db/dbConnect";
-import categoryModel from "../models/categoryModel";
-import { wrapper } from "../store";
-import productModel from "../models/productModel";
-import { setCategories } from "../features/category/categorySlice";
-import { fetchOffers } from "./api/products/offers-available";
-import { fetchCategories } from "./api/categories";
+import { useSelector } from "react-redux";
+import useGetOffers from "../hooks/useGetOffers";
+import Loader from "../components/common/Loader";
 
-export default function HomePage({ categories, offers }) {
+const HomePage = () => {
+  const { categories } = useSelector((state) => state.category);
+
+  const { data } = useGetOffers();
+
   return (
     <>
       <Hero />
       <OfferBanners />
       <ProductCategories categories={categories} />
       <OrderCarousel />
-      <OffersCarousel products={offers} />
+      {data ? <OffersCarousel products={data} /> : <Loader />}
       <Features />
       <Review />
       <Corporate />
@@ -33,22 +33,6 @@ export default function HomePage({ categories, offers }) {
       <Footer />
     </>
   );
-}
+};
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  await dbConnect();
-
-  const categories = await fetchCategories(categoryModel);
-
-  store.dispatch(setCategories(categories));
-
-  const offers = await fetchOffers(productModel);
-
-  return {
-    props: {
-      categories,
-      offers,
-    },
-    revalidate: 3600,
-  };
-});
+export default HomePage;

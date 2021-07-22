@@ -5,7 +5,7 @@ import productModel from "../../../models/productModel";
 export default async (req, res) => {
   const { q = "", page = 1, size = 20 } = req.query;
 
-  dbConnect();
+  await dbConnect();
 
   const result = await getProducts(productModel, q, page, size);
 

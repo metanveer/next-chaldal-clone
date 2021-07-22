@@ -1,0 +1,25 @@
+.fbBtn {
+  background: #1d77f2;
+  border-radius: 5px;
+  color: white;
+  height: 40px;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.fbBtnText {
+  flex: 1 1 60px;
+}
+
+.fbIcon {
+  flex: 0 0 35px;
+  font-size: 30px;
+  height: 30px;
+}

@@ -5,23 +5,24 @@ import InfiniteScroll from "react-infinite-scroller";
 import Header from "../components/common/Header";
 import ProductDetail from "../components/common/ProductDetail";
 import Loader from "../components/common/Loader";
-import dbConnect from "../db/dbConnect";
 import Product from "../models/productModel";
 import Category from "../models/categoryModel";
 import { wrapper } from "../store";
-import {
-  setCategories,
-  setCurrentCategory,
-} from "../features/category/categorySlice";
+import { setCurrentCategory } from "../features/category/categorySlice";
 import ProductCard from "../components/common/ProductCard";
 import Card from "../components/common/Card";
 import { useInfiniteQuery } from "react-query";
 import { getProductsByCatId } from "./api/products/category";
+import { useSelector } from "react-redux";
+import { getCategoryBySlug } from "./api/category/[catSlug]";
+import { getProductBySlug } from "./api/product/[prodSlug]";
 
-function SlugDetailsPage({ category, product, categories, result }) {
+const SlugDetailsPage = ({ category, product, result }) => {
+  const { categories } = useSelector((state) => state.category);
+
   const hasProduct = product && Object.keys(product).length > 0;
-  const hasCategories = category && Object.keys(category).length > 0;
-  const hasNothing = !hasProduct && !hasCategories;
+  const hasCategory = category && Object.keys(category).length > 0;
+  const hasNothing = !hasProduct && !hasCategory;
 
   const router = useRouter();
   const headerRef = useRef();
@@ -30,25 +31,27 @@ function SlugDetailsPage({ category, product, categories, result }) {
   const currentPath = router.asPath;
 
   useEffect(() => {
-    if (hasCategories) {
+    if (hasCategory) {
       headerRef.current.scrollIntoView();
     }
-  }, [currentPath, hasCategories]);
+  }, [currentPath, hasCategory]);
 
   const startPage = 0;
 
   const fetchProducts = async ({ pageParam = startPage }) => {
-    const res = await fetch(
-      `/api/products/category?id=${category.Id}&page=${pageParam}&size=30`
-    );
-    const result = await res.json();
-    return result;
+    if (category) {
+      const res = await fetch(
+        `/api/products/category?id=${category.Id}&page=${pageParam}&size=30`
+      );
+      const result = await res.json();
+      return result;
+    }
   };
 
   const queryRes = useInfiniteQuery(["products", slug], fetchProducts, {
-    enabled: hasCategories,
+    enabled: hasCategory,
     initialData: { pages: [result], pageParams: [] },
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    getNextPageParam: (lastPage) => (lastPage ? lastPage.nextPage : 0),
   });
   console.log("slug query", queryRes);
 
@@ -76,7 +79,7 @@ function SlugDetailsPage({ category, product, categories, result }) {
     );
   }
 
-  if (hasCategories) {
+  if (hasCategory) {
     return (
       <>
         {isLoading ? (
@@ -86,7 +89,7 @@ function SlugDetailsPage({ category, product, categories, result }) {
         ) : (
           <div className={css.wrapper}>
             <div className={css.container}>
-              <div className={css.scrallableDiv}>
+              <div className={css.scrollContainer}>
                 <div ref={headerRef}>
                   <Header category={category} allCategories={categories} />
                 </div>
@@ -131,6 +134,7 @@ function SlugDetailsPage({ category, product, categories, result }) {
                 ) : (
                   <div className={css.childCategories}>
                     {categories &&
+                      category &&
                       categories
                         .filter((item) => item.ParentCategoryId === category.Id)
                         .map((item) => (
@@ -165,31 +169,33 @@ function SlugDetailsPage({ category, product, categories, result }) {
       <h1>Loading...</h1>
     </Fragment>
   );
-}
+};
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params }) => {
       const { slug } = params;
 
-      await dbConnect();
+      const category = await getCategoryBySlug(Category, slug);
+      store.dispatch(setCurrentCategory(category));
 
-      const categories = await Category.find({});
-      store.dispatch(setCategories(JSON.parse(JSON.stringify(categories))));
+      const product = await getProductBySlug(Product, slug);
 
-      const category = categories.find((item) => item.slug === slug) || {};
-      store.dispatch(setCurrentCategory(JSON.parse(JSON.stringify(category))));
-
-      const product = await Product.findOne({ Slug: slug }).exec();
+      if (!category) {
+        return {
+          props: {
+            product: product,
+          },
+        };
+      }
 
       const result = await getProductsByCatId(Product, category.Id, 1, 30);
 
       return {
         props: {
-          product: JSON.parse(JSON.stringify(product)),
-          category: JSON.parse(JSON.stringify(category)),
+          product: product,
+          category: category,
           result: result,
-          categories: JSON.parse(JSON.stringify(categories)),
         },
       };
     }

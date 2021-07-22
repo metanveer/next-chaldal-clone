@@ -205,7 +205,7 @@ const Cart = ({ onClose }) => {
         </div>
       </div>
       {modalShown && modalId === "delivery-policy" && (
-        <Modal modalWidth={400} onCloseModal={handleHideModal}>
+        <Modal modalWidth={400} onCloseModal={handleHideModal} closeBtn>
           <DeliveryPolicy />
         </Modal>
       )}

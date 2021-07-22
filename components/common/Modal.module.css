@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 20;
+  z-index: 101;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -16,7 +16,7 @@
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  z-index: 30;
+  z-index: 110;
   animation: slide-down 100ms ease-out forwards;
 }
 
@@ -41,7 +41,6 @@
 }
 
 .content {
-  padding-bottom: 4px;
   margin-bottom: 10vh;
 }
 
@@ -50,7 +49,7 @@
     width: 100%;
     left: 0;
     top: 0;
-    z-index: 30;
+    z-index: 110;
     border-radius: 0px;
     animation: slide-down 300ms ease-out forwards;
   }

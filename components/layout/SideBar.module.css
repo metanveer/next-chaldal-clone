@@ -1,7 +1,11 @@
-.special {
+.sideBar {
+  width: 100%;
+  padding-top: 5px;
+}
+.devider {
   border-bottom: 1px solid #eee;
-  margin-bottom: 10px;
-  padding: 10px 0 10px 15px;
+  margin: 5px 0;
+  width: 100%;
 }
 
 .parent {

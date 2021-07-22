@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import useScrollbarSize from "react-scrollbar-size";
 import { useSelector, useDispatch } from "react-redux";
 import { showCart, hideCart } from "../../features/toggleCart/toggleCartSlice";
-// import Login from "../../pages/Login/Login";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
-// import Modal from "../UI/Modal";
 
 import css from "./Layout.module.css";
 import Cart from "../cart/Cart";
@@ -37,17 +35,12 @@ const Layout = ({ children }) => {
 
   return (
     <div className={css.layout}>
-      {/* {modalShown && (
-        <Modal handleCloseModal={() => setModalShown(false)}>
-          <Login />
-        </Modal>
-      )} */}
-      <nav className={css.navBar}>
+      <div className={css.navbarWrapper}>
         <NavBar
           handleSideBar={() => setSidebarShown(!sidebarShown)}
           setModalShown={setModalShown}
         />
-      </nav>
+      </div>
 
       <div className={sidebarShown ? css.sideBar : css.sideBarHide}>
         <SideBar />

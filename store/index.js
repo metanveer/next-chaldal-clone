@@ -6,6 +6,7 @@ import toogleCartSlice from "../features/toggleCart/toggleCartSlice";
 import toggleModalSlice from "../features/toggleModal/toggleModalSlice";
 import categorySlice from "../features/category/categorySlice";
 import searchProductSlice from "../features/searchProduct/searchProductSlice";
+import userSlice from "../features/user/userSlice";
 
 const makeStore = () =>
   configureStore({
@@ -15,6 +16,7 @@ const makeStore = () =>
       [toggleModalSlice.name]: toggleModalSlice.reducer,
       [categorySlice.name]: categorySlice.reducer,
       [searchProductSlice.name]: searchProductSlice.reducer,
+      [userSlice.name]: userSlice.reducer,
     },
   });
 

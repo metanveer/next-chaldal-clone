@@ -188,7 +188,7 @@ const ProductCard = ({
       />
 
       {clickedId === id && (
-        <Modal modalWidth={980} onCloseModal={handleCloseModal}>
+        <Modal modalWidth={980} closeBtn onCloseModal={handleCloseModal}>
           <ProductDetail
             id={id}
             image={image}
