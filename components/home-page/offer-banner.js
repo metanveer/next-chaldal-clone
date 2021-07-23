@@ -7,14 +7,22 @@ function OfferBanner() {
       <Link href="/popular">
         <a>
           <div>
-            <img className={css.imageA} src="/home-banners/offerImage1.webp" />
+            <img
+              className={css.imageA}
+              src="/home-banners/offerImage1.webp"
+              alt=""
+            />
           </div>
         </a>
       </Link>
       <Link href="/fresh-fruit">
         <a>
           <div>
-            <img className={css.imageB} src="/home-banners/offerImage2.webp" />
+            <img
+              className={css.imageB}
+              src="/home-banners/offerImage2.webp"
+              alt=""
+            />
           </div>
         </a>
       </Link>

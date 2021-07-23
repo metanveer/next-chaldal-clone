@@ -44,6 +44,7 @@ const Header = ({ type, category, allCategories }) => {
                   <img
                     className={css.frontBannerImg}
                     src={frontBanner.imageOne}
+                    alt=""
                   />
                 </a>
               </Link>
@@ -54,6 +55,7 @@ const Header = ({ type, category, allCategories }) => {
                   <img
                     className={`${css.frontBannerImg} ${css.rightTopImg}`}
                     src={frontBanner.imageTwo}
+                    alt=""
                   />
                 </a>
               </Link>
@@ -62,6 +64,7 @@ const Header = ({ type, category, allCategories }) => {
                   <img
                     className={css.frontBannerImg}
                     src={frontBanner.imageThree}
+                    alt=""
                   />
                 </a>
               </Link>

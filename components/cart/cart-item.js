@@ -42,6 +42,7 @@ const CartItem = ({
   useEffect(() => {
     !hasVisited && scrollToElement(cartItemRef);
     if (cartShown) dispatch(setAllItemsSeen());
+    // eslint-disable-next-line
   }, [cartShown]);
 
   function scrollToElement(elementRef) {
@@ -94,7 +95,7 @@ const CartItem = ({
         </div>
       </div>
       <div className={css.imageSec}>
-        <img className={css.image} src={image} />
+        <img className={css.image} src={image} alt={itemName} />
       </div>
       <div className={css.detailSec}>
         <div className={css.itemName}>{itemName}</div>

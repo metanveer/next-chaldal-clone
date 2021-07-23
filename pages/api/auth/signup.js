@@ -2,7 +2,7 @@ import dbConnect from "../../../db/dbConnect";
 import User from "../../../models/userModel";
 import { hashPassword } from "../../../utils/auth";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const { method } = req;
   if (method !== "POST") {
     return;
@@ -39,4 +39,4 @@ export default async (req, res) => {
   });
 
   res.status(201).json({ message: "User created!", data: result });
-};
+}

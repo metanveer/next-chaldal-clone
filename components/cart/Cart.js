@@ -128,6 +128,7 @@ const Cart = ({ onClose }) => {
                 <img
                   className={css.deliveryTypeIcon}
                   src="/categories/icons/horse.svg"
+                  alt="Express delivery"
                 />
               </span>
               <span className={css.text}>Express Delivery</span>
@@ -135,7 +136,11 @@ const Cart = ({ onClose }) => {
           )}
           {items.length === 0 && (
             <div className={css.emptyCartContainer}>
-              <img className={css.emptyCart} src={emptyCart} />
+              <img
+                className={css.emptyCart}
+                src={emptyCart}
+                alt="An empty shopping bag"
+              />
               <div className={css.emptyCartText}>
                 Your shopping bag is empty. Start shopping
               </div>

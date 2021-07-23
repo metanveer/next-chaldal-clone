@@ -1,7 +1,7 @@
 import dbConnect from "../../../db/dbConnect";
 import Category from "../../../models/categoryModel";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const { method } = req;
 
   await dbConnect();
@@ -27,7 +27,7 @@ export default async (req, res) => {
         .json({ success: false, message: "failed to add new category" });
     }
   }
-};
+}
 
 export async function fetchCategories(CategoryModel) {
   const categories = await CategoryModel.find({});

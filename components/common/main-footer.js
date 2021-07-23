@@ -101,6 +101,7 @@ const Footer = () => {
                 className={css.socialIconLink}
                 href={item.link}
                 target="_blank"
+                rel="noreferrer"
                 key={index}
               >
                 <Image

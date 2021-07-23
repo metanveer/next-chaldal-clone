@@ -1,7 +1,7 @@
 import dbConnect from "../../../db/dbConnect";
 import productModel from "../../../models/productModel";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const { method } = req;
 
   await dbConnect();
@@ -26,7 +26,7 @@ export default async (req, res) => {
         .json({ success: false, message: "failed to add new product" });
     }
   }
-};
+}
 
 export async function getProducts(Model, query, page, size) {
   const rgxSearchSet = query.split(" ").map((word) => new RegExp(word, "i"));

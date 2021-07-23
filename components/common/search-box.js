@@ -23,6 +23,7 @@ const SearchBox = ({ type }) => {
     if (!pathAtSearchPage) {
       dispatch(setSearchInput({ name: "searchTerm", value: "" }));
     }
+    // eslint-disable-next-line
   }, [pathAtSearchPage]);
 
   const inputChangeHandler = (e) => {

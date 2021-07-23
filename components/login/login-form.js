@@ -56,6 +56,7 @@ const LoginForm = () => {
     if (isValidating) {
       setStatus("");
     }
+    //eslint-disable-next-line
   }, [isValidating]);
 
   const switchLoginMode = () => {

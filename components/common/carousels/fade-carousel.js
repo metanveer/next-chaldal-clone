@@ -31,6 +31,7 @@ const FadeCarousel = ({ images }) => {
             index === current ? css.imageActive : null
           }`}
           src={image.BannerUrl}
+          alt=""
         />
       ))}
     </div>

@@ -58,6 +58,7 @@ const PicturesMagnify = ({ pictureUrls }) => {
             onMouseEnter={() => setIsHoveringImg(true)}
             className={css.productImage}
             src={pictureUrls[current]}
+            alt=""
           />
         </div>
 
@@ -69,6 +70,7 @@ const PicturesMagnify = ({ pictureUrls }) => {
             style={getZoomStyle(x, y)}
             className={css.productImageZoom}
             src={pictureUrls[current]}
+            alt=""
           />
         </div>
         {length > 1 && (
@@ -108,6 +110,7 @@ const PicturesMagnify = ({ pictureUrls }) => {
                 index === current ? css.bottomThumbnailActive : null
               }`}
               src={url}
+              alt=""
             />
           ))}
         </div>
