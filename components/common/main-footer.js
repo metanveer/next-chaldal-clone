@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import StoreBadges from "../common/StoreBadges";
-import css from "./Footer.module.css";
+import StoreBadges from "./store-badges";
+import css from "./main-footer.module.css";
 import {
   logo,
   phoneIcon,

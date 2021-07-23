@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SideBarSpecial.module.css";
+import styles from "./sidebar-special.module.css";
 import Link from "next/link";
 import nameToUrl from "../../utils/name-to-url";
 

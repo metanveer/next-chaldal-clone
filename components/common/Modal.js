@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import ReactDOM from "react-dom";
 import { VscChromeClose } from "react-icons/vsc";
 
-import css from "./Modal.module.css";
+import css from "./modal.module.css";
 
 const Backdrop = ({ onCloseModal }) => {
   return <div className={css.backdrop} onClick={onCloseModal} />;

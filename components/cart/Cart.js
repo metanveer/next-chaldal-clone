@@ -8,11 +8,11 @@ import {
   IoChevronUpCircleOutline,
 } from "react-icons/io5";
 
-import css from "./Cart.module.css";
-import DeliveryPromo from "./DeliveryPromo";
-import CartItem from "./CartItem";
-import Modal from "../../components/common/Modal";
-import DeliveryPolicy from "../cart/DeliveryPolicy";
+import css from "./cart.module.css";
+import DeliveryPromo from "./delivery-promo";
+import CartItem from "./cart-item";
+import Modal from "../common/modal";
+import DeliveryPolicy from "./delivery-policy";
 import decimalWithCommas from "../../utils/decimal-with-commas";
 import useScrollbarSize from "react-scrollbar-size";
 import {

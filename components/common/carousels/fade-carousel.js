@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import useInterval from "../../../hooks/useInterval";
-import css from "./FadeCarousel.module.css";
+import css from "./fade-carousel.module.css";
 
 const FadeCarousel = ({ images }) => {
   const slideDuration = 3000;

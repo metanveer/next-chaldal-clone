@@ -1,9 +1,8 @@
-import React, { Fragment } from "react";
-import css from "./NavItem.module.css";
+import React from "react";
+import css from "./nav-item.module.css";
 
 const NavItem = ({
   setModalShown = undefined,
-
   iconPrimary,
   text,
   iconSecondary = null,

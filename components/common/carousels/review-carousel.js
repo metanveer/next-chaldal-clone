@@ -1,14 +1,15 @@
 import { useState } from "react";
-import css from "./ImgCarousel.module.css";
+import css from "./review-carousel.module.css";
+import Image from "next/image";
 import useInterval from "../../../hooks/useInterval";
 
-const ImgCarousel = ({ images }) => {
+const ReviewCarousel = ({ slides }) => {
   const slideDuration = 4000;
 
   const [current, setCurrent] = useState(0);
   const [userHovering, setUserHovering] = useState(false);
 
-  const length = images.length;
+  const length = slides.length;
 
   const next = (current + 1) % length;
 
@@ -33,7 +34,7 @@ const ImgCarousel = ({ images }) => {
       className={css.carousel}
     >
       <div className={css.carouselControl}>
-        {images.map((image, index) => (
+        {slides.map((slide, index) => (
           <div
             key={index}
             onClick={() => handleSelectSlide(index)}
@@ -42,17 +43,26 @@ const ImgCarousel = ({ images }) => {
         ))}
       </div>
       <div className={css.allSlides} style={getSlideStyle(current)}>
-        {images.map((image, index) => (
-          <img
-            className={css.slide}
-            key={index}
-            src={image.image}
-            alt="how to order on chaldal"
-          />
+        {slides.map((slide, index) => (
+          <div key={index} className={css.slide}>
+            <div className={css.portraitContainer}>
+              <Image
+                className={css.portrait}
+                src={slide.image}
+                alt={slide.name}
+                width={130}
+                height={130}
+              />
+              <div className={css.portraitName}>{slide.name}</div>
+            </div>
+            <div className={css.review}>
+              <p className={css.reviewText}>{slide.review}</p>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-export default ImgCarousel;
+export default ReviewCarousel;

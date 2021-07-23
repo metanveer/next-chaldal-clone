@@ -1,32 +1,33 @@
 import Hero from "../components/home-page/Hero";
-import OfferBanners from "../components/home-page/OfferBanners";
-import OrderCarousel from "../components/home-page/OrderCarousel";
-import OffersCarousel from "../components/home-page/OffersCarousel";
-import ProductCategories from "../components/home-page/ProductCategories";
-import Features from "../components/home-page/Features";
-import Review from "../components/home-page/Review";
-import Corporate from "../components/home-page/Corporate";
-import GetApp from "../components/home-page/GetApp";
-import Stats from "../components/home-page/Stats";
-import Footer from "../components/common/Footer";
+import OrderCarousel from "../components/home-page/order-carousel";
+import OfferBanner from "../components/home-page/offer-banner";
+import ProductCategories from "../components/home-page/product-categories";
+import Features from "../components/home-page/features";
+import Review from "../components/home-page/review";
+import Corporate from "../components/home-page/corporate";
+import GetApp from "../components/home-page/get-app";
+import Stats from "../components/home-page/stats";
+import Footer from "../components/common/main-footer";
+import OfferCarousel from "../components/home-page/offer-carousel";
 import { useSelector } from "react-redux";
-import useGetOffers from "../hooks/useGetOffers";
-import Loader from "../components/common/Loader";
+// import { wrapper } from "../store";
+// import dbConnect from "../db/dbConnect";
+// import productModel from "../models/productModel";
+// import categoryModel from "../models/categoryModel";
+// import { fetchCategories } from "./api/categories";
+// import { setCategories } from "../features/category/categorySlice";
+// import { fetchOffers } from "./api/products/offers-available";
 
 const HomePage = () => {
   const { categories } = useSelector((state) => state.category);
 
-  const { data } = useGetOffers();
-
-  console.log("home offer carousel", data);
-
   return (
     <div>
       <Hero />
-      <OfferBanners />
+      <OfferBanner />
       <ProductCategories categories={categories} />
       <OrderCarousel />
-      {!data ? <Loader /> : <OffersCarousel products={data} />}
+      <OfferCarousel />
       <Features />
       <Review />
       <Corporate />
@@ -36,5 +37,24 @@ const HomePage = () => {
     </div>
   );
 };
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async () => {
+//     await dbConnect();
+
+//     const categories = await fetchCategories(categoryModel);
+
+//     store.dispatch(setCategories(categories));
+
+//     const offers = await fetchOffers(productModel);
+
+//     return {
+//       props: {
+//         products: offers,
+//         categories: categories,
+//       },
+//     };
+//   }
+// );
 
 export default HomePage;

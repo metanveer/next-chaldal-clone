@@ -1,6 +1,6 @@
 import React from "react";
-import ReviewCarousel from "../common/carousels/ReviewCarousel";
-import Section from "../common/Section";
+import ReviewCarousel from "../common/carousels/review-carousel";
+import Section from "../common/section";
 
 const clients = [
   {

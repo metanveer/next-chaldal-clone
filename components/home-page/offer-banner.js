@@ -1,7 +1,7 @@
 import Link from "next/link";
-import css from "./OfferBanners.module.css";
+import css from "./offer-banner.module.css";
 
-function OfferBanners() {
+function OfferBanner() {
   return (
     <section className={css.offerBanner}>
       <Link href="/popular">
@@ -22,4 +22,4 @@ function OfferBanners() {
   );
 }
 
-export default OfferBanners;
+export default OfferBanner;

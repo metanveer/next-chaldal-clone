@@ -1,7 +1,7 @@
 import React from "react";
-import StoreBadges from "../common/StoreBadges";
-import css from "./GetApp.module.css";
-import PhoneInputForm from "./PhoneInputForm";
+import StoreBadges from "../common/store-badges";
+import css from "./get-app.module.css";
+import PhoneInputForm from "./phone-input-form";
 
 const GetApp = () => {
   return (

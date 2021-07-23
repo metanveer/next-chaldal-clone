@@ -3,7 +3,7 @@ import categoriesWithSlug from "../../data/categoriesWithSlug";
 
 const AddCategoriesPage = () => {
   async function handleAddCategories() {
-    const url = "/api/Category/AddNewCategory";
+    const url = "/api/categories";
     const config = {
       method: "POST",
       headers: {
@@ -21,7 +21,7 @@ const AddCategoriesPage = () => {
       });
   }
   async function handleGetCategories() {
-    const url = "/api/Category/GetAllCategories";
+    const url = "/api/categories";
     const config = {
       method: "GET",
     };

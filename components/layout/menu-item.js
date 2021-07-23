@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Highlighter from "react-highlight-words";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { useSelector } from "react-redux";
-import css from "./MenuItem.module.css";
+import css from "./menu-item.module.css";
 
 const MenuItem = ({
   name,

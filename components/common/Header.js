@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
-import FadeCarousel from "./carousels/FadeCarousel";
-import css from "./Header.module.css";
+import FadeCarousel from "./carousels/fade-carousel";
+import css from "./header.module.css";
 import { getParentsArray } from "../../utils/get-parent-category";
 
 const frontBanner = {

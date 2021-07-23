@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FaUser } from "react-icons/fa";
-import css from "./UserMenu.module.css";
+import css from "./user-menu.module.css";
 
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/router";

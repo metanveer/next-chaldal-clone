@@ -1,28 +1,24 @@
-import React, { Fragment, useState, useEffect } from "react";
-import css from "./NavBar.module.css";
+import React from "react";
+import css from "./nav-bar.module.css";
 import { HiMenu } from "react-icons/hi";
 import { GoLocation } from "react-icons/go";
-import { FaUser } from "react-icons/fa";
 import { FiHelpCircle } from "react-icons/fi";
 import { HiChevronDown } from "react-icons/hi";
-import SearchBox from "../common/SearchBox";
+import SearchBox from "../common/search-box";
 import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
 import { useDispatch, useSelector } from "react-redux";
-import UserMenu from "./UserMenu";
+import UserMenu from "./user-menu";
 import {
   hideModal,
   showModal,
 } from "../../features/toggleModal/toggleModalSlice";
-import Modal from "../common/Modal";
-import LoginForm from "../login/LoginForm";
+import Modal from "../common/modal";
+import LoginForm from "../login/login-form";
 
 const NavBar = ({ handleSideBar }) => {
   const { currentUser } = useSelector((state) => state.user);
   const { modalShown, modalId } = useSelector((state) => state.toggleModal);
   const dispatch = useDispatch();
-
-  const router = useRouter();
 
   const handleSignIn = () => {
     dispatch(showModal("auth-modal"));

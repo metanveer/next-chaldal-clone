@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./Corporate.module.css";
+import css from "./corporate.module.css";
 import { FiCheck } from "react-icons/fi";
 import Link from "next/link";
 

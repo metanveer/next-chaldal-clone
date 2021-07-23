@@ -1,8 +1,8 @@
 import React from "react";
 import css from "../styles/offers.module.css";
-import OfferCard from "../components/common/OfferCard";
+import OfferCard from "../components/common/offer-card";
 import useGetOffers from "../hooks/useGetOffers";
-import Loader from "../components/common/Loader";
+import Loader from "../components/common/loader";
 
 const OffersPage = () => {
   const { data: products } = useGetOffers();

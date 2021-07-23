@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./Section.module.css";
+import css from "./section.module.css";
 
 const Section = ({ type, title, children }) => {
   if (type === "review") {

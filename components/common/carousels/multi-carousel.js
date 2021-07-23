@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
-import css from "./MultiCarousel.module.css";
+import css from "./multi-carousel.module.css";
 import useInterval from "../../../hooks/useInterval";
-import OfferCard from "../OfferCard";
+import OfferCard from "../offer-card";
 
 const MultiCarousel = ({ items }) => {
   const slideDuration = 3000;

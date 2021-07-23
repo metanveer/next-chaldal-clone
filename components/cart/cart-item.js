@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import css from "./CartItem.module.css";
+import css from "./cart-item.module.css";
 import { VscClose, VscChevronUp, VscChevronDown } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import {

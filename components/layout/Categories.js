@@ -3,8 +3,8 @@ import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getActiveCategory } from "../../utils/get-active-category";
 import { getParentsArray } from "../../utils/get-parent-category";
-import css from "./Categories.module.css";
-import MenuItem from "./MenuItem";
+import css from "./categories.module.css";
+import MenuItem from "./menu-item";
 
 const Categories = ({ categories }) => {
   const { currentCategory } = useSelector((state) => state.category);

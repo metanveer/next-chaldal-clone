@@ -4,7 +4,7 @@ import productsData from "../../data/modifiedProductData.json";
 const AddProductPage = () => {
   const handleAddProduct = async () => {
     try {
-      const res = await fetch(`/api/Product/AddMany`, {
+      const res = await fetch(`/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

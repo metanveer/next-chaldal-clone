@@ -1,11 +1,11 @@
 import { useRouter } from "next/dist/client/router";
 import React, { Fragment, useEffect, useRef } from "react";
-import ProductCard from "../../components/common/ProductCard";
+import ProductCard from "../../components/common/product-card";
 import InfiniteScroll from "react-infinite-scroller";
 import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
 import productModel from "../../models/productModel";
 import { getProducts } from "../api/products";
-import Loader from "../../components/common/Loader";
+import Loader from "../../components/common/loader";
 import { wrapper } from "../../store";
 import css from "../../styles/term.module.css";
 import { useInfiniteQuery } from "react-query";

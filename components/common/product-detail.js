@@ -7,9 +7,9 @@ import {
   setItemSeenStatus,
 } from "../../features/cartItems/cartItemsSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
-import Footer from "../common/Footer";
-import PicturesMagnify from "./PicturesMagnify";
-import css from "./ProductDetail.module.css";
+import Footer from "./main-footer";
+import PicturesMagnify from "./pictures-magnify";
+import css from "./product-detail.module.css";
 
 function getDiscPercent(price, discPric) {
   return (((price - discPric) / price) * 100).toFixed();

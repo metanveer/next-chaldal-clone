@@ -1,6 +1,6 @@
 import React from "react";
 import { FaFacebook } from "react-icons/fa";
-import css from "./FbLoginBtn.module.css";
+import css from "./fb-login-btn.module.css";
 
 const FbLoginBtn = ({ onLogin }) => {
   return (

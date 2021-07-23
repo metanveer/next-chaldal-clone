@@ -1,6 +1,6 @@
-import css from "./StoreBadges.module.css";
+import css from "./store-badges.module.css";
 
-const StoreBadges = ({ mountedAt }) => {
+const StoreBadges = () => {
   return (
     <div className={css.storeBadges}>
       <a

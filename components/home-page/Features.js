@@ -1,6 +1,6 @@
 import React from "react";
-import classes from "./Features.module.css";
-import Section from "../common/Section";
+import classes from "./features.module.css";
+import Section from "../common/section";
 
 const images = [
   {

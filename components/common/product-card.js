@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Highlighter from "react-highlight-words";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
-import Modal from "./Modal";
-import ProductDetail from "./ProductDetail";
-import Button from "./Button";
-import css from "./ProductCard.module.css";
+import Modal from "./modal";
+import ProductDetail from "./product-detail";
+import Button from "./button";
+import css from "./product-card.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToCart,

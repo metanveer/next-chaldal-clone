@@ -1,7 +1,6 @@
 import React from "react";
 import { IoBag } from "react-icons/io5";
-import css from "./CartFloating.module.css";
-
+import css from "./cart-floating.module.css";
 import dynamic from "next/dynamic";
 
 const Odometer = dynamic(import("react-odometerjs"), {

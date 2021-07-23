@@ -1,7 +1,7 @@
-import Section from "../common/Section";
-import Card from "../common/Card";
+import Section from "../common/section";
+import Card from "../common/card";
 
-import Loader from "../common/Loader";
+import Loader from "../common/loader";
 
 function ProductCategories({ categories }) {
   return (

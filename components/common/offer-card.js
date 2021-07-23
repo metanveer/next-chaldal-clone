@@ -1,6 +1,6 @@
 import React from "react";
-import css from "./OfferCard.module.css";
-import ProductCard from "./ProductCard";
+import css from "./offer-card.module.css";
+import ProductCard from "./product-card";
 
 const OfferCard = ({
   cardType,

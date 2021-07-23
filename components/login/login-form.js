@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { signIn } from "next-auth/client";
-import { FaFacebook } from "react-icons/fa";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import css from "./LoginForm.module.css";
+import css from "./login-form.module.css";
 import { useRouter } from "next/dist/client/router";
 import { hideModal } from "../../features/toggleModal/toggleModalSlice";
 import { useDispatch } from "react-redux";
-import FbLoginBtn from "../common/FbLoginBtn";
+import FbLoginBtn from "../common/fb-login-btn";
 
 async function createUser(email, password) {
   const res = await fetch("/api/auth/signup", {

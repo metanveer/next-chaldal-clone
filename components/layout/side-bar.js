@@ -1,7 +1,7 @@
 import React from "react";
-import SideBarSpecial from "./SideBarSpecial";
-import css from "./SideBar.module.css";
-import Categories from "./Categories";
+import SideBarSpecial from "./sidebar-special";
+import css from "./side-bar.module.css";
+import Categories from "./categories";
 import useGetOffers from "../../hooks/useGetOffers";
 import { useSelector } from "react-redux";
 

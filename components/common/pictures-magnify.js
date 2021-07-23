@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import css from "./PicturesMagnify.module.css";
+import css from "./pictures-magnify.module.css";
 
 const PicturesMagnify = ({ pictureUrls }) => {
   const [isHoveringImg, setIsHoveringImg] = useState(false);

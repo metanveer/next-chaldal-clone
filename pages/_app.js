@@ -2,7 +2,7 @@ import React from "react";
 import App from "next/app";
 import { wrapper } from "../store";
 import { getSession, Provider } from "next-auth/client";
-import Layout from "../components/layout/Layout";
+import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { setFetchedCategories } from "../features/category/categoryActions";

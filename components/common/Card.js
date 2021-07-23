@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import nameToUrl from "../../utils/name-to-url";
-import css from "./Card.module.css";
+import css from "./card.module.css";
 
 const Card = ({ type, name, image, slug }) => {
   if (type === "category") {

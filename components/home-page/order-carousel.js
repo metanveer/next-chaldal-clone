@@ -1,6 +1,6 @@
 import React from "react";
-import ImgCarousel from "../common/carousels/ImgCarousel";
-import Section from "../common/Section";
+import ImgCarousel from "../common/carousels/img-carousel";
+import Section from "../common/section";
 
 const images = [
   {

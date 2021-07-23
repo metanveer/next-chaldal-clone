@@ -1,7 +1,7 @@
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 
-import css from "./DeliveryPromo.module.css";
+import css from "./delivery-promo.module.css";
 
 const DeliveryPromo = ({
   minAmountForPromo,

@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./DeliveryPolicy.module.css";
+import css from "./delivery-policy.module.css";
 
 const DeliveryPolicy = () => {
   return (

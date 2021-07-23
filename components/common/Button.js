@@ -1,6 +1,6 @@
 import React from "react";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
-import css from "./Button.module.css";
+import css from "./button.module.css";
 
 const Button = ({ btnType, onIncreaseQty, onDecreaseQty, itemInCart }) => {
   if (btnType === "add-to-cart") {

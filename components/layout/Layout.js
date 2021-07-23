@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import useScrollbarSize from "react-scrollbar-size";
 import { useSelector, useDispatch } from "react-redux";
 import { showCart, hideCart } from "../../features/toggleCart/toggleCartSlice";
-import NavBar from "./NavBar";
-import SideBar from "./SideBar";
+import NavBar from "./nav-bar";
+import SideBar from "./side-bar";
 
-import css from "./Layout.module.css";
-import Cart from "../cart/Cart";
-import CartFloating from "../cart/CartFloating";
+import css from "./layout.module.css";
+import Cart from "../cart/cart";
+import CartFloating from "../cart/cart-floating";
 import useBounceAnimation from "../../hooks/useBounceAnimation";
 
 const Layout = ({ children }) => {

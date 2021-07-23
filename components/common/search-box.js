@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
-import css from "./SearchBox.module.css";
+import css from "./search-box.module.css";
 
 const SearchBox = ({ type }) => {
   const inputRef = useRef();
