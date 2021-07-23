@@ -9,7 +9,7 @@
 }
 
 .btnCollapse {
-  z-index: 3;
+  z-index: 96;
   cursor: pointer;
   position: absolute;
   left: -16px;

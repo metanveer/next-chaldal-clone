@@ -28,7 +28,7 @@
   position: absolute;
   top: calc(var(--width) * 0.325);
   right: 190px;
-  z-index: 3000;
+  z-index: 85;
 }
 
 .dot {

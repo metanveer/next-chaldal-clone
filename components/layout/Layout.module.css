@@ -70,7 +70,7 @@
   top: 55px;
   bottom: 0;
   width: var(--cart-width);
-  z-index: 90;
+  z-index: 95;
   transition: all 0.3s ease;
 }
 

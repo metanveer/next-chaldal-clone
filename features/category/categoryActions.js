@@ -3,7 +3,9 @@ import { setCategories } from "./categorySlice";
 export const setFetchedCategories = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:3000/api/categories");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/categories`
+      );
 
       if (!response.ok) {
         throw new Error("Couldn't fetch categories");

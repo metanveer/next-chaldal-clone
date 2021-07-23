@@ -18,20 +18,22 @@ const HomePage = () => {
 
   const { data } = useGetOffers();
 
+  console.log("home offer carousel", data);
+
   return (
-    <>
+    <div>
       <Hero />
       <OfferBanners />
       <ProductCategories categories={categories} />
       <OrderCarousel />
-      {data ? <OffersCarousel products={data} /> : <Loader />}
+      {!data ? <Loader /> : <OffersCarousel products={data} />}
       <Features />
       <Review />
       <Corporate />
       <GetApp />
       <Stats />
       <Footer />
-    </>
+    </div>
   );
 };
 

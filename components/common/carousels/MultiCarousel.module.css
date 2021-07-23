@@ -4,7 +4,7 @@
   /* background-color: var(--navbar-menu-btn-hover); */
   /* border: 1px solid black; */
   border-radius: 10px;
-  z-index: 999;
+  z-index: 85;
 }
 
 .btn {
