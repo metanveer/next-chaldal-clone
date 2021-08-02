@@ -1,0 +1,168 @@
+.container {
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.2s linear;
+  width: 600px;
+  font-size: 16px;
+}
+
+.container input:focus {
+  border-bottom: 1px solid red;
+}
+
+.container button:disabled {
+  color: #fff;
+  background-color: #ddd;
+}
+
+.title {
+  font-weight: 400;
+  margin: 0 0 1.5rem 0;
+}
+
+.input {
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: left;
+  font-weight: 400;
+  padding: 10px 5px;
+  background-color: #fff;
+  color: #444;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  width: 100%;
+  transition: all 0.2s linear;
+}
+
+.phone {
+  padding: 10px 5px 10px 40px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input:disabled {
+  color: rgb(165, 165, 165);
+  background: rgb(245, 245, 245);
+}
+
+.label {
+  font-weight: 700;
+}
+
+.error {
+  font-weight: 400;
+  color: rgb(250, 0, 0);
+  font-size: 13px;
+  margin-top: 2px;
+}
+.errorForm {
+  font-weight: 600;
+  color: rgb(250, 0, 0);
+}
+
+.formSuccess {
+  font-weight: 600;
+  color: rgb(1, 134, 52);
+}
+
+.inputGroup {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px 30px;
+  position: relative;
+}
+
+.dialCode {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  color: rgb(134, 134, 134);
+  background: rgb(245, 245, 245);
+  padding: 10px 5px;
+  font-weight: 400;
+}
+
+.genderSelect {
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: left;
+  font-weight: 400;
+  padding: 10px 5px;
+  background-color: #fff;
+  color: #444;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  width: 100%;
+  transition: all 0.2s linear;
+}
+
+.genderSelect option {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.genderSelect option:hover {
+  background-color: yellow;
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  width: 180px;
+  border-radius: 5px;
+  color: #eee;
+  background: var(--color-secondary-red);
+  outline: none;
+  border: none;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 700;
+  margin: 5px 0;
+  transition: all 0.2s linear;
+}
+
+.button:hover:enabled {
+  color: #eee;
+  background-color: var(--color-secondary-hover);
+}
+
+.status {
+  font-size: 15px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.addNewAddress {
+  width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+  color: inherit;
+  font-weight: 300;
+  padding: 8px 0;
+  background: #fff;
+  letter-spacing: 0.3px;
+}
+
+.addNewAddress:hover {
+  color: var(--color-secondary-red);
+  border: 1px solid var(--color-secondary-red);
+}
+
+.addNewAddress::before {
+  content: "+";
+  font-size: 1.3rem;
+  font-weight: 300;
+  padding-right: 10px;
+}

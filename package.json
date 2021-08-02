@@ -27,6 +27,7 @@
     "react-query": "^3.19.0",
     "react-redux": "^7.2.4",
     "react-scrollbar-size": "^4.0.0",
+    "react-select": "^4.3.1",
     "react-transition-group": "^4.4.2",
     "swr": "^0.5.6",
     "url-slug": "^3.0.2",

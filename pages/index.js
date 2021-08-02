@@ -10,13 +10,6 @@ import Stats from "../components/home-page/stats";
 import Footer from "../components/common/main-footer";
 import OfferCarousel from "../components/home-page/offer-carousel";
 import { useSelector } from "react-redux";
-// import { wrapper } from "../store";
-// import dbConnect from "../db/dbConnect";
-// import productModel from "../models/productModel";
-// import categoryModel from "../models/categoryModel";
-// import { fetchCategories } from "./api/categories";
-// import { setCategories } from "../features/category/categorySlice";
-// import { fetchOffers } from "./api/products/offers-available";
 
 const HomePage = () => {
   const { categories } = useSelector((state) => state.category);
@@ -37,24 +30,5 @@ const HomePage = () => {
     </div>
   );
 };
-
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async () => {
-//     await dbConnect();
-
-//     const categories = await fetchCategories(categoryModel);
-
-//     store.dispatch(setCategories(categories));
-
-//     const offers = await fetchOffers(productModel);
-
-//     return {
-//       props: {
-//         products: offers,
-//         categories: categories,
-//       },
-//     };
-//   }
-// );
 
 export default HomePage;

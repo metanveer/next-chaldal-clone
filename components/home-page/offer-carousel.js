@@ -6,12 +6,13 @@ import Loader from "../common/loader";
 function OfferCarousel() {
   const { data, error } = useGetOffers();
 
-  console.log("error loading offer carousel", error);
-
   return (
     <Section title="Special Offers">
       {error ? (
-        <div>{error}</div>
+        <div>
+          {console.log(error)}
+          {"Something unexpected happened while loading offers!"}
+        </div>
       ) : !data ? (
         <Loader />
       ) : (

@@ -2,20 +2,16 @@ import Link from "next/link";
 import React from "react";
 import { FaUser } from "react-icons/fa";
 import css from "./user-menu.module.css";
-
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/router";
-import { setCurrentUser } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
 
 const UserMenu = ({ user }) => {
-  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleLogOut = async () => {
     const data = await signOut({ redirect: false, callbackUrl: "/" });
     router.push(data.url);
-    dispatch(setCurrentUser(null));
   };
 
   return (

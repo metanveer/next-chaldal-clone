@@ -1,0 +1,15 @@
+.label {
+  padding: 5px 2px;
+  font-size: 15px;
+}
+
+.container {
+  margin-top: 3px;
+}
+
+.error {
+  font-weight: 400;
+  color: rgb(250, 0, 0);
+  font-size: 14px;
+  margin-top: 2px;
+}

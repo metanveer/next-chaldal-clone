@@ -1,0 +1,94 @@
+.container {
+  border-radius: 5px;
+  padding: 10px;
+
+  transition: all 0.2s linear;
+  text-align: left;
+  font-size: 16px;
+}
+
+.newContainer {
+  width: 400px;
+  margin: 0px auto;
+}
+
+.container input:focus {
+  border: 1px solid red;
+}
+.container textarea:focus {
+  border: 1px solid red;
+}
+
+.container fieldset:focus-within {
+  color: rgb(209, 7, 7);
+  border: 1px solid red;
+  font-weight: 700;
+}
+
+.container button:disabled {
+  color: #fff;
+  background-color: rgb(202, 202, 202);
+  border-color: rgb(202, 202, 202);
+  cursor: auto;
+}
+
+.title {
+  font-size: 1.2rem;
+  padding: 2px 0 10px 2px;
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 5px 0;
+}
+
+.errorForm {
+  font-weight: 600;
+  color: rgb(250, 0, 0);
+}
+.formSuccess {
+  font-weight: 600;
+  color: rgb(1, 134, 52);
+}
+
+.button {
+  width: 48%;
+  border-radius: 5px;
+  color: #fff;
+  background: var(--color-secondary-red);
+  outline: none;
+  border: none;
+  height: 40px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 400;
+  transition: all 0.2s linear;
+}
+
+.newBtn {
+  width: 70%;
+  height: 50px;
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin: auto;
+}
+
+.btnDel {
+  background-color: #fff;
+  color: var(--color-secondary-red);
+  border: 1px solid var(--color-secondary-red);
+}
+
+.button:hover:enabled {
+  color: #eee;
+  background-color: var(--color-secondary-hover);
+}
+
+.status {
+  font-size: 15px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+}

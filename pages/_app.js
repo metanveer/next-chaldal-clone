@@ -6,7 +6,6 @@ import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { setFetchedCategories } from "../features/category/categoryActions";
-import { setCurrentUser } from "../features/user/userSlice";
 
 class MyApp extends App {
   render() {
@@ -30,10 +29,17 @@ class MyApp extends App {
         await store.dispatch(setFetchedCategories());
 
         const session = await getSession({ req: ctx.req });
+
         if (session) {
-          store.dispatch(setCurrentUser(session.user));
-        } else {
-          store.dispatch(setCurrentUser(null));
+          return {
+            pageProps: {
+              ...(Component.getInitialProps
+                ? await Component.getInitialProps({ ...ctx, store })
+                : {}),
+              pathname: ctx.pathname,
+              session: session,
+            },
+          };
         }
 
         return {

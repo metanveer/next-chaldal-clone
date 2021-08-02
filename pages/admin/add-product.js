@@ -12,7 +12,6 @@ const AddProductPage = () => {
         body: JSON.stringify(productsData),
       });
       const data = await res.json();
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

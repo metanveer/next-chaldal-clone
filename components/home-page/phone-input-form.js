@@ -36,7 +36,6 @@ const PhoneInputForm = () => {
 
   function handlePhoneNumSubmit(e) {
     e.preventDefault();
-    console.log("Phone Number:", phoneNum);
   }
 
   return (

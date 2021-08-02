@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import css from "./nav-bar.module.css";
 import { HiMenu } from "react-icons/hi";
 import { GoLocation } from "react-icons/go";
@@ -14,9 +14,13 @@ import {
 } from "../../features/toggleModal/toggleModalSlice";
 import Modal from "../common/modal";
 import LoginForm from "../login/login-form";
+import { useSession } from "next-auth/client";
+import { useQuery } from "react-query";
+import Loader from "../common/loader";
+import { getUserProfile } from "../../utils/query-helpers";
 
 const NavBar = ({ handleSideBar }) => {
-  const { currentUser } = useSelector((state) => state.user);
+  const [session] = useSession();
   const { modalShown, modalId } = useSelector((state) => state.toggleModal);
   const dispatch = useDispatch();
 
@@ -27,6 +31,13 @@ const NavBar = ({ handleSideBar }) => {
   const handleCloseModal = () => {
     dispatch(hideModal());
   };
+
+  const enableQuery = session ? true : false;
+
+  const { isLoading, data } = useQuery("navbar", getUserProfile, {
+    enabled: enableQuery,
+    initialData: session?.user,
+  });
 
   return (
     <>
@@ -77,9 +88,9 @@ const NavBar = ({ handleSideBar }) => {
           <div className={css.localeBn}>বাং</div>
         </span>
 
-        {currentUser && <UserMenu user={currentUser} />}
+        {session && <>{isLoading ? <Loader /> : <UserMenu user={data} />}</>}
 
-        {!currentUser && (
+        {!session && (
           <button onClick={handleSignIn} className={css.btnSignIn}>
             Sign In
           </button>

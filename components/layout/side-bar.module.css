@@ -1,10 +1,10 @@
 .sideBar {
   width: 100%;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 .devider {
   border-bottom: 1px solid #eee;
-  margin: 5px 0;
+  margin: 10px 0 5px 0;
   width: 100%;
 }
 

@@ -23,6 +23,7 @@ async function createUser(email, password) {
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -34,7 +35,6 @@ const LoginForm = () => {
     }),
     onSubmit: handleFormSubmit,
   });
-  console.log("formik", formik);
 
   const {
     setSubmitting,
@@ -105,8 +105,6 @@ const LoginForm = () => {
 
   const fbLoginHandler = async () => {
     const res = await signIn("facebook");
-
-    console.log("res fb", res);
   };
 
   return (

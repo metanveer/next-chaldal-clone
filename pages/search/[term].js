@@ -34,8 +34,6 @@ const SearchResultsPage = ({ result }) => {
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });
 
-  console.log("search query", queryRes);
-
   useEffect(() => {
     searchHeadRef.current.scrollIntoView();
   }, [term]);

@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  dbConnect();
+  await dbConnect();
 
   const userExists = await User.findOne({ email: email });
 
@@ -36,6 +36,7 @@ export default async function handler(req, res) {
   const result = await User.create({
     email: email,
     password: hashedPassword,
+    authProvider: "credentials",
   });
 
   res.status(201).json({ message: "User created!", data: result });
