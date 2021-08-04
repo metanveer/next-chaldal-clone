@@ -29,7 +29,7 @@ export default NextAuth({
         );
 
         if (!isValid) {
-          throw new Error("Login failed!");
+          throw new Error("Password didn't match!");
         }
         return { email: user.email };
       },
@@ -54,8 +54,10 @@ export default NextAuth({
             return true;
           }
 
+          const userName = user.name ? user.name : user.email.split("@")[0];
+
           const newUser = await User.create({
-            name: user.name,
+            name: userName,
             email: user.email,
             authProvider: "facebook",
           });

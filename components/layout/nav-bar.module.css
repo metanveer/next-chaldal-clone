@@ -166,28 +166,6 @@
 .iconSecondary {
   font-size: 22px;
   margin-top: 7px;
-  /*
-  margin-top: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
-.btnSignIn {
-  flex: 0 0 180px;
-  height: 55px;
-  background-color: var(--navbar-login-area-btn);
-  font-size: 12px;
-  font-weight: bold;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.btnSignIn:hover {
-  background-color: var(--navbar-login-area-btn-hover);
 }
 
 .navbarLastItemWrapper {

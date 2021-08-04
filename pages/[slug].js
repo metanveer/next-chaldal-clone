@@ -16,6 +16,7 @@ import { getProductsByCatId } from "./api/products/category";
 import { useSelector } from "react-redux";
 import { getCategoryBySlug } from "./api/category/[catSlug]";
 import { getProductBySlug } from "./api/product/[prodSlug]";
+import Message from "../components/common/message";
 
 const SlugDetailsPage = ({ category, product, result }) => {
   const { categories } = useSelector((state) => state.category);
@@ -159,14 +160,13 @@ const SlugDetailsPage = ({ category, product, result }) => {
     );
   }
 
-  if (hasNothing) {
-    return <h1>Noting Found</h1>;
-  }
-
   return (
-    <Fragment>
-      <h1>Loading...</h1>
-    </Fragment>
+    <Message
+      title="Page Not Found!"
+      info="We're unable to find the page you're looking for!"
+      text="Either the content is no longer available or you might have made a typo
+in the URL!"
+    />
   );
 };
 

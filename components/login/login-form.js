@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { signIn } from "next-auth/client";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,19 +7,7 @@ import { useRouter } from "next/dist/client/router";
 import { hideModal } from "../../features/toggleModal/toggleModalSlice";
 import { useDispatch } from "react-redux";
 import FbLoginBtn from "../common/fb-login-btn";
-
-async function createUser(email, password) {
-  const res = await fetch("/api/auth/signup", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-  return data;
-}
+import FlowerLoader from "../common/flower-loader";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -48,8 +36,6 @@ const LoginForm = () => {
     isValidating,
   } = formik;
 
-  const [isLogin, setIsLogin] = useState(true);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -59,108 +45,69 @@ const LoginForm = () => {
     //eslint-disable-next-line
   }, [isValidating]);
 
-  const switchLoginMode = () => {
-    setStatus("");
-    setIsLogin((prevState) => !prevState);
-  };
-
   async function handleFormSubmit(values) {
     try {
       setSubmitting(true);
       setStatus("Submitting data...");
 
-      if (isLogin) {
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          password: values.password,
-        });
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+      });
 
-        if (!result.error) {
-          setStatus("Success!");
-          router.replace("/food");
-          dispatch(hideModal());
-        } else {
-          setStatus(result.error);
-        }
-      } else {
-        try {
-          const result = await createUser(values.email, values.password);
-          if (result.message === "User created!") {
-            setStatus("User created! Please sign in to continue...");
-          } else {
-            setStatus(result.message);
-          }
-        } catch (error) {
-          setStatus(result.message);
-          console.log(error);
-        }
+      if (!result.error) {
+        setStatus("Success!");
+        router.replace("/food");
+        dispatch(hideModal());
       }
-
       setSubmitting(false);
+      setStatus(result.error);
     } catch (error) {
+      setStatus("Unexpected error occured while signing in!");
       console.log("error from login page", error);
     }
   }
 
-  const fbLoginHandler = async () => {
-    const res = await signIn("facebook");
-  };
-
   return (
-    <div className={css.container}>
-      {isLogin && <FbLoginBtn onLogin={fbLoginHandler} />}
-      <form onSubmit={handleSubmit}>
-        <div className={css.inputGroup}>
-          <input
-            className={css.input}
-            name="email"
-            type="email"
-            placeholder="Email address"
-            {...getFieldProps("email")}
-          />
+    <form onSubmit={handleSubmit}>
+      <div className={css.inputGroup}>
+        <input
+          className={css.input}
+          name="email"
+          type="email"
+          placeholder="Email address"
+          {...getFieldProps("email")}
+        />
 
-          {touched.email && errors.email ? (
-            <div className={css.error}>{errors.email}</div>
-          ) : null}
-        </div>
-        <div className={css.inputGroup}>
-          <input
-            className={css.input}
-            name="password"
-            type="password"
-            placeholder="Password"
-            {...getFieldProps("password")}
-          />
-          {touched.password && errors.password ? (
-            <div className={css.error}>{errors.password}</div>
-          ) : null}
-        </div>
+        {touched.email && errors.email ? (
+          <div className={css.error}>{errors.email}</div>
+        ) : null}
+      </div>
+      <div className={css.inputGroup}>
+        <input
+          className={css.input}
+          name="password"
+          type="password"
+          placeholder="Password"
+          {...getFieldProps("password")}
+        />
+        {touched.password && errors.password ? (
+          <div className={css.error}>{errors.password}</div>
+        ) : null}
+      </div>
 
-        <div className={css.status}>{status}</div>
-        <button className={css.button} type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
-            "Please wait..."
-          ) : (
-            <>{isLogin ? "Sign In" : "Create Account"}</>
-          )}
-        </button>
-        <div className={css.formFooter}>
-          {isLogin && (
-            <>
-              New here?{" "}
-              <span onClick={switchLoginMode}>Please create an account</span>
-            </>
-          )}
-          {!isLogin && (
-            <>
-              Got an account?{" "}
-              <span onClick={switchLoginMode}>Please sign in</span>
-            </>
-          )}
-        </div>
-      </form>
-    </div>
+      <div className={css.status}>{status}</div>
+      <button className={css.button} type="submit" disabled={isSubmitting}>
+        {isSubmitting ? (
+          <span>
+            <FlowerLoader color="white" />
+          </span>
+        ) : (
+          "Sign In"
+        )}
+      </button>
+    </form>
   );
 };
 

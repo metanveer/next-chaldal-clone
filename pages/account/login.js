@@ -1,12 +1,11 @@
 import { getSession } from "next-auth/client";
 import React from "react";
-
-import LoginForm from "../../components/login/login-form";
+import AuthSwitcher from "../../components/login/auth-switcher";
 
 const LoginPage = () => {
   return (
     <div style={{ margin: "8px" }}>
-      <LoginForm />
+      <AuthSwitcher />
     </div>
   );
 };

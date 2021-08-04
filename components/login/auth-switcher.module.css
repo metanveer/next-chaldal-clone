@@ -1,0 +1,72 @@
+.container {
+  border-radius: 5px;
+  padding: 15px 10px 10px 10px;
+  transition: all 0.2s linear;
+  width: 340px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.formFooter {
+  font-size: 15px;
+  padding: 20px 0 40px 0;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  color: rgb(238, 41, 90);
+}
+.formFooter:hover {
+  text-decoration: underline;
+}
+
+.button {
+  width: 100%;
+  border-radius: 5px;
+  color: #eee;
+  background: var(--color-secondary-red);
+  outline: none;
+  border: none;
+  height: 60px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 700;
+  transition: all 0.2s linear;
+  /* margin: 20px 0 20px 0; */
+}
+
+.button:hover {
+  color: #eee;
+  background-color: var(--color-secondary-hover);
+}
+
+.btnSecCreatNew {
+  background-color: var(--color-primary-yellow);
+  color: rgb(112, 112, 112);
+  height: 40px;
+  font-weight: 500;
+  font-size: 15px;
+  width: 60%;
+  margin: 20px 0;
+}
+.btnSecCreatNew:hover {
+  background-color: #ffbd18;
+  color: rgb(112, 112, 112);
+}
+.btnSecSignIn {
+  background-color: var(--color-primary-yellow);
+  color: rgb(112, 112, 112);
+  height: 40px;
+  font-weight: 500;
+  font-size: 15px;
+  width: 75%;
+  margin: 10px 0 30px 0;
+}
+.btnSecSignIn:hover {
+  background-color: #ffbd18;
+  color: rgb(112, 112, 112);
+}
+
+.border {
+  border-top: 1px solid #ccc;
+  margin: 30px 0px 25px 0;
+}

@@ -13,6 +13,37 @@ export const updateProfile = async (data) => {
   }
   return result.data;
 };
+export const createUser = async (data) => {
+  const url = "/api/auth/signup";
+  const res = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const result = await res.json();
+  if (result.error) {
+    throw new Error(result.error);
+  }
+  return result;
+};
+
+export const changePassword = async (data) => {
+  const url = "/api/user/change-password";
+  const res = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const result = await res.json();
+  if (result.error) {
+    throw new Error(result.error);
+  }
+  return result;
+};
 
 export const modifyAddress = async (data) => {
   function getMethod(data) {
@@ -33,7 +64,7 @@ export const modifyAddress = async (data) => {
   });
   const result = await res.json();
   if (result.error) {
-    throw new Error(result.error);
+    throw Error(result.error);
   }
   return result.data;
 };

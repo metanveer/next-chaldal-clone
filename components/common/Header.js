@@ -5,12 +5,9 @@ import css from "./header.module.css";
 import { getParentsArray } from "../../utils/get-parent-category";
 
 const frontBanner = {
-  imageOne:
-    "https://chaldn.com/_mpimage?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D79459&q=low&v=1&m=300&webp=1",
-  imageTwo:
-    "https://chaldn.com/_mpimage?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D79460&q=low&v=1&m=910&webp=1",
-  imageThree:
-    "https://chaldn.com/_mpimage?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D79461&q=low&v=1&m=910&webp=1",
+  imageOne: "/food-page-banner/image-one.webp",
+  imageTwo: "/food-page-banner/image-two.webp",
+  imageThree: "/food-page-banner/image-three.webp",
 };
 
 const Header = ({ type, category, allCategories }) => {

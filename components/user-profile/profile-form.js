@@ -12,6 +12,7 @@ import {
   hideModal,
   showModal,
 } from "../../features/toggleModal/toggleModalSlice";
+import FlowerLoader from "../common/flower-loader";
 
 const ProfileForm = ({ user }) => {
   const [hasSeen, setHasSeen] = useState(true);
@@ -195,12 +196,14 @@ const ProfileForm = ({ user }) => {
         {userProfile.addresses.length === 0 && (
           <fieldset className={styles.inputGroup}>
             <legend>Address Book</legend>
-            <AddressForm user={userProfile} newAddress />
+            <AddressForm user={userProfile} firstAddress />
           </fieldset>
         )}
         <div className={styles.status}>
           {isLoading ? (
-            <div>Loading...</div>
+            <div>
+              <FlowerLoader />
+            </div>
           ) : isError ? (
             <div className={styles.errorForm}>
               {console.log("Error saving profile:", error)}

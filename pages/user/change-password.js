@@ -1,7 +1,8 @@
 import React from "react";
+import ChangePasswordForm from "../../components/change-password/change-pw-form";
 
 const ChangePasswordPage = () => {
-  return <div>Change your password</div>;
+  return <ChangePasswordForm />;
 };
 
 export default ChangePasswordPage;

@@ -5,26 +5,29 @@ import styles from "./address-form.module.css";
 import { modifyAddress } from "../../utils/query-helpers";
 import { useMutation, useQueryClient } from "react-query";
 import AddressFormFields from "./address-form-fields";
+import FlowerLoader from "../common/flower-loader";
 
-const AddressForm = ({ item, newAddress }) => {
+const AddressForm = ({ item, firstAddress }) => {
   const queryClient = useQueryClient();
 
   const mutations = useMutation((data) => modifyAddress(data), {
-    onSuccess: (data) => {
-      queryClient.setQueryData("profile", data);
-    },
+    onSuccess: (data) => handleMutationSuccess(data),
   });
 
   const userData = queryClient.getQueryData("profile");
 
-  const { error, isError, isLoading, isSuccess, mutate, mutateAsync } =
-    mutations;
+  const { error, isError, isLoading, isSuccess, mutate } = mutations;
 
   const formik = useFormik({
     initialValues: {
-      name: newAddress && userData.name ? userData.name : item ? item.name : "",
+      name:
+        firstAddress && userData?.name ? userData.name : item ? item.name : "",
       phone:
-        newAddress && userData.phone ? userData.phone : item ? item.phone : "",
+        firstAddress && userData?.phone
+          ? userData.phone
+          : item
+          ? item.phone
+          : "",
       division: item?.division || { value: "", label: "" },
       district: item?.district || { value: "", label: "" },
       upazila: item?.upazila || { value: "", label: "" },
@@ -47,36 +50,42 @@ const AddressForm = ({ item, newAddress }) => {
       ),
     }),
 
-    onSubmit: async (values) => {
-      const result = await mutateAsync({
+    onSubmit: (values) => {
+      mutate({
         addressId: item?._id,
         addressData: values,
       });
-
-      if (result) {
-        formik.resetForm({ values });
-      }
+      formik.resetForm({ values });
     },
   });
 
-  const deleteAddress = async (id) => {
+  function handleMutationSuccess(data) {
+    queryClient.setQueryData("profile", data);
+    queryClient.setQueryData("navbar", data);
+  }
+
+  const deleteAddress = (id) => {
     mutate({
       addressId: id,
     });
   };
 
   return (
-    <div className={`${styles.container} ${newAddress && styles.newContainer}`}>
+    <div
+      className={`${styles.container} ${firstAddress && styles.newContainer}`}
+    >
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.title}>
           {item
             ? "Edit Address"
-            : `${newAddress ? "Confirm your address" : "New Address"}`}
+            : `${firstAddress ? "Confirm your address" : "New Address"}`}
         </div>
         <AddressFormFields formik={formik} />
         <div className={styles.status}>
           {isLoading ? (
-            <div>Loading...</div>
+            <div>
+              <FlowerLoader />
+            </div>
           ) : isError ? (
             <div className={styles.errorForm}>
               {console.log("Error saving address:", error)}
@@ -90,12 +99,13 @@ const AddressForm = ({ item, newAddress }) => {
         <div className={styles.btnContainer}>
           <button
             disabled={isLoading}
-            className={`${styles.button} ${newAddress && styles.newBtn}`}
+            className={`${styles.button} ${firstAddress && styles.newBtn}`}
             type="submit"
+            disabled={!firstAddress && !formik.dirty}
           >
-            {item ? "Save" : `${newAddress ? "Confirm" : "Add"}`}
+            {item ? "Save" : `${firstAddress ? "Confirm" : "Add"}`}
           </button>
-          {!newAddress && (
+          {!firstAddress && (
             <button
               onClick={() => deleteAddress(item._id)}
               disabled={!item}

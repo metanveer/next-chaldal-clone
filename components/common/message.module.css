@@ -1,0 +1,21 @@
+.container {
+  padding: 0 20px;
+  max-width: 480px;
+}
+
+.title {
+  color: rgb(126, 88, 7);
+}
+
+.error {
+  color: red;
+}
+
+.info {
+  font-weight: 500;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 1rem;
+}
