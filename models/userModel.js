@@ -49,6 +49,22 @@ const userSchema = new mongoose.Schema(
         address: { type: String, minLength: 4, maxLength: 150 },
       },
     ],
+    cartState: {
+      items: [
+        {
+          qty: { type: Number },
+          packSize: { type: String },
+          image: { type: String },
+          itemName: { type: String },
+          discPrice: { type: Number },
+          regPrice: { type: Number },
+          hasVisited: { type: Boolean },
+        },
+      ],
+      totalItemsPriceDisc: { type: Number },
+      totalItemsPriceReg: { type: Number },
+      msg: { type: String },
+    },
   },
   { timestamp: true }
 );

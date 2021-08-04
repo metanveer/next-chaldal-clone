@@ -23,7 +23,6 @@ const SlugDetailsPage = ({ category, product, result }) => {
 
   const hasProduct = product && Object.keys(product).length > 0;
   const hasCategory = category && Object.keys(category).length > 0;
-  const hasNothing = !hasProduct && !hasCategory;
 
   const router = useRouter();
   const headerRef = useRef();
@@ -59,8 +58,8 @@ const SlugDetailsPage = ({ category, product, result }) => {
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage } =
     queryRes;
 
-  // console.log("product", product);
-  // console.log("category", category);
+  console.log("product", product);
+  console.log("category", category);
 
   if (hasProduct) {
     return (
@@ -75,6 +74,7 @@ const SlugDetailsPage = ({ category, product, result }) => {
           discPrice={product.DiscountedPrice.Lo}
           regPrice={product.Price.Lo}
           description={product.LongDescription}
+          stock={product.ExpressQuantitiesByWarehouseId}
         />
       </>
     );
@@ -125,6 +125,7 @@ const SlugDetailsPage = ({ category, product, result }) => {
                                 discPrice={product.DiscountedPrice.Lo}
                                 description={product.LongDescription}
                                 slug={product.Slug}
+                                stock={product.ExpressQuantitiesByWarehouseId}
                               />
                             </div>
                           ))

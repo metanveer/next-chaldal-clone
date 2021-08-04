@@ -19,6 +19,7 @@ import {
   showModal,
   hideModal,
 } from "../../features/toggleModal/toggleModalSlice";
+import ExpressDeliveryIcon from "../common/express-delivery-icon";
 
 const emptyCart =
   "https://chaldn.com/asset/Egg.Grocery.Fabric/Egg.Grocery.Web1/1.5.0+Release-2210/Default/components/header/ShoppingCart/images/emptyShoppingBag.png?q=low&webp=1&alpha=1";
@@ -125,11 +126,7 @@ const Cart = ({ onClose }) => {
           {items.length > 0 && (
             <div className={css.deliveryType}>
               <span className={css.deliveryTypeIconContainer}>
-                <img
-                  className={css.deliveryTypeIcon}
-                  src="/categories/icons/horse.svg"
-                  alt="Express delivery"
-                />
+                <ExpressDeliveryIcon color="#4D4D49" />
               </span>
               <span className={css.text}>Express Delivery</span>
             </div>

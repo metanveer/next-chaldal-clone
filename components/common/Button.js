@@ -1,20 +1,26 @@
 import React from "react";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 import css from "./button.module.css";
+import ExpressDeliveryIcon from "./express-delivery-icon";
+import ReqStockIcon from "./req-stock-icon";
 
-const Button = ({ btnType, onIncreaseQty, onDecreaseQty, itemInCart }) => {
+const Button = ({
+  btnType,
+  onIncreaseQty,
+  onDecreaseQty,
+  itemInCart,
+  onReqStock,
+  stock,
+}) => {
   if (btnType === "add-to-cart") {
     return (
       <>
-        {!itemInCart && (
-          <button onClick={onIncreaseQty} className={css.buttonAddToCart}>
-            <div className={css.buttonIcon}>
-              <img src="/categories/icons/horse.svg" alt="Home Appliances" />
-            </div>
-            <div className={css.buttonText}>Add to bag</div>
+        {stock === 0 ? (
+          <button onClick={onReqStock} className={css.buttonAddToCart}>
+            <ReqStockIcon />
+            <div className={css.buttonText}>Request Stock</div>
           </button>
-        )}
-        {itemInCart && (
+        ) : itemInCart ? (
           <button className={css.buttonAddToCartInBag}>
             <div
               onClick={onDecreaseQty}
@@ -31,6 +37,11 @@ const Button = ({ btnType, onIncreaseQty, onDecreaseQty, itemInCart }) => {
             >
               <HiOutlinePlus />
             </div>
+          </button>
+        ) : (
+          <button onClick={onIncreaseQty} className={css.buttonAddToCart}>
+            <ExpressDeliveryIcon />
+            <div className={css.buttonText}>Add to bag</div>
           </button>
         )}
       </>

@@ -10,6 +10,7 @@ import { showCart } from "../../features/toggleCart/toggleCartSlice";
 import Footer from "./main-footer";
 import PicturesMagnify from "./pictures-magnify";
 import css from "./product-detail.module.css";
+import ReqStockIcon from "./req-stock-icon";
 
 function getDiscPercent(price, discPric) {
   return (((price - discPric) / price) * 100).toFixed();
@@ -24,6 +25,7 @@ const ProductDetail = ({
   discPrice,
   regPrice,
   description,
+  stock,
   modalShownId,
   onHideModal,
 }) => {
@@ -35,6 +37,7 @@ const ProductDetail = ({
   const isItemInCart = itemInCart !== undefined;
 
   const discPercent = getDiscPercent(regPrice, discPrice);
+  const hasStock = stock !== 0;
 
   function handleAddItemToCart() {
     dispatch(
@@ -89,30 +92,45 @@ const ProductDetail = ({
                 <div className={css.price}>{`MRP ৳${regPrice}`}</div>
               )}
             </div>
-            {discPercent > 0 && (
+            {discPercent > 0 && hasStock && (
               <div className={css.percentOff}>{discPercent}% OFF</div>
             )}
           </div>
           <div className={css.changeQtySec}>
-            <div className={css.changeQtyWrapper}>
-              <button onClick={handleDecreaseQty} className={css.changeQtyBtn}>
-                <AiOutlineMinus />
-              </button>
-              <div className={css.changeQtyTextContainer}>
-                <div className={css.qty}>
-                  {isItemInCart ? itemInCart.qty : 0}
+            {hasStock && (
+              <div className={css.changeQtyWrapper}>
+                <button
+                  onClick={handleDecreaseQty}
+                  className={css.changeQtyBtn}
+                >
+                  <AiOutlineMinus />
+                </button>
+                <div className={css.changeQtyTextContainer}>
+                  <div className={css.qty}>
+                    {isItemInCart ? itemInCart.qty : 0}
+                  </div>
+                  <span className={css.inBag}>in bag</span>
                 </div>
-                <span className={css.inBag}>in bag</span>
+                <button
+                  onClick={handleAddItemToCart}
+                  className={css.changeQtyBtn}
+                >
+                  <AiOutlinePlus />
+                </button>
               </div>
-              <button
-                onClick={handleAddItemToCart}
-                className={css.changeQtyBtn}
-              >
-                <AiOutlinePlus />
-              </button>
-            </div>
-            <button onClick={handleBuyNow} className={css.btnBuyNow}>
-              Buy Now
+            )}
+            <button
+              onClick={handleBuyNow}
+              className={`${css.btnBuyNow} ${!hasStock && css.btnReqStock} `}
+            >
+              {!hasStock && (
+                <ReqStockIcon color="white" height="40px" width="40px" />
+              )}
+              {hasStock ? (
+                "Buy Now"
+              ) : (
+                <span className={css.reqStockText}>Request Stock</span>
+              )}
             </button>
           </div>
           <div className={css.devider} />

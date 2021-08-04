@@ -18,6 +18,7 @@ const CartItem = ({
   regPrice,
   id,
   hasVisited,
+  stock,
 }) => {
   const dispatch = useDispatch();
   const { cartShown } = useSelector((state) => state.toggleCart);
@@ -29,6 +30,7 @@ const CartItem = ({
     discPrice && discPrice > 0 && discPrice < regPrice;
   const totalDiscPrice = discPrice * qty;
   const totalRegPrice = regPrice * qty;
+  const isStockOut = stock === 0;
 
   useEffect(() => {
     scrollToElement(cartItemRef);
@@ -53,6 +55,9 @@ const CartItem = ({
   }
 
   const handleAddToCart = () => {
+    if (isStockOut) {
+      return;
+    }
     dispatch(
       addItemToCart({
         packSize,
@@ -70,6 +75,9 @@ const CartItem = ({
   const handleRemoveItem = () => dispatch(removeItem(id));
 
   const handleDecreaseQty = () => {
+    if (isStockOut) {
+      return;
+    }
     if (qty === 1) return;
     dispatch(decreaseQty(id));
     dispatch(setAllItemsSeen());
@@ -78,7 +86,12 @@ const CartItem = ({
   const focusedStyle = focused ? css.focus : !hasVisited ? css.focus : null;
 
   return (
-    <div ref={cartItemRef} className={`${css.cartItem} ${focusedStyle}`}>
+    <div
+      ref={cartItemRef}
+      className={`${css.cartItem} ${focusedStyle} ${
+        isStockOut && css.cartItemStockOut
+      }`}
+    >
       <div onClick={handleRemoveItem} className={css.btnClose}>
         <VscClose />
       </div>

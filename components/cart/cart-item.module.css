@@ -11,6 +11,10 @@
   transition: all 1.2s ease-in-out;
 }
 
+.cartItemStockOut {
+  opacity: 0.5;
+}
+
 .focus {
   transition: all 0.1s ease-in-out;
   background-color: #d9effc;

@@ -26,6 +26,7 @@ const ProductCard = ({
   discPrice,
   description,
   slug,
+  stock,
 }) => {
   const dispatch = useDispatch();
   const { items: cartItems } = useSelector((state) => state.cartItems);
@@ -37,6 +38,7 @@ const ProductCard = ({
 
   const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
   const isItemInCart = itemInCart !== undefined;
+  const isStockOut = stock === 0;
 
   const isDiscounted = discPrice < regPrice;
   const small = cardType === "small" ? css.productCardSmall : null;
@@ -80,7 +82,7 @@ const ProductCard = ({
         onMouseLeave={() => setOverlayShown(false)}
         className={`${css.productCardContainer} ${
           hor && css.productCardContainerHor
-        }`}
+        } ${isStockOut && css.stockOutWrap}`}
       >
         <div className={css.productCardImageWrapper}>
           <img className={css.productCardImage} src={image} alt={itemName} />
@@ -114,7 +116,15 @@ const ProductCard = ({
         {overlayShown && (
           <div className={css.productCardContainerOverlay}>
             <div className={css.overlayContent}>
-              {!isItemInCart && (
+              {isStockOut ? (
+                <div
+                  className={`${css.overlayTextAddStockOut} ${
+                    hor && css.overlayTextAddHor
+                  }`}
+                >
+                  OUT OF STOCK
+                </div>
+              ) : !isItemInCart ? (
                 <div
                   onClick={handleAddItemToCart}
                   className={`${css.overlayTextAdd} ${
@@ -123,8 +133,7 @@ const ProductCard = ({
                 >
                   Add to Shopping Bag
                 </div>
-              )}
-              {isItemInCart && (
+              ) : (
                 <>
                   <div
                     onClick={handleAddItemToCart}
@@ -182,6 +191,7 @@ const ProductCard = ({
       </div>
       <Button
         btnType="add-to-cart"
+        stock={stock}
         onIncreaseQty={handleAddItemToCart}
         onDecreaseQty={handleDecreaseQty}
         itemInCart={itemInCart}
@@ -198,6 +208,7 @@ const ProductCard = ({
             discPrice={discPrice}
             regPrice={regPrice}
             description={description}
+            stock={stock}
             modalShownId={clickedId}
             onHideModal={setClickedId}
           />
