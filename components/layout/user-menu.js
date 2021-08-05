@@ -47,13 +47,7 @@ const UserMenu = () => {
         <div className={css.dropdown}>
           <Link href="/user/profile">
             <a className={css.dropbtn}>
-              {loading ||
-                (!userProfile && (
-                  <div>
-                    <FlowerLoader />
-                  </div>
-                ))}
-              {userProfile && (
+              {userProfile ? (
                 <>
                   <span className={css.userIcon}>
                     <FaUser />
@@ -62,6 +56,8 @@ const UserMenu = () => {
                     {`${userProfile.name || userProfile.email}`}
                   </span>
                 </>
+              ) : (
+                <FlowerLoader />
               )}
             </a>
           </Link>

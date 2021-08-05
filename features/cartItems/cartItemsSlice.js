@@ -93,6 +93,12 @@ const cartItemsSlice = createSlice({
       state.items = state.items.map((item) => ({ ...item, hasVisited: true }));
       state.msg = `All items seen`;
     },
+    setUserCart: (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
   },
 });
 
@@ -102,6 +108,7 @@ export const {
   decreaseQty,
   setItemSeenStatus,
   setAllItemsSeen,
+  setUserCart,
 } = cartItemsSlice.actions;
 
 export default cartItemsSlice;

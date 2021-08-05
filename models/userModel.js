@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
         address: { type: String, minLength: 4, maxLength: 150 },
       },
     ],
-    cartState: {
+    cart: {
       items: [
         {
           qty: { type: Number },

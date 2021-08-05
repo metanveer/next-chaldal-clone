@@ -53,13 +53,12 @@ const SlugDetailsPage = ({ category, product, result }) => {
     initialData: { pages: [result], pageParams: [] },
     getNextPageParam: (lastPage) => (lastPage ? lastPage.nextPage : 0),
   });
-  // console.log("slug query", queryRes);
 
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage } =
     queryRes;
 
-  console.log("product", product);
-  console.log("category", category);
+  // console.log("product", product);
+  // console.log("category", category);
 
   if (hasProduct) {
     return (

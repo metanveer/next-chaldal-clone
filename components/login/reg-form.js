@@ -48,12 +48,13 @@ const RegForm = () => {
       password: values.password,
     });
 
-    if (!result.error) {
-      router.replace("/food");
+    if (result.error) {
       dispatch(hideModal());
+      router.replace(`/error?type=login&message=${encodeURI(result.error)}`);
     }
-    router.replace(`/error?type=login&message=${encodeURI(result.error)}`);
+
     dispatch(hideModal());
+    router.replace("/food");
   }
 
   async function handleFormSubmit() {
