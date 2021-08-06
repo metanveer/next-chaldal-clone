@@ -1,0 +1,27 @@
+.maxQtyToolTip {
+  background-color: #4f4f4f;
+  cursor: pointer;
+  width: 115px;
+  height: 50px;
+  right: 10px;
+  bottom: -90px;
+  z-index: 3;
+  position: absolute;
+  color: #fff;
+  font-size: 11px;
+  line-height: 12px;
+  padding: 5px;
+  border-radius: 5px 0 5px 5px;
+}
+
+.maxQtyToolTip:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 8px solid #4f4f4f;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}

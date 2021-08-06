@@ -13,6 +13,7 @@ import {
 } from "../../features/cart/cartSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
 import decimalWithCommas from "../../utils/decimal-with-commas";
+import ToolTip from "./ui/tooltip";
 
 const ProductCard = ({
   cardType,
@@ -35,10 +36,12 @@ const ProductCard = ({
   const [prevLocation, setPrevLocation] = useState(null);
   const [overlayShown, setOverlayShown] = useState(false);
   const [clickedId, setClickedId] = useState(null);
+  const [showTooltip, setShowTootip] = useState(false);
 
   const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
   const isItemInCart = itemInCart !== undefined;
   const isStockOut = stock === 0;
+  const maxQtyReached = itemInCart?.qty === stock;
 
   const isDiscounted = discPrice < regPrice;
   const small = cardType === "small" ? css.productCardSmall : null;
@@ -56,6 +59,11 @@ const ProductCard = ({
   }
 
   function handleAddItemToCart() {
+    if (maxQtyReached) {
+      setShowTootip(true);
+      return;
+    }
+    setShowTootip(false);
     dispatch(
       addItemToCart({
         packSize,
@@ -131,7 +139,7 @@ const ProductCard = ({
                     hor && css.overlayTextAddHor
                   }`}
                 >
-                  {`Stock ${stock} Add to Shopping Bag`}
+                  {`Add to Shopping Bag (${stock})`}
                 </div>
               ) : (
                 <>
@@ -159,7 +167,7 @@ const ProductCard = ({
                       {itemInCart.qty}
                     </div>
 
-                    <div className={css.inBag}>in bag</div>
+                    <div className={css.inBag}>in bag{` (${stock})`}</div>
                   </div>
                   <div
                     onClick={handleDecreaseQty}
@@ -169,14 +177,16 @@ const ProductCard = ({
                   >
                     <FiMinusCircle />
                   </div>
-                  <div
-                    onClick={handleAddItemToCart}
-                    className={`${css.qtyBtn} ${css.btnRight} ${
-                      hor && css.qtyBtnHor
-                    }`}
-                  >
-                    <FiPlusCircle />
-                  </div>
+                  {maxQtyReached ? null : (
+                    <div
+                      onClick={handleAddItemToCart}
+                      className={`${css.qtyBtn} ${css.btnRight} ${
+                        hor && css.qtyBtnHor
+                      }`}
+                    >
+                      <FiPlusCircle />
+                    </div>
+                  )}
                 </>
               )}
             </div>
@@ -188,6 +198,9 @@ const ProductCard = ({
             </button>
           </div>
         )}
+        {itemInCart ? (
+          <>{maxQtyReached && showTooltip ? <ToolTip maxQty /> : null}</>
+        ) : null}
       </div>
       <Button
         btnType="add-to-cart"

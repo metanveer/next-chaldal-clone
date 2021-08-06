@@ -22,6 +22,13 @@ const CartItem = ({
 }) => {
   const dispatch = useDispatch();
   const { cartShown } = useSelector((state) => state.toggleCart);
+  const [currentStock, setCurrentStock] = useState(stock);
+
+  const getCurrentStock = async () => {
+    const res = await fetch(`/api/product/_id?q=${id}`);
+    const { data } = await res.json();
+    setCurrentStock(data.ExpressQuantitiesByWarehouseId);
+  };
 
   const cartItemRef = useRef();
   const [focused, setFocused] = useState(false);
@@ -30,7 +37,7 @@ const CartItem = ({
     discPrice && discPrice > 0 && discPrice < regPrice;
   const totalDiscPrice = discPrice * qty;
   const totalRegPrice = regPrice * qty;
-  const isStockOut = stock === 0;
+  const isStockOut = currentStock === 0;
 
   useEffect(() => {
     scrollToElement(cartItemRef);
@@ -42,6 +49,7 @@ const CartItem = ({
   }, [qty]);
 
   useEffect(() => {
+    getCurrentStock();
     !hasVisited && scrollToElement(cartItemRef);
     if (cartShown) dispatch(setAllItemsSeen());
     // eslint-disable-next-line

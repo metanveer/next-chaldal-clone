@@ -5,6 +5,7 @@
   --height-width-image-container: 200px;
   display: inline-block;
   width: var(--width-card);
+  margin-bottom: 10px;
 }
 .productCardHor {
   --width-card: 250px;
