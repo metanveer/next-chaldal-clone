@@ -29,7 +29,7 @@ const Cart = ({ onClose }) => {
   const { width: scrollWidth } = useScrollbarSize();
 
   const { items, totalItemsPriceDisc, msg } = useSelector(
-    (state) => state.cartItems
+    (state) => state.cart
   );
   const { cartShown } = useSelector((state) => state.toggleCart);
   const { modalShown, modalId } = useSelector((state) => state.toggleModal);

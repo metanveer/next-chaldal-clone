@@ -24,8 +24,8 @@ const initialState = {
   msg: "Initial state",
 };
 
-const cartItemsSlice = createSlice({
-  name: "cartItems",
+const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
     addItemToCart: (state, action) => {
@@ -109,6 +109,6 @@ export const {
   setItemSeenStatus,
   setAllItemsSeen,
   setUserCart,
-} = cartItemsSlice.actions;
+} = cartSlice.actions;
 
-export default cartItemsSlice;
+export default cartSlice;

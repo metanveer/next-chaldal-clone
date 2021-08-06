@@ -5,7 +5,7 @@ import {
   addItemToCart,
   decreaseQty,
   setItemSeenStatus,
-} from "../../features/cartItems/cartItemsSlice";
+} from "../../features/cart/cartSlice";
 import { showCart } from "../../features/toggleCart/toggleCartSlice";
 import Footer from "./main-footer";
 import PicturesMagnify from "./pictures-magnify";
@@ -30,7 +30,7 @@ const ProductDetail = ({
   onHideModal,
 }) => {
   const dispatch = useDispatch();
-  const { items: cartItems } = useSelector((state) => state.cartItems);
+  const { items: cartItems } = useSelector((state) => state.cart);
   const { cartShown } = useSelector((state) => state.toggleCart);
 
   const itemInCart = cartItems.find((cartItem) => cartItem.id === id);

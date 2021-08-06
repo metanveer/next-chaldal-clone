@@ -16,9 +16,7 @@ const Layout = ({ children }) => {
 
   const dispatch = useDispatch();
   const { cartShown } = useSelector((state) => state.toggleCart);
-  const { items, totalItemsPriceDisc } = useSelector(
-    (state) => state.cartItems
-  );
+  const { items, totalItemsPriceDisc } = useSelector((state) => state.cart);
 
   const { width: scrollBarWidth } = useScrollbarSize();
   const cartWidth = 320;

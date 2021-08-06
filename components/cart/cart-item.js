@@ -7,7 +7,7 @@ import {
   decreaseQty,
   removeItem,
   setAllItemsSeen,
-} from "../../features/cartItems/cartItemsSlice";
+} from "../../features/cart/cartSlice";
 
 const CartItem = ({
   qty,
