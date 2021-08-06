@@ -20,35 +20,17 @@ import {
   hideModal,
 } from "../../features/toggleModal/toggleModalSlice";
 import ExpressDeliveryIcon from "../common/express-delivery-icon";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { saveCart } from "../../utils/cart-query-helpers";
-import { useSession } from "next-auth/client";
-import { getUserProfile } from "../../utils/query-helpers";
-import { setUserCart } from "../../features/cartItems/cartItemsSlice";
 
 const emptyCart =
   "https://chaldn.com/asset/Egg.Grocery.Fabric/Egg.Grocery.Web1/1.5.0+Release-2210/Default/components/header/ShoppingCart/images/emptyShoppingBag.png?q=low&webp=1&alpha=1";
 
 const Cart = ({ onClose }) => {
   const dispatch = useDispatch();
-  const [session, loading] = useSession();
-
-  const enableQuery = session ? true : false;
-
-  useQuery("profile", getUserProfile, {
-    enabled: enableQuery,
-    onSuccess: (data) => {
-      dispatch(setUserCart(data.cart));
-    },
-  });
-
-  const mutation = useMutation((data) => saveCart(data));
   const { width: scrollWidth } = useScrollbarSize();
 
-  const cartItems = useSelector((state) => state.cartItems);
-
-  const { items, totalItemsPriceDisc, msg } = cartItems;
-
+  const { items, totalItemsPriceDisc, msg } = useSelector(
+    (state) => state.cartItems
+  );
   const { cartShown } = useSelector((state) => state.toggleCart);
   const { modalShown, modalId } = useSelector((state) => state.toggleModal);
 
@@ -67,14 +49,6 @@ const Cart = ({ onClose }) => {
       clearTimeout(timer);
     };
   }, [cartShown, isPromoApplied, totalItemsPriceDisc, msg]);
-
-  useEffect(() => {
-    if (totalItemsPriceDisc !== 0) {
-      mutation.mutate({
-        cartState: cartItems,
-      });
-    }
-  }, [totalItemsPriceDisc]);
 
   const handleShowModal = () => {
     dispatch(showModal("delivery-policy"));
@@ -170,8 +144,8 @@ const Cart = ({ onClose }) => {
             </div>
           )}
 
-          {items.map((item, index) => (
-            <CartItem key={index} {...item} />
+          {items.map((item) => (
+            <CartItem key={item.id} {...item} />
           ))}
         </div>
         <div className={css.discountCode}>
