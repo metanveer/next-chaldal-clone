@@ -1,8 +1,8 @@
 import { getSession } from "next-auth/client";
 import dbConnect from "../../../db/dbConnect";
-import User from "../../../models/userModel";
+import { ObjectId } from "mongodb";
 
-const cartController = async (req, res) => {
+const handler = async (req, res) => {
   if (req.method === "GET") {
     const session = await getSession({ req });
 
@@ -11,14 +11,20 @@ const cartController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     try {
-      const user = await User.findById(session.user._id, "name cart");
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
+      const user = await User.findOne(
+        { _id: ObjectId(session.user._id) },
+        { name: 1, cart: 1 }
+      );
       res.status(200).json({ data: user });
+      client.close();
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Unable to retrieve data" });
+      client.close();
     }
   }
 
@@ -30,18 +36,18 @@ const cartController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     const { cartState } = req.body;
 
     try {
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
       const response = await User.findOneAndUpdate(
         { email: session.user.email },
         { $set: { cart: cartState } },
         {
-          new: true,
-          fields: "-password",
-          // runValidators: true,
+          returnNewDocument: true,
+          projection: { password: 0 },
         }
       );
 
@@ -49,14 +55,16 @@ const cartController = async (req, res) => {
         message: "Cart saved!",
         data: response,
       });
+      client.close();
       return;
     } catch (error) {
       console.log(error);
       res.status(500).json({
         error: `"Error saving cart!": ${error}`,
       });
+      client.close();
     }
   }
 };
 
-export default cartController;
+export default handler;

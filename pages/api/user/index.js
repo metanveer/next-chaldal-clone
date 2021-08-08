@@ -1,8 +1,8 @@
 import { getSession } from "next-auth/client";
 import dbConnect from "../../../db/dbConnect";
-import User from "../../../models/userModel";
+import { ObjectId } from "mongodb";
 
-const userController = async (req, res) => {
+const handler = async (req, res) => {
   if (req.method === "GET") {
     const session = await getSession({ req });
 
@@ -11,16 +11,22 @@ const userController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     try {
-      const user = await User.findById(session.user._id, "-password");
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
+      const user = await User.findOne(
+        { _id: ObjectId(session.user._id) },
+        { password: 0 }
+      );
       res.status(200).json({ data: user });
+      client.close();
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Unable to retrieve data" });
+      client.close();
     }
   }
 };
 
-export default userController;
+export default handler;

@@ -63,6 +63,7 @@ const DropdownSelect = ({
         onBlur={() => onSelectBlur(name, true)}
         value={value}
         name={name}
+        placeholder={!isLoading ? "Select..." : "Loading..."}
         isDisabled={!data}
         options={data && data}
       />

@@ -5,18 +5,18 @@ import InfiniteScroll from "react-infinite-scroller";
 import Header from "../components/common/header";
 import ProductDetail from "../components/common/product-detail";
 import Loader from "../components/common/loader";
-import Product from "../models/productModel";
-import Category from "../models/categoryModel";
 import { wrapper } from "../store";
 import { setCurrentCategory } from "../features/category/categorySlice";
 import ProductCard from "../components/common/product-card";
 import Card from "../components/common/card";
 import { useInfiniteQuery } from "react-query";
-import { getProductsByCatId } from "./api/products/category";
 import { useSelector } from "react-redux";
 import { getCategoryBySlug } from "./api/category/[catSlug]";
 import { getProductBySlug } from "./api/product/[prodSlug]";
 import Message from "../components/common/message";
+import { getPaginatedDocs } from "./api/products";
+import dbConnect from "../db/dbConnect";
+import { serialize } from "../utils/serialize";
 
 const SlugDetailsPage = ({ category, product, result }) => {
   const { categories } = useSelector((state) => state.category);
@@ -36,7 +36,7 @@ const SlugDetailsPage = ({ category, product, result }) => {
     }
   }, [currentPath, hasCategory]);
 
-  const startPage = 0;
+  const startPage = 1;
 
   const fetchProducts = async ({ pageParam = startPage }) => {
     if (category) {
@@ -51,14 +51,11 @@ const SlugDetailsPage = ({ category, product, result }) => {
   const queryRes = useInfiniteQuery(["products", slug], fetchProducts, {
     enabled: hasCategory,
     initialData: { pages: [result], pageParams: [] },
-    getNextPageParam: (lastPage) => (lastPage ? lastPage.nextPage : 0),
+    getNextPageParam: (lastPage) => (lastPage ? lastPage.nextPage : 1),
   });
 
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage } =
     queryRes;
-
-  // console.log("product", product);
-  // console.log("category", category);
 
   if (hasProduct) {
     return (
@@ -175,26 +172,34 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ params }) => {
       const { slug } = params;
 
+      const client = await dbConnect();
+      const Category = client.db().collection("categories");
+      const Product = client.db().collection("products");
+
       const category = await getCategoryBySlug(Category, slug);
-      store.dispatch(setCurrentCategory(category));
+      store.dispatch(setCurrentCategory(serialize(category)));
 
       const product = await getProductBySlug(Product, slug);
 
       if (!category) {
+        client.close();
         return {
           props: {
-            product: product,
+            product: serialize(product),
           },
         };
       }
 
-      const result = await getProductsByCatId(Product, category.Id, 1, 30);
+      const queryOptions = { AllCategoryIds: Number(category.Id) };
+      const result = await getPaginatedDocs(Product, queryOptions, 1, 30);
+
+      client.close();
 
       return {
         props: {
-          product: product,
-          category: category,
-          result: result,
+          product: serialize(product),
+          category: serialize(category),
+          result: serialize(result),
         },
       };
     }

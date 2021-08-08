@@ -1,13 +1,12 @@
 import dbConnect from "../../../db/dbConnect";
 import { getSession } from "next-auth/client";
-import User from "../../../models/userModel";
 
 export const getUsers = async (User) => {
-  const users = await User.find({}, "-password");
-  return JSON.parse(JSON.stringify(users));
+  const users = await User.find({}, { password: 0 }).toArray();
+  return users;
 };
 
-const usersController = async (req, res) => {
+const handler = async (req, res) => {
   if (req.method === "GET") {
     const session = await getSession({ req });
 
@@ -16,12 +15,16 @@ const usersController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
+    const client = await dbConnect();
+    const User = client.db().collection("users");
+
     const users = await getUsers(User);
 
     res.status(200).json(users);
+    client.close();
+
     return;
   }
 };
 
-export default usersController;
+export default handler;

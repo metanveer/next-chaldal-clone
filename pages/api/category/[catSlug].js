@@ -1,16 +1,17 @@
 import dbConnect from "../../../db/dbConnect";
-import categoryModel from "../../../models/categoryModel";
 
 const categoryBySlug = async (req, res) => {
   const { catSlug } = req.query;
 
   if (req.method === "GET") {
     try {
-      await dbConnect();
-      const category = await getCategoryBySlug(categoryModel, catSlug);
-
+      const client = await dbConnect();
+      const Category = client.db().collection("categories");
+      const category = await getCategoryBySlug(Category, catSlug);
       res.status(200).json(category);
+      client.close();
     } catch (error) {
+      client.close();
       console.log(error);
     }
   }
@@ -18,7 +19,7 @@ const categoryBySlug = async (req, res) => {
 
 export async function getCategoryBySlug(Category, slug) {
   const category = await Category.findOne({ slug: slug });
-  return JSON.parse(JSON.stringify(category));
+  return category;
 }
 
 export default categoryBySlug;

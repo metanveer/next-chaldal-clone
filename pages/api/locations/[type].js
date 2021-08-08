@@ -1,9 +1,9 @@
 import dbConnect from "../../../db/dbConnect";
-import Location from "../../../models/locationModel";
 
 const locTypeHandler = async (req, res) => {
   if (req.method === "GET") {
-    await dbConnect();
+    const client = await dbConnect();
+    const Location = client.db().collection("locations");
     try {
       if (req.query.type === "divisions") {
         const locations = await Location.find({
@@ -11,12 +11,13 @@ const locTypeHandler = async (req, res) => {
           district_id: undefined,
           upazila_id: undefined,
           union_id: undefined,
-        });
+        }).toArray();
 
         res.status(200).json({
           message: `${locations.length} divisions`,
           data: locations,
         });
+        client.close();
         return;
       }
       if (req.query.type === "districts") {
@@ -26,7 +27,7 @@ const locTypeHandler = async (req, res) => {
             district_id: /\d/,
             upazila_id: undefined,
             union_id: undefined,
-          });
+          }).toArray();
           const division = await Location.findOne({
             division_id: req.query.division_id,
           });
@@ -34,6 +35,7 @@ const locTypeHandler = async (req, res) => {
             message: `${locations.length} districts(s) in ${division.name} division`,
             data: locations,
           });
+          client.close();
           return;
         }
 
@@ -42,16 +44,17 @@ const locTypeHandler = async (req, res) => {
           district_id: /\d/,
           upazila_id: undefined,
           union_id: undefined,
-        });
+        }).toArray();
 
         res.status(200).json({
           message: `${locations.length} districts`,
           data: locations,
         });
+        client.close();
         return;
       }
       if (req.query.type === "upazilas") {
-        const locations = await Location.count({
+        const locations = await Location.countDocuments({
           division_id: undefined,
           district_id: /\d/,
           upazila_id: /\d/,
@@ -64,7 +67,7 @@ const locTypeHandler = async (req, res) => {
             district_id: req.query.district_id,
             upazila_id: /\d/,
             union_id: undefined,
-          });
+          }).toArray();
           const district = await Location.findOne({
             district_id: req.query.district_id,
           });
@@ -73,6 +76,7 @@ const locTypeHandler = async (req, res) => {
             res.status(404).json({
               error: `Not found`,
             });
+            client.close();
             return;
           }
 
@@ -80,12 +84,14 @@ const locTypeHandler = async (req, res) => {
             message: `${locations.length} upazila(s) in ${district.name} district`,
             data: locations,
           });
+          client.close();
           return;
         }
 
         res.status(200).json({
           message: `${locations} upazilas. Please specify a district`,
         });
+        client.close();
         return;
       }
       if (req.query.type === "unions") {
@@ -95,7 +101,7 @@ const locTypeHandler = async (req, res) => {
             district_id: undefined,
             upazila_id: req.query.upazila_id,
             union_id: /\d/,
-          });
+          }).toArray();
           const upazila = await Location.findOne({
             upazila_id: req.query.upazila_id,
           });
@@ -104,6 +110,7 @@ const locTypeHandler = async (req, res) => {
             res.status(404).json({
               error: `Not found`,
             });
+            client.close();
             return;
           }
 
@@ -111,10 +118,11 @@ const locTypeHandler = async (req, res) => {
             message: `${locations.length} unions(s) in ${upazila.name} upazila`,
             data: locations,
           });
+          client.close();
           return;
         }
 
-        const locations = await Location.count({
+        const locations = await Location.countDocuments({
           division_id: undefined,
           district_id: undefined,
           upazila_id: /\d/,
@@ -124,13 +132,16 @@ const locTypeHandler = async (req, res) => {
         res.status(200).json({
           message: `${locations} unions. Please specify a upazila`,
         });
+        client.close();
         return;
       }
 
       res.status(200).json({ error: "Unsupported query!" });
+      client.close();
       return;
     } catch (error) {
       console.log(error);
+      client.close();
       res.status(500).json({ error: "Can not retrieve data!" });
     }
   }

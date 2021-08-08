@@ -3,12 +3,13 @@ import React, { Fragment, useEffect, useRef } from "react";
 import ProductCard from "../../components/common/product-card";
 import InfiniteScroll from "react-infinite-scroller";
 import { setSearchInput } from "../../features/searchProduct/searchProductSlice";
-import productModel from "../../models/productModel";
-import { getProducts } from "../api/products";
+import { getPaginatedDocs } from "../api/products";
 import Loader from "../../components/common/loader";
 import { wrapper } from "../../store";
 import css from "../../styles/term.module.css";
 import { useInfiniteQuery } from "react-query";
+import dbConnect from "../../db/dbConnect";
+import { serialize } from "../../utils/serialize";
 
 const SearchResultsPage = ({ result }) => {
   const {
@@ -16,7 +17,7 @@ const SearchResultsPage = ({ result }) => {
   } = useRouter();
   const searchHeadRef = useRef();
 
-  const startPage = 0;
+  const startPage = 1;
 
   const fetchSearched = async ({ pageParam = startPage }) => {
     const res = await fetch(
@@ -87,6 +88,7 @@ const SearchResultsPage = ({ result }) => {
                             discPrice={product.DiscountedPrice.Lo}
                             description={product.LongDescription}
                             slug={product.Slug}
+                            stock={product.ExpressQuantitiesByWarehouseId}
                           />
                         </div>
                       ))
@@ -108,11 +110,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const { term } = params;
       store.dispatch(setSearchInput({ name: "searchTerm", value: term }));
 
-      const result = await getProducts(productModel, term, 1, 30);
+      const client = await dbConnect();
+      const Product = client.db().collection("products");
 
+      const rgxSearchSet = term
+        ?.split(" ")
+        .map((word) => new RegExp(word, "i"));
+      const queryTerms = { NameWithoutSubText: { $in: rgxSearchSet } };
+
+      const result = await getPaginatedDocs(Product, queryTerms, 1, 30);
+
+      client.close();
       return {
         props: {
-          result,
+          result: serialize(result),
         },
       };
     }

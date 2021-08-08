@@ -1,13 +1,20 @@
-import { getProducts } from ".";
+import { getPaginatedDocs } from ".";
 import dbConnect from "../../../db/dbConnect";
-import productModel from "../../../models/productModel";
 
 export default async function handler(req, res) {
-  const { q = "", page = 1, size = 20 } = req.query;
+  if (req.method === "GET") {
+    const { q, page, size } = req.query;
 
-  await dbConnect();
+    const client = await dbConnect();
+    const Product = client.db().collection("products");
 
-  const result = await getProducts(productModel, q, page, size);
+    const rgxSearchSet = q?.split(" ").map((word) => new RegExp(word, "i"));
 
-  res.status(200).json(result);
+    const query = { NameWithoutSubText: { $in: rgxSearchSet } };
+
+    const result = await getPaginatedDocs(Product, query, page, size);
+
+    res.status(200).json(result);
+    client.close();
+  }
 }

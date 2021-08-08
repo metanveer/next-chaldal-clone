@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/client";
 import dbConnect from "../../../db/dbConnect";
-import User from "../../../models/userModel";
+import { ObjectId } from "mongodb";
 
 const userController = async (req, res) => {
   if (req.method === "GET") {
@@ -11,17 +11,24 @@ const userController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     try {
-      const user = await User.findById(
-        session.user._id,
-        "-password -addresses"
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
+      const user = await User.findOne(
+        {
+          _id: ObjectId(session.user._id),
+        },
+        { projection: { password: 0, addresses: 0 } }
       );
+
       res.status(200).json({ data: user });
+
+      client.close();
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Unable to retrieve data" });
+      client.close();
     }
   }
 
@@ -35,9 +42,9 @@ const userController = async (req, res) => {
 
     const { name, gender, phone } = req.body;
 
-    await dbConnect();
-
     try {
+      const client = await dbConnect();
+      const User = client.db().collection("users");
       //Phone numbers should be unique
       const userWithThisPhone = await User.findOne({ phone: phone });
 
@@ -45,29 +52,33 @@ const userController = async (req, res) => {
         res.status(422).json({
           error: "Phone number in use. Please provide another one.",
         });
+        client.close();
+
         return;
       }
 
       const response = await User.findOneAndUpdate(
         { email: session.user.email },
-        { name, phone, gender },
+        { $set: { name, phone, gender } },
         {
-          new: true,
-          fields: "-password",
-          // runValidators: true,
+          projection: { password: 0 },
+          returnOriginal: false,
         }
       );
 
       res.status(200).json({
         message: "Updated successfully",
-        data: response,
+        data: response.value,
       });
+      client.close();
+
       return;
     } catch (error) {
       console.log(error);
       res.status(500).json({
         error: `"Error updating data!": ${error}`,
       });
+      client.close();
     }
   }
 };

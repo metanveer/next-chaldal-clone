@@ -1,24 +1,26 @@
 import dbConnect from "../../../db/dbConnect";
-import productModel from "../../../models/productModel";
 
 const productBySlug = async (req, res) => {
   if (req.method === "GET") {
     const { prodSlug } = req.query;
 
     try {
-      await dbConnect();
-      const product = await getProductBySlug(productModel, prodSlug);
+      const client = await dbConnect();
+      const Product = client.db().collection("products");
+      const product = await getProductBySlug(Product, prodSlug);
 
       res.status(200).json(product);
+      client.close();
     } catch (error) {
       console.log(error);
+      client.close();
     }
   }
 };
 
-export async function getProductBySlug(Model, slug) {
-  const product = await Model.findOne({ Slug: slug });
-  return JSON.parse(JSON.stringify(product));
+export async function getProductBySlug(collection, slug) {
+  const product = await collection.findOne({ Slug: slug });
+  return product;
 }
 
 export default productBySlug;

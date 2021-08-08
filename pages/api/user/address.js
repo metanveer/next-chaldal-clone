@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/client";
 import dbConnect from "../../../db/dbConnect";
-import User from "../../../models/userModel";
+import { ObjectId } from "mongodb";
 
 const userController = async (req, res) => {
   if (req.method === "GET") {
@@ -11,14 +11,20 @@ const userController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     try {
-      const user = await User.findById(session.user._id, "name addresses");
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
+      const user = await User.findOne(
+        { _id: ObjectId(session.user._id) },
+        { projection: { name: 1, addresses: 1 } }
+      );
       res.status(200).json({ data: user });
+      client.close();
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Unable to retrieve data" });
+      client.close();
     }
   }
 
@@ -30,31 +36,35 @@ const userController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     const { addressData } = req.body;
 
     try {
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
+      const newAddress = { _id: new ObjectId(), ...addressData };
+
       const response = await User.findOneAndUpdate(
         { email: session.user.email },
-        { $push: { addresses: addressData } },
+        { $push: { addresses: newAddress } },
         {
-          new: true,
-          fields: "-password",
-          // runValidators: true,
+          returnOriginal: false,
+          projection: { password: 0 },
         }
       );
 
       res.status(200).json({
         message: "Address Added!",
-        data: response,
+        data: response.value,
       });
+      client.close();
       return;
     } catch (error) {
       console.log(error);
       res.status(500).json({
         error: `"Error updating data!": ${error}`,
       });
+      client.close();
     }
   }
   if (req.method === "PATCH") {
@@ -65,22 +75,21 @@ const userController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
-    console.log("req.body at address", req.body);
-
     const { addressId, addressData: adr } = req.body;
 
     try {
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
       const response = await User.findOneAndUpdate(
         {
           email: session.user.email,
-          "addresses._id": addressId,
+          "addresses._id": ObjectId(addressId),
         },
         {
           $set: {
             "addresses.$": {
-              _id: addressId,
+              _id: ObjectId(addressId),
               name: adr.name,
               phone: adr.phone,
               address: adr.address,
@@ -92,22 +101,25 @@ const userController = async (req, res) => {
           },
         },
         {
-          new: true,
-          fields: "-password",
-          // runValidators: true,
+          returnOriginal: false,
+          projection: { password: 0 },
         }
       );
 
+      console.log("response at patch", response);
+
       res.status(200).json({
         message: "Address updated!",
-        data: response,
+        data: response.value,
       });
+      client.close();
       return;
     } catch (error) {
       console.log(error);
       res.status(500).json({
         error: `"Error updating data!": ${error}`,
       });
+      client.close();
     }
   }
   if (req.method === "DELETE") {
@@ -118,40 +130,42 @@ const userController = async (req, res) => {
       return;
     }
 
-    await dbConnect();
-
     const { addressId: id } = req.body;
 
     try {
+      const client = await dbConnect();
+      const User = client.db().collection("users");
+
       const response = await User.findOneAndUpdate(
         {
           email: session.user.email,
-          "addresses._id": id,
+          "addresses._id": ObjectId(id),
         },
         {
           $pull: {
             addresses: {
-              _id: id,
+              _id: ObjectId(id),
             },
           },
         },
         {
-          new: true,
-          fields: "-password",
-          // runValidators: true,
+          returnOriginal: false,
+          projection: { password: 0 },
         }
       );
 
       res.status(200).json({
         message: "Address deleted!",
-        data: response,
+        data: response.value,
       });
+      client.close();
       return;
     } catch (error) {
       console.log(error);
       res.status(500).json({
         error: `"Error updating data!": ${error}`,
       });
+      client.close();
     }
   }
 };

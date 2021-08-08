@@ -1,45 +1,56 @@
 import dbConnect from "../../../db/dbConnect";
-import productModel from "../../../models/productModel";
 
-export default async function handler(req, res) {
-  const { method } = req;
+const handler = async (req, res) => {
+  if (req.method === "GET") {
+    const client = await dbConnect();
+    const Product = client.db().collection("products");
 
-  await dbConnect();
+    const { page, size } = req.query;
 
-  if (method === "POST") {
-    try {
-      const product = await productModel.create(req.body);
-      res.status(201).json({ success: true, data: product });
-    } catch (error) {
-      res
-        .status(400)
-        .json({ success: false, message: "failed to add new product" });
-    }
+    const result = await getPaginatedDocs(Product, {}, page, size);
+
+    res.status(200).json({
+      result,
+    });
+    client.close();
   }
-  if (method === "GET") {
-    try {
-      const products = await getProducts(productModel, "", 1, 20);
-      res.status(201).json(products);
-    } catch (error) {
-      res
-        .status(400)
-        .json({ success: false, message: "failed to add new product" });
-    }
-  }
-}
+};
 
-export async function getProducts(Model, query, page, size) {
-  const rgxSearchSet = query.split(" ").map((word) => new RegExp(word, "i"));
-  const options = {
-    page: page,
+export default handler;
+
+export async function getPaginatedDocs(
+  docsCollection,
+  queryObj,
+  pageNumber,
+  pageSize
+) {
+  const query = queryObj ? queryObj : {};
+
+  const page = pageNumber ? Number(pageNumber) : 1;
+  const size = pageSize ? Number(pageSize) : 20;
+
+  const cursor = await docsCollection
+    .find(query)
+    .sort({ _id: 1 })
+    .skip(size * (page - 1))
+    .limit(size);
+
+  const totalDocs = await cursor.count();
+  const totalPages = Math.ceil(totalDocs / size);
+  const docs = await cursor.toArray();
+  const nextPage = page < totalPages ? page + 1 : null;
+  const prevPage = page > 1 ? page - 1 : null;
+
+  const result = {
+    docs: docs,
+    totalDocs: await cursor.count(),
     limit: size,
+    page: page,
+    totalPages: totalPages,
+    hasNextPage: page < totalPages,
+    nextPage: nextPage,
+    hasPrevPage: page > 1,
+    prevPage: prevPage,
   };
-  const result = await Model.paginate(
-    { NameWithoutSubText: rgxSearchSet },
-    options,
-    function (err, result) {
-      return result;
-    }
-  );
-  return JSON.parse(JSON.stringify(result));
+  return result;
 }
