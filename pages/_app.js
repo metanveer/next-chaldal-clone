@@ -6,6 +6,8 @@ import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { setFetchedCategories } from "../features/category/categoryActions";
+import { setCartItems } from "../features/cart/cartSlice";
+import axios from "axios";
 
 class MyApp extends App {
   render() {
@@ -31,6 +33,24 @@ class MyApp extends App {
         const session = await getSession({ req: ctx.req });
 
         if (session) {
+          const { data } = await axios({
+            method: "get",
+            url: "http://localhost:3000/api/cart",
+            headers: ctx.req ? { cookie: ctx.req.headers.cookie } : undefined,
+          });
+
+          console.log("axios res", data);
+
+          if (data) {
+            store.dispatch(
+              setCartItems({
+                items: data.data?.products || [],
+                totalItemsPriceDisc: data.data?.totalItemsDiscPrice || 0,
+                totalItemsPriceReg: data.data?.totalItemsRegPrice || 0,
+              })
+            );
+          }
+
           return {
             pageProps: {
               ...(Component.getInitialProps

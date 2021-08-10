@@ -144,8 +144,8 @@ const Cart = ({ onClose }) => {
             </div>
           )}
 
-          {items.map((item) => (
-            <CartItem key={item.id} {...item} />
+          {items.map((item, index) => (
+            <CartItem key={index} {...item} />
           ))}
         </div>
         <div className={css.discountCode}>

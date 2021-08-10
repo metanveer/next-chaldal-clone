@@ -7,7 +7,12 @@ const handler = async (req, res) => {
       res.status(400).json({ error: "Query param missing!" });
       return;
     }
-    console.log(req.query.q);
+
+    if (!ObjectId.isValid(req.query.q)) {
+      res.status(400).json({ error: "Invalid mongodb ObjectId" });
+      return;
+    }
+
     try {
       const client = await dbConnect();
       const Product = client.db().collection("products");

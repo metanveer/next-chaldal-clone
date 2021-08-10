@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev debug": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev-debug": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "formik": "^2.2.9",
     "mongodb": "^3.6.11",

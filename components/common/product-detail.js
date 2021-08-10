@@ -33,7 +33,7 @@ const ProductDetail = ({
   const { items: cartItems } = useSelector((state) => state.cart);
   const { cartShown } = useSelector((state) => state.toggleCart);
 
-  const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
+  const itemInCart = cartItems.find((cartItem) => cartItem._id === id);
   const isItemInCart = itemInCart !== undefined;
 
   const discPercent = getDiscPercent(regPrice, discPrice);
@@ -48,10 +48,11 @@ const ProductDetail = ({
         discPrice,
         regPrice,
         id,
+        hasVisited: cartShown,
       })
     );
     if (cartItems.length === 0) dispatch(showCart());
-    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+    dispatch(setItemSeenStatus({ _id: id, cartStatus: cartShown }));
   }
 
   function handleBuyNow() {
@@ -63,17 +64,18 @@ const ProductDetail = ({
         discPrice,
         regPrice,
         id,
+        hasVisited: cartShown,
       })
     );
     modalShownId && onHideModal(null);
     cartItems.length === 0 && dispatch(showCart());
-    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+    dispatch(setItemSeenStatus({ _id: id, cartStatus: cartShown }));
   }
 
   function handleDecreaseQty() {
     if (!itemInCart) return;
     dispatch(decreaseQty(id));
-    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+    dispatch(setItemSeenStatus({ _id: id, cartStatus: cartShown }));
   }
 
   return (

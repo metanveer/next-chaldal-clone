@@ -38,7 +38,8 @@ const ProductCard = ({
   const [clickedId, setClickedId] = useState(null);
   const [showTooltip, setShowTootip] = useState(false);
 
-  const itemInCart = cartItems.find((cartItem) => cartItem.id === id);
+  const itemInCart = cartItems.find((cartItem) => cartItem._id === id);
+
   const isItemInCart = itemInCart !== undefined;
   const isStockOut = stock === 0;
   const maxQtyReached = itemInCart?.qty === stock;
@@ -72,15 +73,16 @@ const ProductCard = ({
         discPrice,
         regPrice,
         id,
+        hasVisited: cartShown,
       })
     );
     if (cartItems.length === 0) dispatch(showCart());
-    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+    dispatch(setItemSeenStatus({ _id: id, cartStatus: cartShown }));
   }
 
   function handleDecreaseQty() {
-    dispatch(decreaseQty(itemInCart.id));
-    dispatch(setItemSeenStatus({ id: id, cartStatus: cartShown }));
+    dispatch(decreaseQty(itemInCart._id));
+    dispatch(setItemSeenStatus({ _id: id, cartStatus: cartShown }));
   }
 
   return (

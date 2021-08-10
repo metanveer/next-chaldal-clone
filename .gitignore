@@ -34,3 +34,4 @@ yarn-error.log*
 .vercel
 .vscode/settings.json
 .vscode/launch.json
+pages/api/cart/update.js

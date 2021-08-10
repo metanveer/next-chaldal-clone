@@ -16,7 +16,7 @@ const CartItem = ({
   itemName,
   discPrice,
   regPrice,
-  id,
+  _id,
   hasVisited,
   stock,
 }) => {
@@ -49,7 +49,7 @@ const CartItem = ({
   }, [qty]);
 
   useEffect(() => {
-    getCurrentStock();
+    // getCurrentStock();
     !hasVisited && scrollToElement(cartItemRef);
     if (cartShown) dispatch(setAllItemsSeen());
     // eslint-disable-next-line
@@ -73,21 +73,21 @@ const CartItem = ({
         itemName,
         discPrice,
         regPrice,
-        id,
+        id: _id,
         hasVisited: cartShown,
       })
     );
     dispatch(setAllItemsSeen());
   };
 
-  const handleRemoveItem = () => dispatch(removeItem(id));
+  const handleRemoveItem = () => dispatch(removeItem(_id));
 
   const handleDecreaseQty = () => {
     if (isStockOut) {
       return;
     }
     if (qty === 1) return;
-    dispatch(decreaseQty(id));
+    dispatch(decreaseQty(_id));
     dispatch(setAllItemsSeen());
   };
 
