@@ -28,6 +28,22 @@ export const createUser = async (data) => {
   }
   return result;
 };
+export const createOrder = async (data) => {
+  const url = "/api/cart/checkout";
+  const res = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const result = await res.json();
+  if (result.error) {
+    throw new Error(result.error);
+  }
+  console.log("create order", result);
+  return result;
+};
 
 export const changePassword = async (data) => {
   const url = "/api/user/change-password";

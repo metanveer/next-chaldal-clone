@@ -57,7 +57,7 @@
 }
 
 .pageCartVisible {
-  right: var(--cart-width);
+  right: calc(20px + var(--cart-width));
   transition: all 0.3s ease;
 }
 .pageCartHidden {

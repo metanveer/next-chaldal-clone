@@ -1,0 +1,41 @@
+.emptyCartContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.emptyCart {
+  margin: 10px 0 0 0;
+}
+
+.emptyCartText {
+  font-weight: 400;
+  color: #b1aeae;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 10px 5px;
+}
+
+.button {
+  width: 280px;
+  border-radius: 5px;
+  color: #eee;
+  background: var(--color-secondary-red);
+  outline: none;
+  border: none;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 500;
+  margin: 5px 3px;
+  transition: all 0.2s linear;
+}
+
+.button:hover:enabled {
+  color: #eee;
+  background-color: var(--color-secondary-hover);
+}

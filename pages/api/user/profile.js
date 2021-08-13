@@ -62,7 +62,7 @@ const userController = async (req, res) => {
         { $set: { name, phone, gender } },
         {
           projection: { password: 0 },
-          returnOriginal: false,
+          returnDocument: "after",
         }
       );
 

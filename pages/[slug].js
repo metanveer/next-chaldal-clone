@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useRef } from "react";
+import dbConnect from "../db/dbConnect";
 import { useRouter } from "next/router";
 import css from "../styles/slug.module.css";
 import InfiniteScroll from "react-infinite-scroller";
@@ -15,7 +16,6 @@ import { getCategoryBySlug } from "./api/category/[catSlug]";
 import { getProductBySlug } from "./api/product/[prodSlug]";
 import Message from "../components/common/message";
 import { getPaginatedDocs } from "./api/products";
-import dbConnect from "../db/dbConnect";
 import { serialize } from "../utils/serialize";
 
 const SlugDetailsPage = ({ category, product, result }) => {
@@ -181,6 +181,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       const product = await getProductBySlug(Product, slug);
 
+      const queryOptions = { AllCategoryIds: Number(category.Id) };
+      const result = await getPaginatedDocs(Product, queryOptions, 1, 30);
+
       if (!category) {
         client.close();
         return {
@@ -189,9 +192,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
-      const queryOptions = { AllCategoryIds: Number(category.Id) };
-      const result = await getPaginatedDocs(Product, queryOptions, 1, 30);
 
       client.close();
 

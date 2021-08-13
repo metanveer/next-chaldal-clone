@@ -39,6 +39,8 @@ const SearchResultsPage = ({ result }) => {
     searchHeadRef.current.scrollIntoView();
   }, [term]);
 
+  console.log("Query Res at Search", queryRes);
+
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage } =
     queryRes;
 

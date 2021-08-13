@@ -91,28 +91,6 @@
   overflow: auto;
 }
 
-.emptyCartContainer {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-}
-
-.emptyCart {
-  margin: 10px 0 0 0;
-}
-
-.emptyCartText {
-  font-weight: 400;
-  color: #b1aeae;
-  font-size: 1.1rem;
-  text-align: center;
-  padding: 10px 5px;
-}
-
 .deliveryType {
   display: flex;
   justify-content: flex-start;

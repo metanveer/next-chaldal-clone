@@ -1,21 +1,28 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import css from "./delivery-policy.module.css";
 
 const DeliveryPolicy = () => {
+  const { deliveryChargeReg, promoAmount, minAmountForPromo } = useSelector(
+    (state) => state.cart
+  );
+
   return (
     <div className={css.container}>
       <div className={css.heading}>What is your delivery charge policy?</div>
       <div className={css.sub}>
-        We charge ৳ 29 delivery fee for all orders below ৳ 400, and ৳ 19
-        delivery fee for all other orders.
+        We charge ৳ {deliveryChargeReg} delivery fee for all orders below ৳{" "}
+        {minAmountForPromo}, and ৳ 19 delivery fee discount is applicable for
+        orders above ৳ {minAmountForPromo}.
       </div>
       <ol className={css.listContainer}>
-        <li className={css.listItem}>৳ 19 fee on orders of ৳ 400 and above.</li>
         <li className={css.listItem}>
-          ৳ 29 fee applicable for all orders below ৳ 400.
+          Delivery fee discount ৳ {promoAmount} applicable on orders of ৳{" "}
+          {minAmountForPromo} and above.
         </li>
         <li className={css.listItem}>
-          ৳ 59 fee applicable for 15 minutes delivery
+          ৳ {deliveryChargeReg} fee applicable for all orders below ৳{" "}
+          {minAmountForPromo}.
         </li>
       </ol>
     </div>

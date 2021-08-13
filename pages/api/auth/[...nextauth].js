@@ -134,7 +134,7 @@ export default NextAuth({
         role: dbUser.role,
         provider: dbUser.authProvider,
       };
-      console.log("session Callback", session);
+
       return session;
     },
   },

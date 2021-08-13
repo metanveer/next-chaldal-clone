@@ -28,6 +28,7 @@ const ProfileForm = ({ user }) => {
   }
 
   const queryClient = useQueryClient();
+
   const { data: userProfile } = useQuery("profile", getUserProfile, {
     initialData: user,
   });

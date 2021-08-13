@@ -39,8 +39,6 @@ class MyApp extends App {
             headers: ctx.req ? { cookie: ctx.req.headers.cookie } : undefined,
           });
 
-          console.log("axios res", data);
-
           if (data) {
             store.dispatch(
               setCartItems({

@@ -6,9 +6,12 @@ import { modifyAddress } from "../../utils/query-helpers";
 import { useMutation, useQueryClient } from "react-query";
 import AddressFormFields from "./address-form-fields";
 import FlowerLoader from "../common/flower-loader";
+import { useDispatch } from "react-redux";
+import { hideModal } from "../../features/toggleModal/toggleModalSlice";
 
 const AddressForm = ({ item, firstAddress }) => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const mutations = useMutation((data) => modifyAddress(data), {
     onSuccess: (data) => handleMutationSuccess(data),
@@ -62,6 +65,7 @@ const AddressForm = ({ item, firstAddress }) => {
   function handleMutationSuccess(data) {
     queryClient.setQueryData("profile", data);
     queryClient.setQueryData("navbar", data);
+    dispatch(hideModal());
   }
 
   const deleteAddress = (id) => {

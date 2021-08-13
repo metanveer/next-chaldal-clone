@@ -48,7 +48,7 @@ const userController = async (req, res) => {
         { email: session.user.email },
         { $push: { addresses: newAddress } },
         {
-          returnOriginal: false,
+          returnDocument: "after",
           projection: { password: 0 },
         }
       );
@@ -101,7 +101,7 @@ const userController = async (req, res) => {
           },
         },
         {
-          returnOriginal: false,
+          returnDocument: "after",
           projection: { password: 0 },
         }
       );
@@ -149,7 +149,7 @@ const userController = async (req, res) => {
           },
         },
         {
-          returnOriginal: false,
+          returnDocument: "after",
           projection: { password: 0 },
         }
       );

@@ -8,7 +8,7 @@ import Modal from "../common/modal";
 import AddressForm from "./address-form";
 import css from "./address.module.css";
 
-const Address = ({ item }) => {
+const Address = ({ item, onSelect, checkout, selectedId, selected }) => {
   const dispatch = useDispatch();
   const { modalShown, modalId } = useSelector((state) => state.toggleModal);
 
@@ -27,12 +27,33 @@ const Address = ({ item }) => {
   const area = item.union.label;
   const address = item.address;
 
+  const selectedStyle =
+    checkout && selectedId === item?._id ? css.selected : null;
+
+  console.log("selectedIdAtAddress", selectedId);
+
   return (
     <>
-      <address className={css.container}>
-        <button type="button" onClick={handleShowModal} className={css.btnEdit}>
-          Edit
-        </button>
+      <address className={`${css.container} ${selectedStyle}`}>
+        {!selected && (
+          <div className={css.btnContainer}>
+            <div className={css.btnsWrapper}>
+              {checkout && (
+                <button className={css.button} onClick={onSelect} type="button">
+                  Select
+                </button>
+              )}
+
+              <button
+                className={css.button}
+                onClick={handleShowModal}
+                type="button"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        )}
         <div className={css.namePhoneWrapper}>
           <div className={css.name}>{name}</div>
           <div className={css.phone}>Phone: {phone}</div>

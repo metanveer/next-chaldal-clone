@@ -9,6 +9,7 @@ import css from "./layout.module.css";
 import Cart from "../cart/cart";
 import CartFloating from "../cart/cart-floating";
 import useBounceAnimation from "../../hooks/useBounceAnimation";
+import { setAllItemsSeen } from "../../features/cart/cartSlice";
 
 const Layout = ({ children }) => {
   const [modalShown, setModalShown] = useState(false);
@@ -29,6 +30,7 @@ const Layout = ({ children }) => {
 
   function handleShowCart() {
     dispatch(showCart(items));
+    dispatch(setAllItemsSeen());
   }
 
   return (

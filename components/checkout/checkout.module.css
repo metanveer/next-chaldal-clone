@@ -1,0 +1,155 @@
+.container {
+  border: 0px solid #ccc;
+  max-width: 900px;
+  margin: 10px 15px 15px;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.addressSelectorContainer {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-style: normal;
+}
+.addressSelectorHeading {
+  border-bottom: 1px solid #ccc;
+  height: 50px;
+  background-color: #f8f8f8;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.btnChangeAddress {
+  position: absolute;
+  height: 26px;
+  margin-top: -13px;
+  top: 50%;
+  right: 20px;
+  background: #fff;
+  outline: none;
+  border: 1px solid var(--color-secondary-red);
+  border-radius: 3px;
+  color: var(--color-secondary-red);
+  width: 80px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%);
+  transition: all 0.3s linear;
+}
+
+.btnChangeAddress:hover {
+  background: rgb(255, 213, 213);
+  color: red;
+}
+
+.locationIcon {
+  font-size: 1.7rem;
+  margin: 5px 20px;
+}
+
+.headingText {
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.addNewAddress {
+  width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+  color: inherit;
+  font-weight: 300;
+  padding: 8px 0;
+  background: #fff;
+  letter-spacing: 0.3px;
+}
+
+.addNewAddress:hover {
+  color: var(--color-secondary-red);
+  border: 1px solid var(--color-secondary-red);
+}
+
+.addNewAddress::before {
+  content: "+";
+  font-size: 1.3rem;
+  font-weight: 300;
+  padding-right: 10px;
+}
+
+.addressContainer {
+  padding: 5px 100px;
+}
+
+.paymentText {
+  margin: 40px 0 10px 0;
+}
+
+.btnProceedContainer {
+  border: 0px solid black;
+  position: relative;
+}
+
+.deliveryCharge {
+  position: absolute;
+  right: 0;
+}
+
+.btnPlaceOrder {
+  font-family: inherit;
+  font-size: 17px;
+  border: none;
+  outline: none;
+  padding: 0;
+  height: 53px;
+  width: 350px;
+  box-shadow: 0 0 3px #b1aeae;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 25px;
+}
+
+.placeOrderText:hover {
+  background-color: var(--linkbutton-hover);
+  transition: all 0.5s ease;
+}
+
+.placeOrderText {
+  border-radius: 2px 0 0 2px;
+  margin: 0;
+  display: inline-block;
+  height: 100%;
+  background-color: lightcoral;
+  flex: 1 1 60%;
+  color: white;
+  height: 100%;
+  transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orderAmount {
+  border-radius: 0 2px 2px 0;
+  flex: 1 0 40%;
+  background-color: rgb(230, 59, 59);
+  color: white;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5px;
+}
+
+.takaSign {
+  font-size: 25px;
+  margin: -5px 3px 0 5px;
+}

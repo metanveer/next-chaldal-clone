@@ -22,6 +22,11 @@ const initialState = {
   items: [],
   totalItemsPriceDisc: 0,
   totalItemsPriceReg: 0,
+  deliveryChargeReg: 29,
+  promoAmount: 10,
+  minAmountForPromo: 400,
+  isPromoApply: false,
+  promoDeliveryCharge: null,
   msg: "Initial state",
   status: "initial",
 };
@@ -55,6 +60,10 @@ const cartSlice = createSlice({
       }
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
+      state.isPromoApply = state.totalItemsPriceDisc >= state.minAmountForPromo;
+      state.promoDeliveryCharge = state.isPromoApply
+        ? state.deliveryChargeReg - state.promoAmount
+        : null;
     },
     removeItem: (state, action) => {
       const id = action.payload;
@@ -63,6 +72,11 @@ const cartSlice = createSlice({
 
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
+
+      state.isPromoApply = state.totalItemsPriceDisc >= state.minAmountForPromo;
+      state.promoDeliveryCharge = state.isPromoApply
+        ? state.deliveryChargeReg - state.promoAmount
+        : null;
 
       state.msg = "Item removed";
     },
@@ -86,6 +100,11 @@ const cartSlice = createSlice({
       state.msg = "Item not in cart";
       state.totalItemsPriceDisc = getItemsTotalPrice(state.items, "discPrice");
       state.totalItemsPriceReg = getItemsTotalPrice(state.items, "regPrice");
+
+      state.isPromoApply = state.totalItemsPriceDisc >= state.minAmountForPromo;
+      state.promoDeliveryCharge = state.isPromoApply
+        ? state.deliveryChargeReg - state.promoAmount
+        : null;
     },
 
     setItemSeenStatus: (state, action) => {
@@ -105,16 +124,25 @@ const cartSlice = createSlice({
     },
     setCartItems: (state, action) => {
       const { items, totalItemsPriceDisc, totalItemsPriceReg } = action.payload;
-      console.log("ap", action.payload);
       state.items = items;
       state.totalItemsPriceDisc = totalItemsPriceDisc;
       state.totalItemsPriceReg = totalItemsPriceReg;
+
+      state.isPromoApply = state.totalItemsPriceDisc >= state.minAmountForPromo;
+      state.promoDeliveryCharge = state.isPromoApply
+        ? state.deliveryChargeReg - state.promoAmount
+        : null;
+    },
+    resetCart: (state) => {
+      return {
+        ...state,
+        ...initialState,
+      };
     },
   },
 
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      console.log("HYDRATE ACTION", action.payload.cart);
       return {
         ...state,
         ...action.payload.cart,
@@ -220,6 +248,27 @@ export const removeItem = (id) => {
       }
     } catch (error) {
       console.log("Error decreasing qty in server", error);
+    }
+  };
+};
+export const resetCart = () => {
+  return async (dispatch) => {
+    dispatch(cartSlice.actions.resetCart());
+    const url = "/api/cart/reset-cart";
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await res.json();
+
+      if (result.message) {
+        dispatch(cartSlice.actions.setStatus("success"));
+      }
+    } catch (error) {
+      console.log("Error reseting cart", error);
     }
   };
 };

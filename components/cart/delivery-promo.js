@@ -1,18 +1,23 @@
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 import css from "./delivery-promo.module.css";
 
-const DeliveryPromo = ({
-  minAmountForPromo,
-  cartAmount,
-  deliveryCharge,
-  promoAmount,
-  onShowModal,
-}) => {
-  const isPromoApply = cartAmount >= minAmountForPromo;
-  const amountNeeded = minAmountForPromo - cartAmount;
-  const progress = isPromoApply ? 100 : (cartAmount / minAmountForPromo) * 100;
+const DeliveryPromo = ({ onShowModal }) => {
+  const {
+    totalItemsPriceDisc,
+    deliveryChargeReg,
+    promoAmount,
+    minAmountForPromo,
+    promoDeliveryCharge,
+    isPromoApply,
+  } = useSelector((state) => state.cart);
+
+  const amountNeeded = minAmountForPromo - totalItemsPriceDisc;
+  const progress = isPromoApply
+    ? 100
+    : (totalItemsPriceDisc / minAmountForPromo) * 100;
   const fullProgressStyle = isPromoApply ? css.full : null;
 
   return (
@@ -22,7 +27,7 @@ const DeliveryPromo = ({
           <FaInfoCircle />
         </div>
         <div className={css.deliveryCharge}>{`৳ ${
-          isPromoApply ? deliveryCharge - promoAmount : deliveryCharge
+          isPromoApply ? promoDeliveryCharge : deliveryChargeReg
         }`}</div>
         <div
           style={{ width: `${progress}%` }}

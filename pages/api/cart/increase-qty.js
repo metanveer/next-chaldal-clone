@@ -37,7 +37,7 @@ const handler = async (req, res) => {
               itemName,
               discPrice,
               regPrice,
-              hasVisited,
+              hasVisited: true,
             },
           ],
         });
@@ -65,7 +65,7 @@ const handler = async (req, res) => {
           $set: {
             modifiedOn: new Date(),
             "products.$._id": ObjectId(_id),
-            "products.$.hasVisited": hasVisited,
+            "products.$.hasVisited": true,
           },
           $inc: { "products.$.qty": 1 },
         };
@@ -92,7 +92,7 @@ const handler = async (req, res) => {
             itemName,
             discPrice,
             regPrice,
-            hasVisited,
+            hasVisited: true,
           },
         },
       };

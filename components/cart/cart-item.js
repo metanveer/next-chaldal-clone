@@ -83,12 +83,12 @@ const CartItem = ({
   const handleRemoveItem = () => dispatch(removeItem(_id));
 
   const handleDecreaseQty = () => {
+    dispatch(setAllItemsSeen());
     if (isStockOut) {
       return;
     }
     if (qty === 1) return;
     dispatch(decreaseQty(_id));
-    dispatch(setAllItemsSeen());
   };
 
   const focusedStyle = focused ? css.focus : !hasVisited ? css.focus : null;

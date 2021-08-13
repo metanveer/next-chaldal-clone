@@ -20,35 +20,38 @@ import {
   hideModal,
 } from "../../features/toggleModal/toggleModalSlice";
 import ExpressDeliveryIcon from "../common/express-delivery-icon";
-
-const emptyCart =
-  "https://chaldn.com/asset/Egg.Grocery.Fabric/Egg.Grocery.Web1/1.5.0+Release-2210/Default/components/header/ShoppingCart/images/emptyShoppingBag.png?q=low&webp=1&alpha=1";
+import { useRouter } from "next/dist/client/router";
+import EmptyCart from "../common/ui/empty-cart";
 
 const Cart = ({ onClose }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { width: scrollWidth } = useScrollbarSize();
 
-  const { items, totalItemsPriceDisc, msg } = useSelector(
-    (state) => state.cart
-  );
+  const {
+    items,
+    totalItemsPriceDisc,
+    msg,
+    deliveryChargeReg,
+    promoAmount,
+    minAmountForPromo,
+    isPromoApply,
+  } = useSelector((state) => state.cart);
   const { cartShown } = useSelector((state) => state.toggleCart);
   const { modalShown, modalId } = useSelector((state) => state.toggleModal);
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [notifyPromo, setNotifyPromo] = useState(false);
 
-  const minAmountForPromo = 500;
-  const isPromoApplied = totalItemsPriceDisc >= minAmountForPromo;
-
   useEffect(() => {
-    if (!cartShown && !isPromoApplied && msg !== "Initial state") {
+    if (!cartShown && !isPromoApply && msg !== "Initial state") {
       setNotifyPromo(true);
     }
     const timer = setTimeout(() => setNotifyPromo(false), 3000);
     return () => {
       clearTimeout(timer);
     };
-  }, [cartShown, isPromoApplied, totalItemsPriceDisc, msg]);
+  }, [cartShown, isPromoApply, totalItemsPriceDisc, msg]);
 
   const handleShowModal = () => {
     dispatch(showModal("delivery-policy"));
@@ -57,7 +60,7 @@ const Cart = ({ onClose }) => {
     dispatch(hideModal());
   };
 
-  const duration = 500;
+  const duration = 400;
 
   const defaultStyle = {
     transition: `opacity ${duration}ms ease-in-out`,
@@ -84,6 +87,10 @@ const Cart = ({ onClose }) => {
     exited: { height: 0 },
   };
 
+  const handlePlaceOrder = () => {
+    router.push("/checkout");
+  };
+
   return (
     <>
       <Transition in={notifyPromo} timeout={duration}>
@@ -92,13 +99,7 @@ const Cart = ({ onClose }) => {
             style={{ ...defaultStyle, ...transitionStyles[state] }}
             className={css.promoNotifyWrapper}
           >
-            <DeliveryPromo
-              minAmountForPromo={minAmountForPromo}
-              cartAmount={totalItemsPriceDisc}
-              deliveryCharge={30}
-              promoAmount={15}
-              onShowModal={handleShowModal}
-            />
+            <DeliveryPromo onShowModal={handleShowModal} />
           </div>
         )}
       </Transition>
@@ -117,8 +118,8 @@ const Cart = ({ onClose }) => {
         <DeliveryPromo
           minAmountForPromo={minAmountForPromo}
           cartAmount={totalItemsPriceDisc}
-          deliveryCharge={30}
-          promoAmount={15}
+          deliveryCharge={29}
+          promoAmount={19}
           onShowModal={handleShowModal}
         />
 
@@ -131,18 +132,7 @@ const Cart = ({ onClose }) => {
               <span className={css.text}>Express Delivery</span>
             </div>
           )}
-          {items.length === 0 && (
-            <div className={css.emptyCartContainer}>
-              <img
-                className={css.emptyCart}
-                src={emptyCart}
-                alt="An empty shopping bag"
-              />
-              <div className={css.emptyCartText}>
-                Your shopping bag is empty. Start shopping
-              </div>
-            </div>
-          )}
+          {items.length === 0 && <EmptyCart />}
 
           {items.map((item, index) => (
             <CartItem key={index} {...item} />
@@ -194,7 +184,7 @@ const Cart = ({ onClose }) => {
 
         <div className={css.placeOrder}>
           {items.length > 0 ? (
-            <button className={css.btnPlaceOrder}>
+            <button onClick={handlePlaceOrder} className={css.btnPlaceOrder}>
               <span className={css.placeOrderText}>Place Order</span>
               <span className={css.orderAmount}>
                 <span className={css.takaSign}>{`৳`}</span>
