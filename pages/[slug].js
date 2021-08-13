@@ -39,11 +39,12 @@ const SlugDetailsPage = ({ category, product, result }) => {
   const startPage = 1;
 
   const fetchProducts = async ({ pageParam = startPage }) => {
-    if (category) {
+    if (hasCategory) {
       const res = await fetch(
         `/api/products/category?id=${category.Id}&page=${pageParam}&size=30`
       );
       const result = await res.json();
+      console.log("fetchProducdt result", result);
       return result;
     }
   };
@@ -53,6 +54,8 @@ const SlugDetailsPage = ({ category, product, result }) => {
     initialData: { pages: [result], pageParams: [] },
     getNextPageParam: (lastPage) => (lastPage ? lastPage.nextPage : 1),
   });
+
+  console.log("query Res slug", queryRes);
 
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage } =
     queryRes;
@@ -176,22 +179,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const Category = client.db().collection("categories");
       const Product = client.db().collection("products");
 
-      const category = await getCategoryBySlug(Category, slug);
+      const category = (await getCategoryBySlug(Category, slug)) || {};
       store.dispatch(setCurrentCategory(serialize(category)));
 
-      const product = await getProductBySlug(Product, slug);
+      const product = (await getProductBySlug(Product, slug)) || {};
 
       const queryOptions = { AllCategoryIds: Number(category.Id) };
-      const result = await getPaginatedDocs(Product, queryOptions, 1, 30);
-
-      if (!category) {
-        client.close();
-        return {
-          props: {
-            product: serialize(product),
-          },
-        };
-      }
+      const result =
+        (await getPaginatedDocs(Product, queryOptions, 1, 30)) || {};
 
       client.close();
 

@@ -29,21 +29,21 @@ export async function getPaginatedDocs(
   const page = pageNumber ? Number(pageNumber) : 1;
   const size = pageSize ? Number(pageSize) : 20;
 
-  const cursor = await docsCollection
-    .find(query)
-    .sort({ _id: 1 })
-    .skip(size * (page - 1))
-    .limit(size);
+  const cursor = await docsCollection.find(query);
 
   const totalDocs = await cursor.count();
   const totalPages = Math.ceil(totalDocs / size);
-  const docs = await cursor.toArray();
+  const docs = await cursor
+    .sort({ _id: 1 })
+    .skip(size * (page - 1))
+    .limit(size)
+    .toArray();
   const nextPage = page < totalPages ? page + 1 : null;
   const prevPage = page > 1 ? page - 1 : null;
 
   const result = {
     docs: docs,
-    totalDocs: await cursor.count(),
+    totalDocs: totalDocs,
     limit: size,
     page: page,
     totalPages: totalPages,

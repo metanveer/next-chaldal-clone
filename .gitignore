@@ -35,3 +35,4 @@ yarn-error.log*
 .vscode/settings.json
 .vscode/launch.json
 pages/api/cart/update.js
+pages/test/[testSlug].js
