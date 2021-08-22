@@ -62,10 +62,16 @@
   border-radius: 6px;
   padding: 0 0 0 12px;
   height: 40px;
-  width: 60%;
+  width: 50%;
   box-sizing: border-box;
   background-color: #fff;
   display: flex;
   align-items: center;
   border: 1px solid #c8c8c8;
+}
+
+@media (max-width: 768px) {
+  .searchBoxBanner {
+    width: 80%;
+  }
 }

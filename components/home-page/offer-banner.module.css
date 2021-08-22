@@ -14,3 +14,9 @@
   width: 100%;
   padding-left: 2px;
 }
+
+@media (max-width: 768px) {
+  .offerBanner {
+    flex-direction: column;
+  }
+}

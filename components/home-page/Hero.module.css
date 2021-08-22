@@ -10,8 +10,25 @@
 }
 
 .homeBannerText {
-  font-size: 40px;
+  font-size: 2.5rem;
   color: black;
   font-weight: 700;
   margin-bottom: 10px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .homeBannerText {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 550px) {
+  .homeBannerText {
+    font-size: 1.8rem;
+  }
+}
+@media (max-width: 450px) {
+  .homeBannerText {
+    font-size: 1.4rem;
+  }
 }

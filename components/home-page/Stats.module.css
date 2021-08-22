@@ -30,3 +30,10 @@
   font-size: 35px;
   color: var(--color-primary-yellow);
 }
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    padding: 20px 10px 40px 10px;
+  }
+}

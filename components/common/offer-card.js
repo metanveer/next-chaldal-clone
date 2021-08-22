@@ -14,6 +14,7 @@ const OfferCard = ({
   discPrice,
   description,
   slug,
+  stock,
 }) => {
   const ver = cardType === "vertical";
 
@@ -42,6 +43,7 @@ const OfferCard = ({
           discPrice={discPrice}
           description={description}
           slug={slug}
+          stock={stock}
         />
       </div>
     </div>

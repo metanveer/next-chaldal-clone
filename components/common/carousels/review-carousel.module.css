@@ -72,6 +72,7 @@
   top: 90%;
   left: 50%;
   z-index: 85;
+  width: 130px;
 }
 
 .dot {
@@ -99,11 +100,30 @@
     top: 185px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .carousel {
-    --width: 500px;
+    height: 500px;
   }
   .carouselControl {
-    top: 150px;
+    top: 390px;
+    left: 50%;
+    margin-left: -65px;
+  }
+  .slide {
+    flex-direction: column;
+  }
+  .portraitContainer {
+    flex: 0 0 130px;
+    margin: 0px;
+  }
+  .reviewText::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background-color: #eee;
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    clip-path: polygon(50% 50%, 0% 100%, 100% 100%);
   }
 }

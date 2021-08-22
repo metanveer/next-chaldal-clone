@@ -14,34 +14,39 @@ const Footer = () => {
   return (
     <footer>
       <section className={css.footerRowOne}>
-        <div className={css.rowOneContent}>
-          <Image
-            src={deliMethods.oneHour}
-            alt="1 hour delivery"
-            width={40}
-            height={40}
-          />
-          <p>1 hour delivery</p>
-
-          <Image
-            src={deliMethods.cashOnDelivery}
-            alt="Cash on delivery"
-            width={40}
-            height={40}
-          />
-          <p>Cash on delivery</p>
-        </div>
-        <div className={css.rowOneContent}>
-          <p>Pay with</p>
-          {paymentMethods.map((item, index) => (
+        <div className={css.rowOneContentLeft}>
+          <div className={css.contentGroup}>
             <Image
-              key={index}
-              src={item.image}
-              alt={item.name}
+              src={deliMethods.oneHour}
+              alt="1 hour delivery"
               width={40}
               height={40}
             />
-          ))}
+            <p>1 hour delivery</p>
+          </div>
+          <div className={css.contentGroup}>
+            <Image
+              src={deliMethods.cashOnDelivery}
+              alt="Cash on delivery"
+              width={40}
+              height={40}
+            />
+            <p>Cash on delivery</p>
+          </div>
+        </div>
+        <div className={css.rowOneContentRight}>
+          <div className={css.contentGroup}>
+            <p>Pay with</p>
+            {paymentMethods.map((item, index) => (
+              <Image
+                key={index}
+                src={item.image}
+                alt={item.name}
+                width={40}
+                height={40}
+              />
+            ))}
+          </div>
         </div>
       </section>
       <section className={css.footerRowTwo}>

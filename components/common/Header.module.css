@@ -55,6 +55,13 @@
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .imagesContainer {
+    min-height: 0;
+  }
+}
+
 .imageWrapper {
   flex: 0 1 700px;
 }
@@ -64,6 +71,16 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .carouselContainer {
+    max-height: 110px;
+    min-height: 110px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .bannerImage {

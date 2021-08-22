@@ -18,3 +18,13 @@
   left: 0;
   transition: all 1.5s ease;
 }
+
+@media (max-width: 768px) {
+  .container {
+    width: 350px;
+  }
+
+  .image {
+    max-width: 350px;
+  }
+}

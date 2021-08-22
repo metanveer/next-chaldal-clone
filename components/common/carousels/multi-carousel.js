@@ -96,6 +96,7 @@ const MultiCarousel = ({ items }) => {
                 discPrice={item.DiscountedPrice.Lo}
                 description={item.LongDescription}
                 slug={item.Slug}
+                stock={item.ExpressQuantitiesByWarehouseId}
               />
             </div>
           ))}
@@ -121,6 +122,7 @@ const MultiCarousel = ({ items }) => {
                 discPrice={item.DiscountedPrice.Lo}
                 description={item.LongDescription}
                 slug={item.Slug}
+                stock={item.ExpressQuantitiesByWarehouseId}
               />
             </div>
           ))}

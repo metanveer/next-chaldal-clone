@@ -25,3 +25,19 @@
   display: flex;
   align-items: flex-end;
 }
+
+@media (max-width: 768px) {
+  .sectionGetApp {
+    margin-top: 10px;
+    flex-direction: column;
+    height: 500px;
+  }
+
+  .mobileAppPreview {
+    width: 200px;
+  }
+
+  .rightContent {
+    justify-content: center;
+  }
+}

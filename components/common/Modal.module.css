@@ -7,6 +7,10 @@
   z-index: 105;
   background-color: rgba(0, 0, 0, 0.4);
 }
+.backdropSidebar {
+  top: 55px;
+  height: calc(100vh - 55px);
+}
 
 .modal {
   position: relative;
@@ -20,6 +24,20 @@
   animation: slide-down 100ms ease-out forwards;
 }
 
+.modalSidebar {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  bottom: 0;
+  width: 219px;
+  background-color: white;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 110;
+  overflow: auto;
+  animation: slide-from-left 100ms ease-out forwards;
+}
+
 .close {
   position: absolute;
   right: 10px;
@@ -29,7 +47,6 @@
   background: none;
   font-size: 28px;
   color: #afafaf;
-  /* border: 1px solid black; */
   padding: 0px;
   height: 30px;
   width: 30px;
@@ -44,7 +61,7 @@
   margin-bottom: 10vh;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .modal {
     width: 100%;
     left: 0;
@@ -53,7 +70,7 @@
     border-radius: 0px;
     animation: slide-down 300ms ease-out forwards;
   }
-}
+} */
 
 @keyframes slide-down {
   from {
@@ -63,5 +80,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes slide-from-left {
+  from {
+    opacity: 1;
+    transform: translateX(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

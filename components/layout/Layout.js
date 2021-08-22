@@ -12,7 +12,6 @@ import useBounceAnimation from "../../hooks/useBounceAnimation";
 import { setAllItemsSeen } from "../../features/cart/cartSlice";
 
 const Layout = ({ children }) => {
-  const [modalShown, setModalShown] = useState(false);
   const [sidebarShown, setSidebarShown] = useState(true);
 
   const dispatch = useDispatch();
@@ -21,6 +20,7 @@ const Layout = ({ children }) => {
 
   const { width: scrollBarWidth } = useScrollbarSize();
   const cartWidth = 320;
+  // const scrollBarWidth = 0;
 
   const bounceStyle = useBounceAnimation(totalItemsPriceDisc, css.bounce, 900);
 
@@ -36,10 +36,7 @@ const Layout = ({ children }) => {
   return (
     <div className={css.layout}>
       <div className={css.navbarWrapper}>
-        <NavBar
-          handleSideBar={() => setSidebarShown(!sidebarShown)}
-          setModalShown={setModalShown}
-        />
+        <NavBar handleSideBar={() => setSidebarShown(!sidebarShown)} />
       </div>
 
       <div className={sidebarShown ? css.sideBar : css.sideBarHide}>

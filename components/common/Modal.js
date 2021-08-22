@@ -4,18 +4,32 @@ import { VscChromeClose } from "react-icons/vsc";
 
 import css from "./modal.module.css";
 
-const Backdrop = ({ onCloseModal }) => {
-  return <div className={css.backdrop} onClick={onCloseModal} />;
+const Backdrop = ({ onCloseModal, sidebar }) => {
+  return (
+    <div
+      className={`${css.backdrop} ${sidebar && css.backdropSidebar}`}
+      onClick={onCloseModal}
+    />
+  );
 };
 
-const ModalOverlay = ({ onCloseModal, children, modalWidth, closeBtn }) => {
+const ModalOverlay = ({
+  onCloseModal,
+  children,
+  modalWidth,
+  closeBtn,
+  sidebar,
+}) => {
   const widthStyle = {
     left: `calc(50vw - ${modalWidth}px / 2)`,
     width: `${modalWidth}px`,
   };
 
   return (
-    <div style={widthStyle} className={css.modal}>
+    <div
+      style={widthStyle}
+      className={`${css.modal} ${sidebar && css.modalSidebar}`}
+    >
       {closeBtn && (
         <button onClick={onCloseModal} className={css.close}>
           <VscChromeClose />
@@ -26,11 +40,11 @@ const ModalOverlay = ({ onCloseModal, children, modalWidth, closeBtn }) => {
   );
 };
 
-const Modal = ({ onCloseModal, children, modalWidth, closeBtn }) => {
+const Modal = ({ onCloseModal, children, modalWidth, closeBtn, sidebar }) => {
   return (
     <Fragment>
       {ReactDOM.createPortal(
-        <Backdrop onCloseModal={onCloseModal} />,
+        <Backdrop onCloseModal={onCloseModal} sidebar={sidebar} />,
         document.getElementById("overlays")
       )}
       {ReactDOM.createPortal(
@@ -38,6 +52,7 @@ const Modal = ({ onCloseModal, children, modalWidth, closeBtn }) => {
           modalWidth={modalWidth}
           closeBtn={closeBtn}
           onCloseModal={onCloseModal}
+          sidebar={sidebar}
         >
           {children}
         </ModalOverlay>,

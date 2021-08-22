@@ -29,6 +29,16 @@
   background-color: var(--color-secondary-hover);
 }
 
+@media (max-width: 768px) {
+  .btn {
+    background: none;
+    color: #ee4054;
+  }
+  .btn:hover {
+    background-color: unset;
+  }
+}
+
 .btnPrev {
   left: -5px;
   border-radius: 0 50% 50% 0;

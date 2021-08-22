@@ -6,7 +6,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  /* right: 0; */
+  width: 100%;
   z-index: 100;
 }
 
@@ -37,7 +38,6 @@
 .main {
   position: fixed;
   top: 55px;
-
   left: 219px;
   right: 0;
   bottom: 0;
@@ -52,12 +52,12 @@
 
 .page {
   position: absolute;
-  top: 0px;
+  top: 0;
   left: 0;
 }
 
 .pageCartVisible {
-  right: calc(20px + var(--cart-width));
+  right: 320px;
   transition: all 0.3s ease;
 }
 .pageCartHidden {
@@ -68,7 +68,9 @@
 .cartWrapper {
   position: fixed;
   top: 55px;
-  bottom: 0;
+  height: calc(100vh - 55px);
+  /* bottom: 0; */
+  /* right: -340px; */
   width: var(--cart-width);
   z-index: 95;
   transition: all 0.3s ease;
@@ -117,4 +119,15 @@
   overflow-y: auto;
   overflow-x: hidden;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .sideBar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .main {
+    left: 0px;
+  }
 }

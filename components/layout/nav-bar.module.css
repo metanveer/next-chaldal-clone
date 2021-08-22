@@ -8,12 +8,18 @@
 }
 
 .searchbox {
-  flex: 1 0 300px;
+  flex: 1 0 200px;
 }
 
 .logo {
   width: 140px;
   padding: 5px 15px 5px 0px;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    display: none;
+  }
 }
 
 .menu {
@@ -32,6 +38,21 @@
 .menu:hover {
   background-color: var(--navbar-menu-btn-hover);
   cursor: pointer;
+}
+
+.hamburgerMenuIcon {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .hamburgerMenuIcon {
+    display: inline-block;
+    z-index: 105;
+  }
 }
 
 .navlink {
@@ -63,6 +84,12 @@
   padding: 0 10px;
   font-size: 14px;
   font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .location {
+    display: none;
+  }
 }
 
 .localeWrapper {
@@ -130,29 +157,10 @@
   margin: 0 3px;
 }
 
-.userContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 55px;
-  border-left: 1px solid var(--navbar-items-divider);
-  white-space: nowrap;
-  font-size: 14px;
-  padding: 0 3px;
-  position: relative;
-}
-
-.userMenuWrapper {
-  position: absolute;
-  top: 55px;
-}
-
-.user {
-  font-weight: bold;
-}
-
-.userName {
-  padding: 0 0 0 5px;
+@media (max-width: 768px) {
+  .navItem {
+    display: none;
+  }
 }
 
 .iconPrimary {
@@ -166,8 +174,4 @@
 .iconSecondary {
   font-size: 22px;
   margin-top: 7px;
-}
-
-.navbarLastItemWrapper {
-  flex: 1 0 100px;
 }

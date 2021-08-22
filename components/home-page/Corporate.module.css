@@ -81,3 +81,14 @@
 .btnLink:hover {
   background-color: var(--linkbutton-hover);
 }
+
+@media (max-width: 655px) {
+  .featuresWrapper {
+    margin: 20px 0;
+    flex-direction: column;
+  }
+
+  .corporate {
+    height: 720px;
+  }
+}

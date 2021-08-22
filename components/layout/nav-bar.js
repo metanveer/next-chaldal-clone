@@ -7,10 +7,14 @@ import { HiChevronDown } from "react-icons/hi";
 import SearchBox from "../common/search-box";
 import Link from "next/link";
 import UserMenu from "./user-menu";
+import Hamburger from "../common/ui/hamburger";
 
 const NavBar = ({ handleSideBar }) => {
   return (
     <nav className={css.navbar}>
+      <div className={css.hamburgerMenuIcon}>
+        <Hamburger />
+      </div>
       <button onClick={handleSideBar} className={css.menu}>
         <HiMenu />
       </button>

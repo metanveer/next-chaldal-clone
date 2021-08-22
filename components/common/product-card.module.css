@@ -22,6 +22,17 @@
   width: var(--width-card);
 }
 
+@media (max-width: 768px) {
+  .productCard {
+    --width-card: 146px;
+    --height-width-image-container: 145px;
+    --maxheight-card-container: calc(200px * 1.525);
+    display: inline-block;
+    width: var(--width-card);
+    margin: 10px;
+  }
+}
+
 .productCardContainer {
   max-height: var(--maxheight-card-container);
   position: relative;

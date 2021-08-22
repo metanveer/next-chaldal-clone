@@ -26,6 +26,28 @@
   border-radius: 5px;
 }
 
+.threeDotMenu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .dropbtn {
+    display: none;
+  }
+
+  .threeDotMenu {
+    display: inline-block;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px 0 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
 .dropdownContent {
   display: none;
   position: absolute;
@@ -89,6 +111,34 @@
   font-weight: 700;
 }
 
+@media (max-width: 768px) {
+  .btnSignIn {
+    display: none;
+  }
+}
+
 .btnSignIn:hover {
   background-color: var(--navbar-login-area-btn-hover);
+}
+
+.menuContent {
+  border-radius: 5px;
+}
+
+.listContainer {
+  padding: 0px 0px;
+  font-size: 1.3rem;
+}
+
+.userIcon {
+  padding: 0px 15px 0 8px;
+}
+
+.userSection {
+  background: rgb(71, 71, 71);
+  display: block;
+  width: 100%;
+  color: white;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
 }

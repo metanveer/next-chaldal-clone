@@ -7,6 +7,12 @@
   color: black;
 }
 
+@media (max-width: 768px) {
+  .child {
+    padding: 8px 0;
+  }
+}
+
 .child:hover {
   cursor: pointer;
   background: #e1e1e1;

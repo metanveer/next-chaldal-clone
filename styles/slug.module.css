@@ -24,3 +24,13 @@
   display: inline-block;
   margin: 0px 5px;
 }
+
+@media (max-width: 768px) {
+  .childCategories {
+    padding: 0 0px;
+  }
+
+  .productCardWrapper {
+    margin: 10px 0px;
+  }
+}

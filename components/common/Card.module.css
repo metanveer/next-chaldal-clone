@@ -45,6 +45,26 @@
   text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+  .categoryCardImageContainer {
+    width: 150px;
+    height: 150px;
+    margin: auto;
+  }
+
+  .categoryCardName {
+    text-align: center;
+  }
+
+  .categoryCardContainer {
+    width: 160px;
+    height: 210px;
+
+    margin: 3px;
+    font-size: 16px;
+  }
+}
+
 /* ********PRODUCT_CARD_STYLES********** */
 
 .productCardContainer {

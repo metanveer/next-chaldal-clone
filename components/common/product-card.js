@@ -45,8 +45,8 @@ const ProductCard = ({
   const maxQtyReached = itemInCart?.qty === stock;
 
   const isDiscounted = discPrice < regPrice;
-  const small = cardType === "small" ? css.productCardSmall : null;
-  const hor = cardType === "horizontal" ? css.productCardHor : null;
+  const small = cardType === "small";
+  const hor = cardType === "horizontal";
 
   function handleCloseModal() {
     setClickedId(null);
@@ -85,8 +85,14 @@ const ProductCard = ({
     dispatch(setItemSeenStatus({ _id: id, cartStatus: cartShown }));
   }
 
+  const className = small
+    ? css.productCardSmall
+    : hor
+    ? css.productCardHor
+    : css.productCard;
+
   return (
-    <div className={`${css.productCard} ${small} ${hor}`}>
+    <div className={`${className}`}>
       <div
         onMouseEnter={() => setOverlayShown(true)}
         onMouseLeave={() => setOverlayShown(false)}
