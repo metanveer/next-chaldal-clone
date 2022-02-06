@@ -3,8 +3,7 @@ import React from "react";
 import css from "./empty-cart.module.css";
 
 const emptyCart =
-  "https://chaldn.com/asset/Egg.Grocery.Fabric/Egg.Grocery.Web1/1.5.0+DataCenter-Release-2261/Default/components/header/ShoppingCart/images/emptyShoppingBag.png?q=low&webp=1&alpha=1";
-
+  "https://chaldn.com/asset/Egg.Grocery.Fabric/Egg.Grocery.Web/1.5.0+DataCenter-Release-2759/Default/components/header/ShoppingCart/images/emptyShoppingBag.png?q=low&webp=1&alpha=1";
 const EmptyCart = ({ checkout }) => {
   const router = useRouter();
   return (

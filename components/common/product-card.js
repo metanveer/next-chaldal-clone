@@ -147,7 +147,7 @@ const ProductCard = ({
                     hor && css.overlayTextAddHor
                   }`}
                 >
-                  {`Add to Shopping Bag (${stock})`}
+                  {`Add to Shopping Bag`}
                 </div>
               ) : (
                 <>

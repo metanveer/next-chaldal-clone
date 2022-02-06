@@ -1,17 +1,19 @@
 import { useQuery } from "react-query";
 
 const useAddress = (type, parentId) => {
-  const fetchAddress = async () => {
+  const fetchAddress = async (type, parentId) => {
     if (type === "divisions") {
       const res = await fetch(`/api/locations/${type}`);
       if (!res.ok) {
         throw new Error("Fetching divisions failed!");
       }
       const result = await res.json();
+
       const options = result.data.map((item) => ({
-        value: item.division_id,
+        value: item.id,
         label: item.name,
       }));
+
       return options;
     }
     if (type === "districts") {
@@ -21,7 +23,7 @@ const useAddress = (type, parentId) => {
       }
       const result = await res.json();
       const options = result.data.map((item) => ({
-        value: item.district_id,
+        value: item.id,
         label: item.name,
       }));
       return options;
@@ -33,7 +35,7 @@ const useAddress = (type, parentId) => {
       }
       const result = await res.json();
       const options = result.data.map((item) => ({
-        value: item.upazila_id,
+        value: item.id,
         label: item.name,
       }));
       return options;
@@ -45,7 +47,7 @@ const useAddress = (type, parentId) => {
       }
       const result = await res.json();
       const options = result.data.map((item) => ({
-        value: item.union_id,
+        value: item.id,
         label: item.name,
       }));
       return options;
@@ -54,7 +56,7 @@ const useAddress = (type, parentId) => {
 
   const { isLoading, isError, data, error } = useQuery(
     [type, parentId],
-    fetchAddress,
+    () => fetchAddress(type, parentId),
     {
       enabled: parentId ? true : false,
       refetchOnWindowFocus: false,

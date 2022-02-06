@@ -102,10 +102,9 @@ const AddressForm = ({ item, firstAddress }) => {
 
         <div className={styles.btnContainer}>
           <button
-            disabled={isLoading}
             className={`${styles.button} ${firstAddress && styles.newBtn}`}
             type="submit"
-            disabled={!firstAddress && !formik.dirty}
+            disabled={isLoading && !firstAddress && !formik.dirty}
           >
             {item ? "Save" : `${firstAddress ? "Confirm" : "Add"}`}
           </button>

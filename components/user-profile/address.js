@@ -30,8 +30,6 @@ const Address = ({ item, onSelect, checkout, selectedId, selected }) => {
   const selectedStyle =
     checkout && selectedId === item?._id ? css.selected : null;
 
-  console.log("selectedIdAtAddress", selectedId);
-
   return (
     <>
       <address className={`${css.container} ${selectedStyle}`}>

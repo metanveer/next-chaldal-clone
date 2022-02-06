@@ -6,11 +6,13 @@ const locTypeHandler = async (req, res) => {
     const Location = client.db().collection("locations");
     try {
       if (req.query.type === "divisions") {
+        console.log("req query type at type", req.query);
         const locations = await Location.find({
-          division_id: /\d/,
-          district_id: undefined,
-          upazila_id: undefined,
-          union_id: undefined,
+          // division_id: /\d/,
+          // district_id: undefined,
+          // upazila_id: undefined,
+          // union_id: undefined,
+          type: "division",
         }).toArray();
 
         res.status(200).json({
@@ -21,15 +23,16 @@ const locTypeHandler = async (req, res) => {
         return;
       }
       if (req.query.type === "districts") {
+        console.log("req query type at type", req.query);
+
         if (req.query.division_id) {
           const locations = await Location.find({
-            division_id: req.query.division_id,
-            district_id: /\d/,
-            upazila_id: undefined,
-            union_id: undefined,
+            type: "district",
+            parent_id: req.query.division_id,
           }).toArray();
           const division = await Location.findOne({
-            division_id: req.query.division_id,
+            type: "division",
+            id: req.query.division_id,
           });
           res.status(200).json({
             message: `${locations.length} districts(s) in ${division.name} division`,
@@ -39,37 +42,26 @@ const locTypeHandler = async (req, res) => {
           return;
         }
 
-        const locations = await Location.find({
-          division_id: /\d/,
-          district_id: /\d/,
-          upazila_id: undefined,
-          union_id: undefined,
-        }).toArray();
-
-        res.status(200).json({
-          message: `${locations.length} districts`,
-          data: locations,
+        res.status(400).json({
+          error: `No division id entered!`,
         });
         client.close();
         return;
       }
+
       if (req.query.type === "upazilas") {
         const locations = await Location.countDocuments({
-          division_id: undefined,
-          district_id: /\d/,
-          upazila_id: /\d/,
-          union_id: undefined,
+          type: "upazila",
         });
 
         if (req.query.district_id) {
           const locations = await Location.find({
-            division_id: undefined,
-            district_id: req.query.district_id,
-            upazila_id: /\d/,
-            union_id: undefined,
+            type: "upazila",
+            parent_id: req.query.district_id,
           }).toArray();
           const district = await Location.findOne({
-            district_id: req.query.district_id,
+            type: "district",
+            id: req.query.district_id,
           });
 
           if (!district) {
@@ -94,16 +86,16 @@ const locTypeHandler = async (req, res) => {
         client.close();
         return;
       }
+
       if (req.query.type === "unions") {
         if (req.query.upazila_id) {
           const locations = await Location.find({
-            division_id: undefined,
-            district_id: undefined,
-            upazila_id: req.query.upazila_id,
-            union_id: /\d/,
+            type: "union",
+            parent_id: req.query.upazila_id,
           }).toArray();
           const upazila = await Location.findOne({
-            upazila_id: req.query.upazila_id,
+            type: "upazila",
+            id: req.query.upazila_id,
           });
 
           if (!upazila) {
@@ -123,10 +115,7 @@ const locTypeHandler = async (req, res) => {
         }
 
         const locations = await Location.countDocuments({
-          division_id: undefined,
-          district_id: undefined,
-          upazila_id: /\d/,
-          union_id: /\d/,
+          type: "union",
         });
 
         res.status(200).json({
